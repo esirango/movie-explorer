@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../../lang/LanguageContext";
-import LanguageDropdown from "./LanguageDropdown";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,8 @@ const Navbar = () => {
 
                 {/* دسکتاپ */}
                 <div className="hidden md:flex items-center space-x-6">
-                    <LanguageDropdown
+                    <LanguageSwitcher
+                        type={"desktop"}
                         language={language}
                         setLanguage={setLanguage}
                         t={t}
@@ -79,14 +80,14 @@ const Navbar = () => {
                         transition={{ duration: 0.15 }}
                         className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl px-5 py-4 shadow-inner flex flex-col space-y-3"
                     >
-                        <div className="inline-flex items-center justify-center w-full h-12 rounded-md border border-indigo-600 bg-indigo-600 px-4 py-2 text-white font-semibold shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <LanguageDropdown
-                                language={language}
-                                setLanguage={setLanguage}
-                                t={t}
-                                closeMenu={() => setIsOpen(false)}
-                            />
-                        </div>
+                        <LanguageSwitcher
+                            type={"phone"}
+                            language={language}
+                            setLanguage={setLanguage}
+                            t={t}
+                            closeMenu={() => setIsOpen(false)}
+                        />
+
                         <Link
                             href="/movies"
                             onClick={() => setIsOpen(false)}

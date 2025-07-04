@@ -17,7 +17,9 @@ export default function Landing() {
             <main className="relative z-10 flex flex-col justify-center items-center min-h-screen px-6 text-center select-none">
                 <h1 className="text-5xl font-extrabold mb-6 leading-tight max-w-4xl">
                     Welcome to{" "}
-                    <span className="text-indigo-400">CinemaApp</span>
+                    <span className="dark:text-indigo-400 text-indigo-700">
+                        CinemaApp
+                    </span>
                 </h1>
                 <p className="max-w-2xl text-lg mb-12 px-4 dark:text-gray-300">
                     Discover trending movies with interactive animations that

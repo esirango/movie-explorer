@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    font-family: "Vazir";
+}
+
 /* For line clamp */
 .line-clamp-3 {
     display: -webkit-box;

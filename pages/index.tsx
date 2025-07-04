@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import Footer from "../components/layout/Footer";
 
 import Navbar from "../components/layout/Navbar";
-import dynamic from "next/dynamic";
 import TrendingMovies from "../components/landing/TrendingMovies";
 import Landing from "../components/landing/Landing";
 import { fetchMovies } from "./api/movies";

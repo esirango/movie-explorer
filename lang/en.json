@@ -1,0 +1,24 @@
+{
+    "global": {
+        "appName": "CinemaApp"
+    },
+    "header": {
+        "links": ["Movies"]
+    },
+    "landing": {
+        "bannerTitle": "Welcome to",
+        "bannerDescription": "Discover trending movies with interactive animations that respond to your mouse movement. Experience cinema like never before",
+        "bannerButton": "Explore Movies"
+    },
+    "trendingMoviesSection": {
+        "title": "Trending Movies"
+    },
+    "movies": {
+        "title": "Movies",
+        "inputSearchPlaceholder": "Search movies..."
+    },
+    "footer": {
+        "firstText": "Made With",
+        "secondText": "by esirango"
+    }
+}

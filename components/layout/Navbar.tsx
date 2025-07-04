@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "../../contexts/lang/LanguageContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { language, setLanguage, t } = useLanguage();
 
     return (
         <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 sticky top-0 z-50">
@@ -13,7 +15,7 @@ const Navbar = () => {
                     href="/"
                     className="lg:text-2xl text-[18px] font-bold text-indigo-600 dark:text-indigo-400"
                 >
-                    🎬 CinemaApp
+                    🎬 {t("global.appName")}
                 </Link>
 
                 <div className="hidden md:flex items-center space-x-4">
@@ -21,8 +23,20 @@ const Navbar = () => {
                         href="/movies"
                         className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium"
                     >
-                        Movies
+                        {t("header.links")}
                     </Link>
+
+                    <select
+                        value={language}
+                        onChange={(e) =>
+                            setLanguage(e.target.value as "en" | "fa")
+                        }
+                        className="bg-transparent border border-indigo-600 rounded px-2 py-1 text-indigo-600 cursor-pointer"
+                    >
+                        <option value="en">EN</option>
+                        <option value="fa">FA</option>
+                    </select>
+
                     <ThemeToggle />
                 </div>
 
@@ -71,7 +85,7 @@ const Navbar = () => {
                             onClick={() => setIsOpen(false)}
                             className="block py-2 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
                         >
-                            🎥 Movies
+                            🎥 {t("header.links")}
                         </Link>
                     </motion.div>
                 )}

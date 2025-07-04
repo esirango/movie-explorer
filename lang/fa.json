@@ -1,0 +1,24 @@
+{
+    "global": {
+        "appName": "سینمااپ"
+    },
+    "header": {
+        "links": ["فیلم‌ها"]
+    },
+    "landing": {
+        "bannerTitle": "خوش آمدید به",
+        "bannerDescription": "فیلم‌های محبوب را با انیمیشن‌های تعاملی که به حرکت موس شما واکنش نشان می‌دهند، کشف کنید. تجربه‌ای بی‌نظیر از سینما",
+        "bannerButton": "کاوش فیلم‌ها"
+    },
+    "trendingMoviesSection": {
+        "title": "فیلم‌های محبوب"
+    },
+    "movies": {
+        "title": "فیلم‌ها",
+        "inputSearchPlaceholder": "جستجوی فیلم..."
+    },
+    "footer": {
+        "firstText": "ساخته شده با",
+        "secondText": "توسط esirango"
+    }
+}

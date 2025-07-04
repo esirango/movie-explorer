@@ -1,4 +1,6 @@
 import React from "react";
+import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { toPersianNumber } from "../../func/toPersianNumber";
 
 interface PaginationProps {
     currentPage: number;
@@ -11,6 +13,8 @@ const Pagination: React.FC<PaginationProps> = ({
     totalPages,
     onPageChange,
 }) => {
+    const { language } = useLanguage();
+
     const pagesToShow = 5;
     const startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
     const endPage = Math.min(totalPages, startPage + pagesToShow - 1);
@@ -49,7 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
                     }`}
                     onClick={() => handlePageChange(p)}
                 >
-                    {p}
+                    {language === "fa" ? toPersianNumber(p) : p}
                 </button>
             ))}
             <button

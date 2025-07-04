@@ -2,119 +2,79 @@ import { useEffect, useRef, useState } from "react";
 
 const FLOATING_ICONS = ["🎬", "🎥", "🍿", "⭐", "🎞️"];
 
-type Position = { x: number; y: number }; // 0..1 به عنوان درصد (0% تا 100%)
-
-function lerp(start: number, end: number, t: number) {
-    return start + (end - start) * t;
-}
-
-export default function InteractiveCinemaBackground() {
-    // موقعیت پایه هر آیکون (ثابت)
-    const [basePositions] = useState(() =>
-        Array.from({ length: 25 }).map(() => ({
-            x: Math.random(),
-            y: Math.random(),
-            size: 24 + Math.random() * 20,
-            animationDuration: 40 + Math.random() * 20,
-            animationDelay: Math.random() * 5,
-        }))
-    );
-
-    // موقعیت فعلی هر آیکون (برای انیمیشن نرم)
-    const positionsRef = useRef(basePositions.map(({ x, y }) => ({ x, y })));
-
-    // موقعیت موس نرمال شده بین -1 و 1
-    const targetPosRef = useRef({ x: 0, y: 0 });
-
-    const [, forceUpdate] = useState(0); // برای رندر
+export default function InteractiveCinemaScene() {
+    const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
 
     useEffect(() => {
-        function onMouseMove(e: MouseEvent) {
-            const x = (e.clientX / window.innerWidth) * 2 - 1; // -1 تا 1
-            const y = (e.clientY / window.innerHeight) * 2 - 1; // -1 تا 1
-            targetPosRef.current = { x, y };
-        }
-
-        window.addEventListener("mousemove", onMouseMove);
-        return () => window.removeEventListener("mousemove", onMouseMove);
-    }, []);
-
-    useEffect(() => {
-        let animationFrameId: number;
-
-        function animate() {
-            // مقدار نرمی حرکت (0=بدون حرکت، 1=آنی)
-            const smoothing = 0.1;
-
-            // آپدیت موقعیت آیکون‌ها
-            positionsRef.current = positionsRef.current.map((pos, i) => {
-                const base = basePositions[i];
-                // افکت جابجایی بر اساس موس: می‌خوایم تا مثلا ±5% تغییر مکان بدیم
-                const offsetRange = 0.05;
-
-                // هدف نهایی = موقعیت پایه + افکت جابه‌جایی بر اساس موس
-                const targetX = base.x + targetPosRef.current.x * offsetRange;
-                const targetY = base.y + targetPosRef.current.y * offsetRange;
-
-                // مقدار نهایی با نرمی lerp شده
-                const newX = lerp(pos.x, targetX, smoothing);
-                const newY = lerp(pos.y, targetY, smoothing);
-
-                return { x: newX, y: newY };
+        const handleMouseMove = (e: MouseEvent) => {
+            setMousePos({
+                x: e.clientX / window.innerWidth,
+                y: e.clientY / window.innerHeight,
             });
-
-            // مجبور می‌کنیم React رندر کنه
-            forceUpdate((n) => n + 1);
-
-            animationFrameId = requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [basePositions]);
+        };
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, []);
 
     return (
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-            {basePositions.map(
-                ({ size, animationDuration, animationDelay }, i) => {
-                    const pos = positionsRef.current[i];
-                    return (
-                        <div
-                            key={i}
-                            className="absolute animate-float text-white opacity-20"
-                            style={{
-                                top: `${pos.y * 100}%`,
-                                left: `${pos.x * 100}%`,
-                                fontSize: `${size}px`,
-                                animationDuration: `${animationDuration}s`,
-                                animationDelay: `${animationDelay}s`,
-                                transition: "top 0.1s ease, left 0.1s ease",
-                            }}
-                        >
-                            {FLOATING_ICONS[i % FLOATING_ICONS.length]}
-                        </div>
-                    );
-                }
-            )}
+            {/* لایه نوری که با موس حرکت می‌کنه */}
+            <div
+                className="absolute w-[200px] h-[200px] rounded-full bg-white opacity-5 blur-3xl"
+                style={{
+                    left: `${mousePos.x * 100}%`,
+                    top: `${mousePos.y * 100}%`,
+                    transform: "translate(-50%, -50%)",
+                    transition: "left 0.1s ease-out, top 0.1s ease-out",
+                }}
+            />
+
+            {/* آیکون‌های ثابت با افکت‌های ملایم */}
+            {Array.from({ length: 20 }).map((_, i) => {
+                const angle = (i / 20) * Math.PI * 2;
+                const radius = 0.4 + Math.random() * 0.1;
+
+                const x = 0.5 + Math.cos(angle) * radius;
+                const y = 0.5 + Math.sin(angle) * radius;
+
+                const icon = FLOATING_ICONS[i % FLOATING_ICONS.length];
+                const animationDelay = Math.random() * 5;
+
+                return (
+                    <div
+                        key={i}
+                        className="absolute text-white opacity-15"
+                        style={{
+                            top: `${y * 100}%`,
+                            left: `${x * 100}%`,
+                            fontSize: `${40 + Math.random() * 20}px`,
+                            transform: "translate(-50%, -50%)",
+                            animation: `pulse ${
+                                8 + Math.random() * 4
+                            }s ease-in-out infinite`,
+                            animationDelay: `${animationDelay}s`,
+                        }}
+                    >
+                        {icon}
+                    </div>
+                );
+            })}
 
             <style jsx>{`
-                @keyframes float {
+                @keyframes pulse {
                     0% {
-                        transform: translateY(0px) scale(1);
+                        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                        opacity: 0.1;
                     }
                     50% {
-                        transform: translateY(-40px) scale(1.1) rotate(5deg);
+                        transform: translate(-50%, -50%) scale(1.05)
+                            rotate(3deg);
+                        opacity: 0.2;
                     }
                     100% {
-                        transform: translateY(0px) scale(1);
+                        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                        opacity: 0.1;
                     }
-                }
-
-                .animate-float {
-                    animation-name: float;
-                    animation-timing-function: ease-in-out;
-                    animation-iteration-count: infinite;
                 }
             `}</style>
         </div>

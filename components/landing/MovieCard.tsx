@@ -17,7 +17,7 @@ function MovieCard({
     return (
         <div
             ref={ref}
-            className="w-[500px] md:w-[200px] rounded-lg overflow-hidden shadow-lg
+            className="lg:w-[500px] md:w-[300px] min-w-[200px] rounded-lg overflow-hidden shadow-lg
                  bg-white text-gray-900
                  dark:bg-gray-800 dark:text-gray-100
                  mx-3 my-5 hover:scale-105 transition-transform cursor-pointer"

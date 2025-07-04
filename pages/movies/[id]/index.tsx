@@ -4,6 +4,8 @@ import { Movie } from "../../../types/movie";
 import { LoadingSpinner } from "../../../components/Loading";
 import { fetchMovieDetails, fetchSimilarMovies } from "../../api/movieDetail";
 import MovieSlider from "../../../components/movies/movie/MovieSlider";
+import Navbar from "../../../components/layout/Navbar";
+import Footer from "../../../components/layout/Footer";
 
 const MovieDetailPage = () => {
     const router = useRouter();
@@ -29,9 +31,10 @@ const MovieDetailPage = () => {
 
     return (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
+            <Navbar />
             {/* Banner */}
             <div
-                className="w-full h-[60vh] bg-cover bg-center relative"
+                className="w-full h-[60vh] bg-cover bg-center relative "
                 style={{
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                 }}
@@ -54,7 +57,7 @@ const MovieDetailPage = () => {
                     />
 
                     {/* Info */}
-                    <div className="flex-1 space-y-4">
+                    <div className="flex-1 lg:space-y-12 md:space-y-12 space-y-4">
                         <p className="text-lg">{movie.overview}</p>
 
                         <div className="flex gap-4 text-sm flex-wrap">
@@ -82,6 +85,7 @@ const MovieDetailPage = () => {
                     <MovieSlider movies={related} />
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

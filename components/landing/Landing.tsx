@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useLanguage } from "../../lang/LanguageContext";
 import InteractiveCinemaBackground from "../landing/InteractiveCinemaBackground";
 
@@ -28,12 +29,12 @@ export default function Landing() {
                     {t("landing.bannerDescription")}
                 </p>
 
-                <a
+                <Link
                     href="/movies"
                     className="mt-16 inline-block px-10 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-semibold shadow-lg transition-colors duration-300"
                 >
                     {t("landing.bannerButton")}
-                </a>
+                </Link>
             </main>
         </div>
     );

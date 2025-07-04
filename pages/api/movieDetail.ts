@@ -1,15 +1,11 @@
-import axios from "axios";
+import tmdb from "../../lib/axios";
 
 export const fetchMovieDetails = async (id: string) => {
-    const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=YOUR_API_KEY&language=en-US`
-    );
-    return res;
+    const { data } = await tmdb.get(`/movie/${id}`);
+    return data;
 };
 
 export const fetchSimilarMovies = async (id: string) => {
-    const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=YOUR_API_KEY&language=en-US`
-    );
-    return res;
+    const { data } = await tmdb.get(`/movie/${id}/similar`);
+    return data;
 };

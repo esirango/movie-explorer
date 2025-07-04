@@ -1,4 +1,4 @@
-import axios from "axios";
+import tmdb from "./axios";
 
 export interface Movie {
     id: number;
@@ -8,6 +8,6 @@ export interface Movie {
 }
 
 export const fetchTrending = async (): Promise<Movie[]> => {
-    const { data } = await axios.get("/api/trending");
-    return data;
+    const { data } = await tmdb.get("/trending/movie/week");
+    return data.results;
 };

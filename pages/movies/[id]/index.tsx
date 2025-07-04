@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Movie } from "../../../types/movie";
 import { LoadingSpinner } from "../../../components/Loading";
 import { fetchMovieDetails, fetchSimilarMovies } from "../../api/movieDetail";
+import MovieSlider from "../../../components/movies/movie/MovieSlider";
 
 const MovieDetailPage = () => {
     const router = useRouter();
@@ -76,7 +77,6 @@ const MovieDetailPage = () => {
                     </div>
                 </div>
 
-                {/* Related Movies */}
                 <div className="mt-12">
                     <h2 className="text-2xl font-bold mb-4">Related Movies</h2>
                     <MovieSlider movies={related} />

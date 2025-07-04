@@ -12,9 +12,9 @@ type IconData = {
 
 export default function InteractiveCinemaScene() {
     const [mouseTarget, setMouseTarget] = useState({ x: 0.5, y: 0.5 });
+    const [hasInteracted, setHasInteracted] = useState(false);
     const mousePos = useRef({ x: 0.5, y: 0.5 });
 
-    // مقداردهی اولیه فقط یک بار در کلاینت
     const iconsRef = useRef<IconData[]>([]);
 
     useEffect(() => {
@@ -30,6 +30,7 @@ export default function InteractiveCinemaScene() {
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
+            if (!hasInteracted) setHasInteracted(true);
             setMouseTarget({
                 x: e.clientX / window.innerWidth,
                 y: e.clientY / window.innerHeight,
@@ -37,13 +38,19 @@ export default function InteractiveCinemaScene() {
         };
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, []);
+    }, [hasInteracted]);
 
     useEffect(() => {
         let frameId: number;
+
         const animate = () => {
-            mousePos.current.x += (mouseTarget.x - mousePos.current.x) * 0.05;
-            mousePos.current.y += (mouseTarget.y - mousePos.current.y) * 0.05;
+            // همیشه موج بزن، ولی اگر تعامل شده بود، موشو دنبال کن
+            if (hasInteracted) {
+                mousePos.current.x +=
+                    (mouseTarget.x - mousePos.current.x) * 0.05;
+                mousePos.current.y +=
+                    (mouseTarget.y - mousePos.current.y) * 0.05;
+            }
 
             const time = Date.now() / 1000;
 
@@ -54,8 +61,12 @@ export default function InteractiveCinemaScene() {
                 const waveX = 0.01 * Math.sin(time * 2 + i);
                 const waveY = 0.01 * Math.cos(time * 2.5 + i);
 
-                const offsetX = (mousePos.current.x - 0.5) * 0.05;
-                const offsetY = (mousePos.current.y - 0.5) * 0.05;
+                const offsetX = hasInteracted
+                    ? (mousePos.current.x - 0.5) * 0.05
+                    : 0;
+                const offsetY = hasInteracted
+                    ? (mousePos.current.y - 0.5) * 0.05
+                    : 0;
 
                 const finalX = icon.baseX + waveX + offsetX;
                 const finalY = icon.baseY + waveY + offsetY;
@@ -66,9 +77,10 @@ export default function InteractiveCinemaScene() {
 
             frameId = requestAnimationFrame(animate);
         };
+
         animate();
         return () => cancelAnimationFrame(frameId);
-    }, [mouseTarget]);
+    }, [mouseTarget, hasInteracted]);
 
     return (
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">

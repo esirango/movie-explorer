@@ -20,7 +20,7 @@ const MovieSlider: React.FC<Props> = ({ movies }) => {
             {movies.map((movie) => (
                 <Link
                     key={movie.id}
-                    href={`/movies/${movie.id}`}
+                    href={`/movies/${movie.id}/${movie.title}`}
                     className="w-48 mx-2 bg-white dark:bg-gray-800 rounded-lg shadow hover:scale-105 transform transition-all duration-200 overflow-hidden"
                 >
                     <img

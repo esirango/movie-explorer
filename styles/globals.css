@@ -6,6 +6,14 @@
     font-family: "Vazir";
 }
 
+html {
+    background-color: white; /* معادل bg-white */
+}
+
+html[theme="dark"] body {
+    background-color: #2d3748; /* معادل bg-gray-800 در Tailwind */
+}
+
 /* For line clamp */
 .line-clamp-3 {
     display: -webkit-box;

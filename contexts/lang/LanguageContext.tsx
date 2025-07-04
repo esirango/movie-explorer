@@ -1,5 +1,12 @@
-// contexts/LanguageContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
+    useEffect,
+} from "react";
+
+import Cookies from "cookies-js";
 
 type Language = "en" | "fa";
 
@@ -23,17 +30,22 @@ const LanguageContext = createContext<LanguageContextProps>({
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     const [language, setLanguage] = useState<Language>("en");
 
-    // تابع ساده برای گرفتن متن از فایل ترجمه بر اساس کلید نقطه‌ای (dot notation)
+    useEffect(() => {
+        const lang = Cookies.get("lang");
+        if (lang === "en" || lang === "fa") {
+            setLanguage(lang);
+        }
+    }, []);
+
     const t = (key: string): string => {
         const keys = key.split(".");
         let text: any = translations[language];
 
         for (const k of keys) {
-            if (text[k] === undefined) return key; // اگر کلید وجود نداشت کلید را برگردان
+            if (text[k] === undefined) return key;
             text = text[k];
         }
 
-        // اگر مقدار رشته نبود مثلا آرایه بود، به سادگی join کن
         if (Array.isArray(text)) return text.join(", ");
 
         return text;

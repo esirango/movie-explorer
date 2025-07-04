@@ -1,5 +1,7 @@
 import React from "react";
 
+import Cookies from "cookies-js";
+
 const LanguageToggle = ({
     language,
     setLanguage,
@@ -14,6 +16,7 @@ const LanguageToggle = ({
     const toggleLanguage = () => {
         const nextLang = language === "en" ? "fa" : "en";
         setLanguage(nextLang);
+        Cookies.set("lang", nextLang);
         closeMenu();
     };
 

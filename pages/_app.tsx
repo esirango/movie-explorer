@@ -33,7 +33,7 @@ function MetaHead() {
                 rel="stylesheet"
                 href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css"
             />
-            <link rel="shortcut icon" href="🎬" type="image/x-icon" />
+            <link rel="icon" href="/favicon.ico" />
             <link
                 href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css"
                 rel="stylesheet"
@@ -43,7 +43,6 @@ function MetaHead() {
     );
 }
 
-// ✅ Dir تنظیم
 function DirectionSetter() {
     const { language } = useLanguage();
 

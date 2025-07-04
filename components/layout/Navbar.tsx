@@ -1,16 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { useTheme } from "../theme/ThemeProvider";
 import { ThemeToggle } from "../theme/ThemeToggle";
 
-const Navbar: React.FC = () => {
-    const { theme, toggle } = useTheme();
-
+const Navbar = () => {
     return (
-        <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-10">
+        <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 flex justify-between  sticky top-0 z-10">
             <Link
                 href="/"
-                className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+                className="lg:text-2xl  text-xl font-bold text-indigo-600 dark:text-indigo-400"
             >
                 🎬 CinemaApp
             </Link>

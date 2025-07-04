@@ -2,7 +2,7 @@ import InteractiveCinemaBackground from "./InteractiveCinemaBackground";
 
 export default function Landing() {
     return (
-        <div className="relative min-h-screen bg-black text-white overflow-hidden">
+        <div className="relative min-h-screen bg-gray-200 dark:bg-black dark:text-white overflow-hidden">
             <InteractiveCinemaBackground />
 
             <div
@@ -19,7 +19,7 @@ export default function Landing() {
                     Welcome to{" "}
                     <span className="text-indigo-400">CinemaApp</span>
                 </h1>
-                <p className="max-w-2xl text-lg mb-12 px-4 text-gray-300">
+                <p className="max-w-2xl text-lg mb-12 px-4 dark:text-gray-300">
                     Discover trending movies with interactive animations that
                     respond to your mouse movement. Experience cinema like never
                     before.

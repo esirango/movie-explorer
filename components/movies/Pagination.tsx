@@ -20,11 +20,21 @@ const Pagination: React.FC<PaginationProps> = ({
         pages.push(i);
     }
 
+    const handlePageChange = (page: number) => {
+        onPageChange(page);
+        const topElement = document.getElementById("movie-list-top");
+        if (topElement) {
+            topElement.scrollIntoView({ behavior: "smooth" });
+        } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    };
+
     return (
         <div className="flex justify-center items-center space-x-2 mt-6">
             <button
                 className="px-3 py-1 rounded border disabled:opacity-50"
-                onClick={() => onPageChange(currentPage - 1)}
+                onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
             >
                 Prev
@@ -37,14 +47,14 @@ const Pagination: React.FC<PaginationProps> = ({
                             ? "bg-indigo-600 text-white"
                             : "bg-white dark:bg-gray-700"
                     }`}
-                    onClick={() => onPageChange(p)}
+                    onClick={() => handlePageChange(p)}
                 >
                     {p}
                 </button>
             ))}
             <button
                 className="px-3 py-1 rounded border disabled:opacity-50"
-                onClick={() => onPageChange(currentPage + 1)}
+                onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >
                 Next

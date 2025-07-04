@@ -6,6 +6,7 @@ import { LoadingSpinner } from "../../components/Loading";
 import Navbar from "../../components/layout/Navbar";
 import { Movie } from "../../types/movie";
 import NotFoundMovie from "../../components/movies/NotFoundMovie";
+import MovieCard from "../../components/movies/MovieCard";
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -58,34 +59,7 @@ const MoviesPage = () => {
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             {movies.map((movie) => (
-                                <div
-                                    key={movie.id}
-                                    className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow hover:shadow-lg transition-shadow"
-                                >
-                                    {movie.poster_path ? (
-                                        <img
-                                            src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                                            alt={movie.title}
-                                            className="w-full h-64 object-cover"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-64 flex items-center justify-center bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
-                                            No Image
-                                        </div>
-                                    )}
-                                    <div className="p-4">
-                                        <h3 className="text-lg font-semibold">
-                                            {movie.title}
-                                        </h3>
-                                        <p className="text-sm line-clamp-3 mt-2">
-                                            {movie.overview}
-                                        </p>
-                                        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                                            Release: {movie.release_date} |
-                                            Rating: {movie.vote_average}
-                                        </p>
-                                    </div>
-                                </div>
+                                <MovieCard key={movie.id} movie={movie} />
                             ))}
                         </div>
 

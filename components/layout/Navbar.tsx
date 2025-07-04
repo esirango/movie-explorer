@@ -63,7 +63,7 @@ const Navbar = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.15 }}
                         className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl px-4 py-3 shadow-inner"
                     >
                         <Link

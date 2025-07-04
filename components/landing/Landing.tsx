@@ -1,11 +1,9 @@
-import dynamic from "next/dynamic";
-
-const InteractiveCinemaBackground = dynamic(
-    () => import("./InteractiveCinemaBackground"),
-    { ssr: false }
-);
+import { useLanguage } from "../../contexts/lang/LanguageContext";
+import InteractiveCinemaBackground from "../landing/InteractiveCinemaBackground";
 
 export default function Landing() {
+    const { t } = useLanguage();
+
     return (
         <div className="relative min-h-screen bg-gray-200 dark:bg-black dark:text-white overflow-hidden">
             <InteractiveCinemaBackground />
@@ -21,22 +19,20 @@ export default function Landing() {
             />
             <main className="relative z-10 flex flex-col justify-center items-center min-h-screen px-6 text-center select-none">
                 <h1 className="text-5xl font-extrabold mb-6 leading-tight max-w-4xl">
-                    Welcome to{" "}
+                    {t("landing.bannerTitle")}{" "}
                     <span className="dark:text-indigo-400 text-indigo-700">
-                        CinemaApp
+                        {t("global.appName")}
                     </span>
                 </h1>
                 <p className="max-w-2xl text-lg mb-12 px-4 dark:text-gray-300">
-                    Discover trending movies with interactive animations that
-                    respond to your mouse movement. Experience cinema like never
-                    before.
+                    {t("landing.bannerDescription")}
                 </p>
 
                 <a
                     href="/movies"
                     className="mt-16 inline-block px-10 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-semibold shadow-lg transition-colors duration-300"
                 >
-                    Explore Movies
+                    {t("landing.bannerButton")}
                 </a>
             </main>
         </div>

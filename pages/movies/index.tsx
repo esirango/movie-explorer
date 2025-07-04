@@ -7,6 +7,7 @@ import Navbar from "../../components/layout/Navbar";
 import { Movie } from "../../types/movie";
 import NotFoundMovie from "../../components/movies/NotFoundMovie";
 import MovieCard from "../../components/movies/MovieCard";
+import { useLanguage } from "../../contexts/lang/LanguageContext";
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -14,6 +15,8 @@ const MoviesPage = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    const { t } = useLanguage();
 
     const loadMovies = async () => {
         setLoading(true);
@@ -39,14 +42,16 @@ const MoviesPage = () => {
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
             <Navbar />
             <main className="container mx-auto px-4 py-8 flex-grow">
-                <h2 className="text-3xl font-bold mb-6 text-center">Movies</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center">
+                    {t("movies.title")}
+                </h2>
 
                 <div className="flex justify-center">
                     <input
                         type="text"
                         value={query}
                         onChange={handleSearchChange}
-                        placeholder="Search movies..."
+                        placeholder={t("movies.inputSearchPlaceholder")}
                         className="w-full max-w-md px-4 py-2 mb-6 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-600"
                     />
                 </div>

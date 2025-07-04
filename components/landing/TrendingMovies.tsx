@@ -1,19 +1,21 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 import { Movie } from "../../lib/tmdb";
+import { useLanguage } from "../../contexts/lang/LanguageContext";
 
 interface HomeProps {
     sampleMovies: Movie[];
 }
 
 function TrendingMovies({ sampleMovies = [] }: HomeProps) {
+    const { t } = useLanguage();
     return (
         <section className="bg-gray-100 dark:bg-gray-800 py-16">
             <h2
                 className="text-3xl font-bold text-center mb-10
                        text-gray-900 dark:text-gray-100"
             >
-                Trending Movies
+                {t("trendingMoviesSection.title")}
             </h2>
             <div className="flex flex-wrap justify-center max-w-6xl mx-auto">
                 {sampleMovies.length > 0 ? (

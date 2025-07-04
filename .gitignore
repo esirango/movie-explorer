@@ -1,6 +1,5 @@
 # Node.js
 node_modules/
-.env*
 .next/
 out/
 
@@ -28,8 +27,4 @@ build/
 # Optional: if using vercel
 .vercel/
 
-# Optional: local development overrides
-# .env.local
-# .env.development.local
-# .env.test.local
-# .env.production.local
+

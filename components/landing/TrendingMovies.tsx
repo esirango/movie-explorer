@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCard from "./MovieCard";
-import { Movie } from "../../lib/tmdb";
-import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { useLanguage } from "../../lang/LanguageContext";
+import { Movie } from "../../types/movie";
 
 interface HomeProps {
     sampleMovies: Movie[];

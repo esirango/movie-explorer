@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import tmdb from "../../lib/axios";
+import tmdb from "./axios";
 
 export default async function handler(res: NextApiResponse) {
     try {

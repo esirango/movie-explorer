@@ -1,5 +1,5 @@
 import React from "react";
-import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { useLanguage } from "../../lang/LanguageContext";
 import { toPersianNumber } from "../../func/toPersianNumber";
 
 interface PaginationProps {

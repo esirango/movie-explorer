@@ -16,8 +16,8 @@ interface LanguageContextProps {
     t: (key: string) => string;
 }
 
-import en from "../../lang/en.json";
-import fa from "../../lang/fa.json";
+import en from "../lang/en.json";
+import fa from "../lang/fa.json";
 
 const translations = { en, fa };
 

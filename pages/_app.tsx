@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 import { ThemeProvider } from "../components/theme/ThemeProvider";
-import {
-    LanguageProvider,
-    useLanguage,
-} from "../contexts/lang/LanguageContext";
+
 import "../styles/globals.css";
 
 import NextNProgress from "nextjs-progressbar";
+import { LanguageProvider, useLanguage } from "../lang/LanguageContext";
 
 export default function App({ Component, pageProps }) {
     function DirectionSetter() {

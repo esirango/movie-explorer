@@ -1,4 +1,4 @@
-import tmdb from "../../lib/axios";
+import tmdb from "./axios";
 
 export const fetchMovieDetails = async (id: string) => {
     const { data } = await tmdb.get(`/movie/${id}`);

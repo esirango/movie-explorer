@@ -1,4 +1,4 @@
-import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { useLanguage } from "../../lang/LanguageContext";
 import InteractiveCinemaBackground from "../landing/InteractiveCinemaBackground";
 
 export default function Landing() {

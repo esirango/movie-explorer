@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { useLanguage } from "../../lang/LanguageContext";
 import LanguageDropdown from "./LanguageDropdown";
 
 const Navbar = () => {

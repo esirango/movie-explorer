@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../../components/layout/Footer";
 import Pagination from "../../components/movies/Pagination";
-import { fetchMovies } from "../../lib/api";
 import { LoadingSpinner } from "../../components/Loading";
 import Navbar from "../../components/layout/Navbar";
 import { Movie } from "../../types/movie";
 import NotFoundMovie from "../../components/movies/NotFoundMovie";
 import MovieCard from "../../components/movies/MovieCard";
-import { useLanguage } from "../../contexts/lang/LanguageContext";
+import { fetchMovies } from "../api/movies";
+import { useLanguage } from "../../lang/LanguageContext";
 
 const MoviesPage = () => {
     const [movies, setMovies] = useState<Movie[]>([]);

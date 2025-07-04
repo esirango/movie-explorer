@@ -1,24 +1,42 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import tmdb from "../../lib/axios";
+import { Movie, Pagination } from "../../types/movie";
+import tmdb from "./axios";
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    const { page = 1, query = "" } = req.query;
+export interface MoviesResponse extends Pagination {
+    results: Movie[];
+}
 
+export const fetchMovies = async (
+    page: number,
+    query?: string
+): Promise<MoviesResponse> => {
     try {
-        const url = query ? "/search/movie" : "/trending/movie/week";
-        const { data } = await tmdb.get(url, {
-            params: {
-                page,
-                query,
-                include_adult: false,
-            },
+        let url = "";
+        const params: Record<string, any> = {
+            page,
+            include_adult: false,
+        };
+
+        if (query?.trim()) {
+            url = "/search/movie";
+            params.query = query;
+        } else {
+            url = "/trending/movie/week";
+        }
+
+        const { data } = await tmdb.get(url, { params });
+        return data;
+    } catch (error: any) {
+        console.error("❌ Failed to fetch movies:", {
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
         });
 
-        res.status(200).json(data);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch movies" });
+        return {
+            results: [],
+            page: 1,
+            total_pages: 1,
+            total_results: 0,
+        };
     }
-}
+};

@@ -1,0 +1,35 @@
+# Node.js
+node_modules/
+.env*
+.next/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Tailwind JIT cache
+.tailwind/
+
+# Build outputs
+dist/
+build/
+
+# Optional: if using vercel
+.vercel/
+
+# Optional: local development overrides
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local

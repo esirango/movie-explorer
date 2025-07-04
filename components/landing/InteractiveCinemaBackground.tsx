@@ -13,16 +13,21 @@ type IconData = {
 export default function InteractiveCinemaScene() {
     const [mouseTarget, setMouseTarget] = useState({ x: 0.5, y: 0.5 });
     const mousePos = useRef({ x: 0.5, y: 0.5 });
-    const iconsRef = useRef<IconData[]>(
-        Array.from({ length: ICON_COUNT }).map(() => ({
-            baseX: Math.random(), // پراکندگی کامل در عرض
-            baseY: Math.random(), // پراکندگی کامل در ارتفاع
-            size: 30 + Math.random() * 30,
-            ref: null,
-        }))
-    );
 
-    // حرکت موس
+    // مقداردهی اولیه فقط یک بار در کلاینت
+    const iconsRef = useRef<IconData[]>([]);
+
+    useEffect(() => {
+        if (iconsRef.current.length === 0) {
+            iconsRef.current = Array.from({ length: ICON_COUNT }).map(() => ({
+                baseX: Math.random(),
+                baseY: Math.random(),
+                size: 30 + Math.random() * 30,
+                ref: null,
+            }));
+        }
+    }, []);
+
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             setMouseTarget({
@@ -34,7 +39,6 @@ export default function InteractiveCinemaScene() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    // انیمیشن شناور
     useEffect(() => {
         let frameId: number;
         const animate = () => {
@@ -80,6 +84,8 @@ export default function InteractiveCinemaScene() {
                         style={{
                             fontSize: `${icon.size}px`,
                             transform: "translate(-50%, -50%)",
+                            left: `${icon.baseX * 100}%`,
+                            top: `${icon.baseY * 100}%`,
                         }}
                     >
                         {symbol}

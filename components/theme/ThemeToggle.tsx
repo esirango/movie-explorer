@@ -1,9 +1,18 @@
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 export const ThemeToggle = () => {
     const { theme, toggle } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null; // ⛔ جلوگیری از hydration error
+
     const isDark = theme === "dark";
 
     return (
@@ -24,7 +33,7 @@ export const ThemeToggle = () => {
 
                 <motion.div
                     className="absolute top-1 left-1 w-6 h-6 rounded-full flex items-center justify-center
-          bg-white dark:bg-yellow-300 text-gray-800 dark:text-yellow-900 shadow-md"
+                    bg-white dark:bg-yellow-300 text-gray-800 dark:text-yellow-900 shadow-md"
                     animate={{ x: isDark ? 32 : 0 }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     whileHover={{ scale: 1.1 }}

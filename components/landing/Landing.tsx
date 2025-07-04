@@ -1,4 +1,9 @@
-import InteractiveCinemaBackground from "./InteractiveCinemaBackground";
+import dynamic from "next/dynamic";
+
+const InteractiveCinemaBackground = dynamic(
+    () => import("./InteractiveCinemaBackground"),
+    { ssr: false }
+);
 
 export default function Landing() {
     return (

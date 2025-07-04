@@ -21,7 +21,7 @@ function TrendingMovies({ sampleMovies = [] }: HomeProps) {
                         .slice(0, 5)
                         .map((movie, idx) => (
                             <MovieCard
-                                key={idx}
+                                key={movie.id}
                                 title={movie.title}
                                 poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             />

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../../contexts/lang/LanguageContext";
+import LanguageDropdown from "./LanguageDropdown";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,34 +19,31 @@ const Navbar = () => {
                     🎬 {t("global.appName")}
                 </Link>
 
-                <div className="hidden md:flex items-center space-x-4">
+                {/* دسکتاپ */}
+                <div className="hidden md:flex items-center space-x-6">
+                    <LanguageDropdown
+                        language={language}
+                        setLanguage={setLanguage}
+                        t={t}
+                        closeMenu={() => setIsOpen(false)}
+                    />
                     <Link
                         href="/movies"
-                        className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium"
+                        className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
                     >
                         {t("header.links")}
                     </Link>
 
-                    <select
-                        value={language}
-                        onChange={(e) =>
-                            setLanguage(e.target.value as "en" | "fa")
-                        }
-                        className="bg-transparent border border-indigo-600 rounded px-2 py-1 text-indigo-600 cursor-pointer"
-                    >
-                        <option value="en">EN</option>
-                        <option value="fa">FA</option>
-                    </select>
-
                     <ThemeToggle />
                 </div>
 
-                <div className="md:hidden flex items-center space-x-2">
+                {/* موبایل */}
+                <div className="md:hidden flex items-center space-x-3">
                     <ThemeToggle />
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="relative z-50 flex flex-col justify-center items-center w-8 h-8"
-                        aria-label="Toggle Menu"
+                        className="relative z-50 flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
+                        aria-label={isOpen ? "Close menu" : "Open menu"}
                     >
                         <motion.span
                             animate={
@@ -53,11 +51,11 @@ const Navbar = () => {
                                     ? { rotate: 45, y: 6 }
                                     : { rotate: 0, y: 0 }
                             }
-                            className="w-6 h-[2px] bg-indigo-500 mb-1 origin-center"
+                            className="w-6 h-[2px] bg-indigo-500 mb-1 origin-center rounded"
                         />
                         <motion.span
                             animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                            className="w-6 h-[2px] bg-indigo-500 mb-1"
+                            className="w-6 h-[2px] bg-indigo-500 mb-1 rounded"
                         />
                         <motion.span
                             animate={
@@ -65,12 +63,13 @@ const Navbar = () => {
                                     ? { rotate: -45, y: -6 }
                                     : { rotate: 0, y: 0 }
                             }
-                            className="w-6 h-[2px] bg-indigo-500"
+                            className="w-6 h-[2px] bg-indigo-500 rounded"
                         />
                     </button>
                 </div>
             </div>
 
+            {/* منوی موبایل با انیمیشن */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -78,12 +77,20 @@ const Navbar = () => {
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.15 }}
-                        className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl px-4 py-3 shadow-inner"
+                        className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl px-5 py-4 shadow-inner flex flex-col space-y-3"
                     >
+                        <div className="inline-flex items-center justify-center w-full h-12 rounded-md border border-indigo-600 bg-indigo-600 px-4 py-2 text-white font-semibold shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <LanguageDropdown
+                                language={language}
+                                setLanguage={setLanguage}
+                                t={t}
+                                closeMenu={() => setIsOpen(false)}
+                            />
+                        </div>
                         <Link
                             href="/movies"
                             onClick={() => setIsOpen(false)}
-                            className="block py-2 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            className="block text-center text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                         >
                             🎥 {t("header.links")}
                         </Link>

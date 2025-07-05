@@ -1,9 +1,6 @@
 import React from "react";
 import MovieSlider from "./MovieSlider";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImdb } from "@fortawesome/free-brands-svg-icons";
-
 function MovieDetails({ movie, related }) {
     return (
         <div className="container mx-auto px-4 py-8">
@@ -19,19 +16,25 @@ function MovieDetails({ movie, related }) {
                 <div className="flex-1 lg:space-y-12 md:space-y-12 space-y-4">
                     <p className="text-lg">{movie.overview}</p>
 
-                    <div className="flex gap-4 text-sm flex-wrap">
-                        <span>📅 Release: {movie.release_date}</span>
-                        <span>⏱ Runtime: {movie.runtime} mins</span>
-                        <span>
-                            <FontAwesomeIcon
-                                icon={faImdb}
-                                colorProfile="#ffd43b"
-                                color="#ffd43b"
-                            />{" "}
-                            {movie.vote_average} ⭐
+                    <div className="flex gap-4 text-sm flex-wrap items-center">
+                        <span className="flex gap-1">
+                            <span className="bg-[#f5c518] text-black border-black border-2 font-extrabold text-[13px] leading-none p-1 rounded-[4px] tracking-wider shadow-sm">
+                                IMDb
+                            </span>
+                            {movie.vote_average}{" "}
+                            <span className="icon-text">⭐</span>
                         </span>
-                        <span>🎯 Status: {movie.status}</span>
+                        <span className="icon-text">
+                            📅 Release: {movie.release_date}
+                        </span>
+                        <span className="icon-text">
+                            ⏱ Runtime: {movie.runtime} mins
+                        </span>
+                        <span className="icon-text">
+                            🎯 Status: {movie.status}
+                        </span>
                     </div>
+
                     <div className="flex gap-2 flex-wrap mt-2">
                         {movie.genres.map((genre) => (
                             <span

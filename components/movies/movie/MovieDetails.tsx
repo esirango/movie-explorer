@@ -1,6 +1,9 @@
 import React from "react";
 import MovieSlider from "./MovieSlider";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImdb } from "@fortawesome/free-brands-svg-icons";
+
 function MovieDetails({ movie, related }) {
     return (
         <div className="container mx-auto px-4 py-8">
@@ -19,10 +22,16 @@ function MovieDetails({ movie, related }) {
                     <div className="flex gap-4 text-sm flex-wrap">
                         <span>📅 Release: {movie.release_date}</span>
                         <span>⏱ Runtime: {movie.runtime} mins</span>
-                        <span>⭐ Rating: {movie.vote_average}</span>
+                        <span>
+                            <FontAwesomeIcon
+                                icon={faImdb}
+                                colorProfile="#ffd43b"
+                                color="#ffd43b"
+                            />{" "}
+                            {movie.vote_average} ⭐
+                        </span>
                         <span>🎯 Status: {movie.status}</span>
                     </div>
-
                     <div className="flex gap-2 flex-wrap mt-2">
                         {movie.genres.map((genre) => (
                             <span

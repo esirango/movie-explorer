@@ -7,9 +7,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.6.0",
     "cookies-js": "^1.2.3",
     "framer-motion": "^12.23.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.525.0",
     "next": "latest",
     "nextjs-progressbar": "^0.0.16",

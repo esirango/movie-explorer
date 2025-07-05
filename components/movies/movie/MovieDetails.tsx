@@ -20,7 +20,7 @@ function MovieDetails({ movie, related }) {
                     <p className="text-lg">{movie.overview}</p>
 
                     <div className="flex gap-4 text-sm flex-wrap items-center">
-                        <span className="flex gap-1">
+                        <span className="flex gap-1 items-center">
                             <span className="bg-[#f5c518] text-black border-black border-2 font-extrabold text-[13px] leading-none p-1 rounded-[4px] tracking-wider shadow-sm">
                                 IMDb
                             </span>

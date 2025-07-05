@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-    font-family: "Vazir";
+    font-family: "Roboto", "Vazir";
 }
 
 html {

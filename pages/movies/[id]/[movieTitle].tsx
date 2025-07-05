@@ -6,10 +6,12 @@ import { fetchMovieDetails, fetchSimilarMovies } from "../../api/movieDetail";
 import MovieSlider from "../../../components/movies/movie/MovieSlider";
 import Navbar from "../../../components/layout/Navbar";
 import Footer from "../../../components/layout/Footer";
+import NotFoundMovie from "../../../components/movies/NotFoundMovie";
 
 const MovieDetailPage = () => {
     const router = useRouter();
     const { id } = router.query;
+
     const [movie, setMovie] = useState<Movie | null>(null);
     const [related, setRelated] = useState<Movie[]>([]);
     const [loading, setLoading] = useState(true);
@@ -18,11 +20,25 @@ const MovieDetailPage = () => {
         if (id) {
             (async () => {
                 setLoading(true);
-                const movieData = await fetchMovieDetails(id as string);
-                const similar = await fetchSimilarMovies(id as string);
-                setMovie(movieData);
-                setRelated(similar.results);
-                setLoading(false);
+                try {
+                    const movieData = await fetchMovieDetails(id as string);
+                    const similar = await fetchSimilarMovies(id as string);
+
+                    if (!movieData) {
+                        // اگر داده فیلم نبود
+                        setMovie(null);
+                        setRelated([]);
+                    } else {
+                        setMovie(movieData);
+                        setRelated(similar?.results || []);
+                    }
+                } catch (err) {
+                    console.error("Failed to fetch movie data:", err);
+                    setMovie(null);
+                    setRelated([]);
+                } finally {
+                    setLoading(false);
+                }
             })();
         }
     }, [id]);
@@ -32,8 +48,14 @@ const MovieDetailPage = () => {
             className={`bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen`}
         >
             <Navbar />
-            {loading || !movie ? (
-                <LoadingSpinner />
+            {loading ? (
+                <div className="h-full my-40">
+                    <LoadingSpinner />
+                </div>
+            ) : !movie ? (
+                <div className="h-full my-32">
+                    <NotFoundMovie />
+                </div>
             ) : (
                 <>
                     {/* Banner */}

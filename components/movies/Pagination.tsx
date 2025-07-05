@@ -46,7 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({
             {pages.map((p) => (
                 <button
                     key={p}
-                    className={`px-3 py-1 rounded border ${
+                    className={`px-3 py-1  rounded   ${
                         p === currentPage
                             ? "bg-indigo-600 text-white"
                             : "bg-white dark:bg-gray-700"

@@ -3,10 +3,14 @@ import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import TrendingMovies from "../components/landing/TrendingMovies";
 import Landing from "../components/landing/Landing";
-import { useMovies } from "./api/hooks/useMovies";
+import { fetchMovies, MoviesResponse, useMovies } from "./api/hooks/useMovies";
 
-export default function Home() {
-    const { data, isLoading, isError } = useMovies(1);
+interface HomeProps {
+    initialData: MoviesResponse;
+}
+
+export default function Home({ initialData }: HomeProps) {
+    const { data } = useMovies(1, undefined, initialData);
 
     const sampleMovies = data?.results || [];
 
@@ -18,4 +22,14 @@ export default function Home() {
             <Footer />
         </div>
     );
+}
+
+export async function getServerSideProps() {
+    const initialData = await fetchMovies(1);
+
+    return {
+        props: {
+            initialData,
+        },
+    };
 }

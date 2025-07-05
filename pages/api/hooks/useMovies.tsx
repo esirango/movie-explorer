@@ -1,15 +1,34 @@
-import { Movie, Pagination } from "../../../types/movie";
-
 import useSWR from "swr";
 import { fetcher } from "../fetcher";
+import { Movie, Pagination } from "../../../types/movie";
 
 export interface MoviesResponse extends Pagination {
     results: Movie[];
 }
 
-export const useMovies = (page: number, query?: string) => {
-    const shouldFetch = !!page;
+export async function fetchMovies(
+    page: number,
+    query?: string
+): Promise<MoviesResponse> {
+    const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
 
+    const response = await fetcher<MoviesResponse>(endpoint, {
+        params: {
+            page,
+            include_adult: false,
+            ...(query ? { query } : {}),
+        },
+    });
+
+    return response;
+}
+
+export const useMovies = (
+    page: number,
+    query?: string,
+    initialData?: MoviesResponse
+) => {
+    const shouldFetch = !!page;
     const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
 
     const { data, error, isLoading } = useSWR<MoviesResponse>(
@@ -24,6 +43,7 @@ export const useMovies = (page: number, query?: string) => {
             }),
         {
             revalidateOnFocus: false,
+            fallbackData: initialData,
         }
     );
 

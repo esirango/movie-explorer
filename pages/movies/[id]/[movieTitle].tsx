@@ -17,36 +17,33 @@ const MovieDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (id) {
-            (async () => {
-                setLoading(true);
-                try {
-                    const movieData = await fetchMovieDetails(id as string);
-                    const similar = await fetchSimilarMovies(id as string);
+        if (!id) return;
 
-                    if (!movieData) {
-                        // اگر داده فیلم نبود
-                        setMovie(null);
-                        setRelated([]);
-                    } else {
-                        setMovie(movieData);
-                        setRelated(similar?.results || []);
-                    }
-                } catch (err) {
-                    console.error("Failed to fetch movie data:", err);
+        (async () => {
+            setLoading(true);
+            try {
+                const movieData = await fetchMovieDetails(id as string);
+                if (!movieData) {
+                    // فیلم پیدا نشد (مثلاً 404)
                     setMovie(null);
                     setRelated([]);
-                } finally {
-                    setLoading(false);
+                } else {
+                    setMovie(movieData);
+                    const similar = await fetchSimilarMovies(id as string);
+                    setRelated(similar?.results || []);
                 }
-            })();
-        }
+            } catch (err) {
+                console.error("Failed to fetch movie data:", err);
+                setMovie(null);
+                setRelated([]);
+            } finally {
+                setLoading(false);
+            }
+        })();
     }, [id]);
 
     return (
-        <div
-            className={`bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen`}
-        >
+        <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
             <Navbar />
             {loading ? (
                 <div className="h-full my-40">
@@ -60,7 +57,7 @@ const MovieDetailPage = () => {
                 <>
                     {/* Banner */}
                     <div
-                        className="w-full h-[60vh] bg-cover bg-center relative "
+                        className="w-full h-[60vh] bg-cover bg-center relative"
                         style={{
                             backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                         }}

@@ -17,17 +17,12 @@ interface Props {
 const MovieSlider: React.FC<Props> = ({ movies }) => {
     return (
         <Swiper
-            spaceBetween={15}
+            spaceBetween={5}
             slidesPerView={3}
             loop={true}
             navigation
             pagination={{ clickable: true }}
-            autoplay={{ delay: 3000 }}
-            breakpoints={{
-                640: { slidesPerView: 1 },
-                1024: { slidesPerView: 2 },
-                1280: { slidesPerView: 3 },
-            }}
+            autoplay={{ delay: 2000 }}
         >
             {movies.map((movie) => (
                 <SwiperSlide key={movie.id}>

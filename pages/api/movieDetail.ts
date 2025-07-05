@@ -5,10 +5,12 @@ export const fetchMovieDetails = async (id: string) => {
         const { data } = await tmdb.get(`/movie/${id}`);
         return data;
     } catch (error: any) {
+        // اگر 404 بود فیلم پیدا نشد
         if (error.response && error.response.status === 404) {
             return null;
         }
-        console.error("Error fetching movie details:", error);
+        // خطای شبکه یا هر خطای دیگه رو لاگ کن و null برگردون
+        console.error("Error fetching movie details:", error.message || error);
         return null;
     }
 };

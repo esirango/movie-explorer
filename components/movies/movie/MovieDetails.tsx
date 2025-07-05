@@ -1,7 +1,10 @@
 import React from "react";
 import MovieSlider from "./MovieSlider";
+import { useLanguage } from "../../../lang/LanguageContext";
 
 function MovieDetails({ movie, related }) {
+    const { t } = useLanguage();
+
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col md:flex-row gap-8">
@@ -25,13 +28,13 @@ function MovieDetails({ movie, related }) {
                             <span className="icon-text">⭐</span>
                         </span>
                         <span className="icon-text">
-                            📅 Release: {movie.release_date}
+                            📅 {t("movieDetail.release")}: {movie.release_date}
                         </span>
                         <span className="icon-text">
-                            ⏱ Runtime: {movie.runtime} mins
+                            ⏱ {t("movieDetail.runtime")}: {movie.runtime} mins
                         </span>
                         <span className="icon-text">
-                            🎯 Status: {movie.status}
+                            🎯 {t("movieDetail.status")}: {movie.status}
                         </span>
                     </div>
 

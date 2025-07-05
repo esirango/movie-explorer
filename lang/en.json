@@ -17,6 +17,11 @@
         "title": "Movies",
         "inputSearchPlaceholder": "Search movies..."
     },
+    "movieDetail": {
+        "release": "Release",
+        "runtime": "Runtime",
+        "status": "Status"
+    },
     "footer": {
         "firstText": "Made With",
         "secondText": "by esirango"

@@ -17,6 +17,11 @@
         "title": "فیلم‌ها",
         "inputSearchPlaceholder": "جستجوی فیلم..."
     },
+    "movieDetail": {
+        "release": "تاریخ انتشار",
+        "runtime": "مدت زمان",
+        "status": "وضعیت"
+    },
     "footer": {
         "firstText": "ساخته شده با",
         "secondText": "توسط esirango"

@@ -4,7 +4,7 @@ export const LoadingSpinner = () => {
     return (
         <div className="flex justify-center items-center py-20 ">
             <motion.div
-                className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full"
+                className="w-16 h-16 border-4 mx-4 border-indigo-600 border-t-transparent rounded-full"
                 animate={{ rotate: 360 }}
                 transition={{
                     repeat: Infinity,

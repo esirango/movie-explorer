@@ -15,7 +15,6 @@ const MoviesPage = () => {
     const { t } = useLanguage();
 
     const { data, isLoading, isError } = useMovies(page, query);
-    console.log(data);
     const movies = data?.results || [];
     const totalPages = data?.total_pages || 1;
 

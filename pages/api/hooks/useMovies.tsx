@@ -3,28 +3,10 @@ import { fetcher } from "../fetcher";
 import { Movie, Pagination } from "../../../types/movie";
 
 import Cookies from "js-cookie";
+import { useLang } from "../../../lang/hooks/useLang";
 
 export interface MoviesResponse extends Pagination {
     results: Movie[];
-}
-
-export async function fetchMovies(
-    page: number,
-    query?: string,
-    lang?: string
-): Promise<MoviesResponse> {
-    const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
-
-    const response = await fetcher<MoviesResponse>(endpoint, {
-        params: {
-            page,
-            include_adult: false,
-            ...(query ? { query } : {}),
-            language: lang,
-        },
-    });
-
-    return response;
 }
 
 export const useMovies = (
@@ -32,8 +14,7 @@ export const useMovies = (
     query?: string,
     initialData?: MoviesResponse
 ) => {
-    const lang = Cookies.get("lang") || "en";
-
+    const lang = useLang();
     const shouldFetch = !!page;
     const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
 

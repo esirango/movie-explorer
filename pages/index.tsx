@@ -1,18 +1,15 @@
 import React from "react";
-import { GetServerSideProps } from "next";
 import Footer from "../components/layout/Footer";
-
 import Navbar from "../components/layout/Navbar";
 import TrendingMovies from "../components/landing/TrendingMovies";
 import Landing from "../components/landing/Landing";
-import { fetchMovies } from "./api/movies";
-import { Movie } from "../types/movie";
+import { useMovies } from "./api/hooks/useMovies";
 
-interface HomeProps {
-    sampleMovies: Movie[];
-}
+export default function Home() {
+    const { data, isLoading, isError } = useMovies(1);
 
-export default function Home({ sampleMovies }: HomeProps) {
+    const sampleMovies = data?.results || [];
+
     return (
         <div className="relative min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 overflow-x-hidden">
             <Navbar />
@@ -22,21 +19,3 @@ export default function Home({ sampleMovies }: HomeProps) {
         </div>
     );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-    try {
-        const movies = await fetchMovies(1);
-        return {
-            props: {
-                sampleMovies: movies.results || [],
-            },
-        };
-    } catch (error) {
-        console.error("Failed to fetch movies:", error);
-        return {
-            props: {
-                sampleMovies: [],
-            },
-        };
-    }
-};

@@ -1,37 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Footer from "../../components/layout/Footer";
 import Pagination from "../../components/movies/Pagination";
 import { LoadingSpinner } from "../../components/Loading";
 import Navbar from "../../components/layout/Navbar";
-import { Movie } from "../../types/movie";
+import { useLanguage } from "../../lang/LanguageContext";
 import NotFoundMovie from "../../components/movies/NotFoundMovie";
 import MovieCard from "../../components/movies/MovieCard";
-import { fetchMovies } from "../api/movies";
-import { useLanguage } from "../../lang/LanguageContext";
+import { useMovies } from "../api/hooks/useMovies";
 
 const MoviesPage = () => {
-    const [movies, setMovies] = useState<Movie[]>([]);
     const [query, setQuery] = useState("");
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(false);
 
     const { t } = useLanguage();
 
-    const loadMovies = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchMovies(page, query);
-            setMovies(data.results);
-            setTotalPages(data.total_pages);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        loadMovies();
-    }, [page, query]);
+    const { data, isLoading, isError } = useMovies(page, query);
+    console.log(data);
+    const movies = data?.results || [];
+    const totalPages = data?.total_pages || 1;
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPage(1);
@@ -56,8 +42,12 @@ const MoviesPage = () => {
                     />
                 </div>
 
-                {loading ? (
+                {isLoading ? (
                     <LoadingSpinner />
+                ) : isError ? (
+                    <div className="text-center text-red-500">
+                        {t("movies.errorLoading")}
+                    </div>
                 ) : movies.length === 0 ? (
                     <NotFoundMovie />
                 ) : (

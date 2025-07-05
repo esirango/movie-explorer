@@ -2,6 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { useLanguage } from "../../lang/LanguageContext";
 import { Movie } from "../../types/movie";
+import NotFoundMovie from "../movies/NotFoundMovie";
 
 interface HomeProps {
     sampleMovies: Movie[];
@@ -30,9 +31,7 @@ function TrendingMovies({ sampleMovies = [] }: HomeProps) {
                             />
                         ))
                 ) : (
-                    <p className="text-gray-600 dark:text-gray-400">
-                        No movies found.
-                    </p>
+                    <NotFoundMovie />
                 )}
             </div>
         </section>

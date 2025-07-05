@@ -45,11 +45,7 @@ const MoviesPage = () => {
 
                 {isLoading ? (
                     <LoadingSpinner />
-                ) : isError ? (
-                    <div className="text-center text-red-500">
-                        {t("movies.errorLoading")}
-                    </div>
-                ) : movies.length === 0 ? (
+                ) : isError || movies.length === 0 ? (
                     <NotFoundMovie />
                 ) : (
                     <>

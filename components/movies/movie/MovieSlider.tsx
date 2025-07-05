@@ -1,8 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -17,20 +15,21 @@ interface Props {
 const MovieSlider: React.FC<Props> = ({ movies }) => {
     return (
         <Swiper
-            spaceBetween={5}
-            slidesPerView={3}
+            modules={[Navigation, Autoplay]}
+            spaceBetween={8}
+            slidesPerView="auto"
             loop={true}
             navigation
             pagination={{ clickable: true }}
-            autoplay={{ delay: 2000 }}
+            autoplay={{ delay: 3000 }}
         >
             {movies.map((movie) => (
-                <SwiperSlide key={movie.id}>
+                <SwiperSlide key={movie.id} className="!w-auto">
                     <Link
                         href={`/movies/${movie.id}/${encodeURIComponent(
                             movie.title
                         )}`}
-                        className="w-48 mx-2 bg-white dark:bg-gray-800 rounded-lg shadow hover:scale-105 transform transition-all duration-200 overflow-hidden block"
+                        className="w-48 bg-white dark:bg-gray-800 rounded-lg shadow hover:scale-105 transform transition-all duration-200 overflow-hidden block"
                     >
                         <img
                             src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

@@ -21,7 +21,7 @@ function TrendingMovies({ sampleMovies = [] }: HomeProps) {
             <div className="flex flex-wrap justify-center max-w-6xl mx-auto">
                 {sampleMovies.length > 0 ? (
                     sampleMovies
-                        .slice(0, 5)
+                        .slice(0, 6)
                         .map((movie, idx) => (
                             <MovieCard
                                 id={movie.id}

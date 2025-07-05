@@ -2,13 +2,16 @@ import useSWR from "swr";
 import { fetcher } from "../fetcher";
 import { Movie, Pagination } from "../../../types/movie";
 
+import Cookies from "js-cookie";
+
 export interface MoviesResponse extends Pagination {
     results: Movie[];
 }
 
 export async function fetchMovies(
     page: number,
-    query?: string
+    query?: string,
+    lang?: string
 ): Promise<MoviesResponse> {
     const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
 
@@ -17,6 +20,7 @@ export async function fetchMovies(
             page,
             include_adult: false,
             ...(query ? { query } : {}),
+            language: lang,
         },
     });
 
@@ -28,17 +32,20 @@ export const useMovies = (
     query?: string,
     initialData?: MoviesResponse
 ) => {
+    const lang = Cookies.get("lang") || "en";
+
     const shouldFetch = !!page;
     const endpoint = query?.trim() ? "/search/movie" : "/trending/movie/week";
 
     const { data, error, isLoading } = useSWR<MoviesResponse>(
-        shouldFetch ? [endpoint, page, query] : null,
-        ([url, page, query]) =>
+        shouldFetch ? [endpoint, page, query, lang] : null,
+        ([url, page, query, lang]) =>
             fetcher<MoviesResponse>(url, {
                 params: {
                     page,
                     include_adult: false,
                     ...(query ? { query } : {}),
+                    language: lang,
                 },
             }),
         {

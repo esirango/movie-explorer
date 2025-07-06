@@ -22,12 +22,12 @@ interface MovieFilterProps {
 }
 
 const inputClass =
-    "appearance-none px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 text-sm";
+    "w-60 appearance-none px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 text-sm";
 
-const dropdownClass = "relative w-40 text-sm z-10";
+const dropdownClass = "relative w-60 text-sm z-100";
 
 const listboxButtonClass =
-    "w-full py-2 pl-4 pr-10  rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
+    "w-60 py-2 pl-4 pr-10  rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
 
 const listboxOptionClass = ({ active, selected }: any) =>
     clsx(
@@ -161,7 +161,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     );
 
     return (
-        <div className="flex flex-wrap my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
+        <div className="flex flex-col  sm:flex-row flex-wrap my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
             {/* جستجو */}
             <div className="relative">
                 <input
@@ -185,7 +185,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
             {/* دکمه جستجو */}
             <button
                 onClick={() => onSubmit(filters)}
-                className="flex cursor-pointer items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="flex lg:w-auto w-60 cursor-pointer items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
                 <Search className="w-5 h-5" />
                 {t("movies.filters.search")}

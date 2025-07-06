@@ -2,6 +2,7 @@ import React from "react";
 import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
 import IMDbVoteAverage from "../IMDbVoteAverage";
+import Link from "next/link";
 
 function MovieDetails({ movie, related }) {
     const { t } = useLanguage();
@@ -36,12 +37,13 @@ function MovieDetails({ movie, related }) {
                     <div className="flex gap-2 flex-wrap mt-2">
                         {movie.genres.map(
                             (genre: { id: React.Key; name: string }) => (
-                                <span
+                                <Link
                                     key={genre.id}
-                                    className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs"
+                                    href={`/movies?genre=${genre.id}&genreName=${genre.name}`}
+                                    className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs hover:bg-indigo-200 dark:hover:bg-indigo-700 transition"
                                 >
                                     {genre.name}
-                                </span>
+                                </Link>
                             )
                         )}
                     </div>

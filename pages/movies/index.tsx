@@ -28,9 +28,6 @@ const MoviesPage = () => {
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
             <Navbar />
             <main className="container mx-auto px-4 py-8 flex-grow">
-                {/* <h2 className="text-3xl font-bold mb-6 text-center">
-                    {t("movies.title")}
-                </h2> */}
                 <LandingMovieSlider movies={movies} />
 
                 <div className="flex justify-center">

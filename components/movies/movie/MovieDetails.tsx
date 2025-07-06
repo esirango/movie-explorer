@@ -1,6 +1,7 @@
 import React from "react";
 import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
+import IMDbLogo from "../IMDbLogo";
 
 function MovieDetails({ movie, related }) {
     const { t } = useLanguage();
@@ -21,10 +22,8 @@ function MovieDetails({ movie, related }) {
 
                     <div className="flex gap-4 text-sm flex-wrap items-center">
                         <span className="flex gap-1 items-center">
-                            <span className="bg-[#f5c518] text-black border-black border-2 font-extrabold text-[13px] leading-none p-1 rounded-[4px] tracking-wider shadow-sm">
-                                IMDb
-                            </span>
-                            {movie.vote_average}{" "}
+                            <IMDbLogo />
+                            {movie.vote_average.toFixed(1)}{" "}
                             <span className="icon-text">⭐</span>
                         </span>
                         <span className="icon-text">

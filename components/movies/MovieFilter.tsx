@@ -27,7 +27,7 @@ const inputClass =
 const dropdownClass = "relative w-40 text-sm z-10";
 
 const listboxButtonClass =
-    "w-full py-2 pl-4 pr-10 text-left rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
+    "w-full py-2 pl-4 pr-10  rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
 
 const listboxOptionClass = ({ active, selected }: any) =>
     clsx(
@@ -185,7 +185,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
             {/* دکمه جستجو */}
             <button
                 onClick={() => onSubmit(filters)}
-                className="flex items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="flex cursor-pointer items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
                 <Search className="w-5 h-5" />
                 {t("movies.filters.search")}

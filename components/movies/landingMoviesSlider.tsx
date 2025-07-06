@@ -23,9 +23,10 @@ const LandingMovieSlider: React.FC<Props> = ({ movies }) => {
             navigation
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
+            className="mb-10"
         >
             {movies.slice(15, 21).map((movie) => (
-                <SwiperSlide key={movie.id} className="w-full">
+                <SwiperSlide key={movie.id} className="w-full ">
                     <Link
                         href={`/movies/${movie.id}/${encodeURIComponent(
                             movie.title

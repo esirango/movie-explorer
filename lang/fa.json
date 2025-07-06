@@ -14,8 +14,33 @@
         "title": "فیلم‌های محبوب"
     },
     "movies": {
-        "title": "فیلم‌ها",
-        "inputSearchPlaceholder": "جستجوی فیلم..."
+        "filters": {
+            "inputSearchPlaceholder": "جستجوی فیلم...",
+            "genre": "ژانر",
+            "genres": {
+                "28": "اکشن",
+                "35": "کمدی",
+                "18": "درام",
+                "27": "ترسناک"
+            },
+            "country": "کشور",
+            "countries": {
+                "US": "آمریکا",
+                "FR": "فرانسه",
+                "JP": "ژاپن",
+                "IR": "ایران"
+            },
+            "sort": "مرتب‌سازی",
+            "sortOptions": {
+                "popularity": "محبوب‌ترین",
+                "release_date": "جدیدترین",
+                "vote_average": "امتیاز بالا"
+            },
+            "year": {
+                "selectYear": "سال ساخت"
+            },
+            "search": "جستجو"
+        }
     },
     "movieDetail": {
         "release": "تاریخ انتشار",

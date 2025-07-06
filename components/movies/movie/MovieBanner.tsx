@@ -9,7 +9,7 @@ function MovieBanner({ movie }) {
             }}
         >
             <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-                <h1 className="text-4xl md:text-6xl font-bold text-white text-center px-4">
+                <h1 className="text-3xl md:text-5xl font-bold text-white text-center px-4">
                     {movie.title}
                 </h1>
             </div>

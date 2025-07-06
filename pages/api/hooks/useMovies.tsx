@@ -12,28 +12,38 @@ export const useMovies = (
     page: number,
     genre?: number,
     query?: string,
+    country?: string,
+    sortBy?: string,
+    year?: string,
     initialData?: MoviesResponse
 ) => {
     const lang = useLang();
     const shouldFetch = !!page;
+
     const endpoint = query?.trim()
         ? "/search/movie"
-        : genre
+        : genre || country || sortBy || year
         ? "/discover/movie"
         : "/trending/movie/week";
 
+    const params: Record<string, any> = {
+        page,
+        include_adult: false,
+        language: lang,
+    };
+
+    if (query) params.query = query;
+    if (genre) params.with_genres = genre;
+    if (country) params.with_original_language = country.toLowerCase();
+    if (sortBy) params.sort_by = sortBy;
+    if (year) {
+        params["primary_release_date.gte"] = `${year}-01-01`;
+        params["primary_release_date.lte"] = `${year}-12-31`;
+    }
+
     const { data, error, isLoading } = useSWR<MoviesResponse>(
-        shouldFetch ? [endpoint, page, query, genre, lang] : null,
-        ([url, page, query, genre, lang]) =>
-            fetcher<MoviesResponse>(url, {
-                params: {
-                    page,
-                    include_adult: false,
-                    language: lang,
-                    ...(query ? { query } : {}),
-                    ...(genre ? { with_genres: genre } : {}),
-                },
-            }),
+        shouldFetch ? [endpoint, params] : null,
+        ([url, params]) => fetcher<MoviesResponse>(url, { params }),
         {
             revalidateOnFocus: false,
             fallbackData: initialData,

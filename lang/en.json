@@ -14,8 +14,33 @@
         "title": "Trending Movies"
     },
     "movies": {
-        "title": "Movies",
-        "inputSearchPlaceholder": "Search movies..."
+        "filters": {
+            "inputSearchPlaceholder": "Search movies...",
+            "genre": "Genre",
+            "genres": {
+                "28": "Action",
+                "35": "Comedy",
+                "18": "Drama",
+                "27": "Horror"
+            },
+            "country": "Country",
+            "countries": {
+                "US": "USA",
+                "FR": "France",
+                "JP": "Japan",
+                "IR": "Iran"
+            },
+            "sort": "Sort By",
+            "sortOptions": {
+                "popularity": "Most Popular",
+                "release_date": "Newest",
+                "vote_average": "Highest Rating"
+            },
+            "year": {
+                "selectYear": "Select Year"
+            },
+            "search": "Search"
+        }
     },
     "movieDetail": {
         "release": "Release",

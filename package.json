@@ -3,9 +3,10 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "next dev",
-        "build": "next build && next export",
+        "build": "next build",
+        "start": "next start",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d out"
+        "deploy": "gh-pages -d build"
     },
     "homepage": "https://esirango.github.io/movie-explorer",
     "dependencies": {

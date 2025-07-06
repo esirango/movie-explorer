@@ -34,14 +34,16 @@ function MovieDetails({ movie, related }) {
                     </div>
 
                     <div className="flex gap-2 flex-wrap mt-2">
-                        {movie.genres.map((genre) => (
-                            <span
-                                key={genre.id}
-                                className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs"
-                            >
-                                {genre.name}
-                            </span>
-                        ))}
+                        {movie.genres.map(
+                            (genre: { id: React.Key; name: string }) => (
+                                <span
+                                    key={genre.id}
+                                    className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs"
+                                >
+                                    {genre.name}
+                                </span>
+                            )
+                        )}
                     </div>
                 </div>
             </div>

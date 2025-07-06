@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../lang/LanguageContext";
-import { Search } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
+import { Listbox } from "@headlessui/react";
+import clsx from "clsx";
 
 interface MovieFilterProps {
     defaultValues: {
@@ -20,16 +22,28 @@ interface MovieFilterProps {
 }
 
 const inputClass =
-    "px-4 py-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-600";
+    "appearance-none px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 text-sm";
+
+const dropdownClass = "relative w-40 text-sm z-10";
+
+const listboxButtonClass =
+    "w-full py-2 pl-4 pr-10 text-left rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
+
+const listboxOptionClass = ({ active, selected }: any) =>
+    clsx(
+        "cursor-pointer select-none px-4 py-2",
+        active &&
+            "bg-indigo-100 dark:bg-indigo-700 text-indigo-900 dark:text-white",
+        selected && "font-semibold"
+    );
 
 const MovieFilter: React.FC<MovieFilterProps> = ({
     defaultValues,
     onSubmit,
 }) => {
     const { t } = useLanguage();
-
     const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: currentYear - 1899 }, (_, i) =>
+    const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
         (currentYear - i).toString()
     );
 
@@ -80,14 +94,75 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         },
     ];
 
+    const years = [
+        {
+            value: "",
+            label: t("movies.filters.year.selectYear"),
+            disabled: true,
+        },
+        ...yearsList.map((y) => ({ value: y, label: y })),
+    ];
+
     const [filters, setFilters] = useState(defaultValues);
 
     useEffect(() => {
         setFilters(defaultValues);
     }, [defaultValues]);
 
+    const renderListbox = (
+        value: string,
+        options: {
+            id?: string;
+            code?: string;
+            value?: string;
+            name?: string;
+            label?: string;
+            disabled?: boolean;
+        }[],
+        key: keyof typeof filters
+    ) => (
+        <div className={dropdownClass}>
+            <Listbox
+                value={value}
+                onChange={(val) => setFilters({ ...filters, [key]: val })}
+            >
+                <div className="relative">
+                    <Listbox.Button className={listboxButtonClass}>
+                        {options.find(
+                            (opt) =>
+                                opt.id === value ||
+                                opt.code === value ||
+                                opt.value === value
+                        )?.name ||
+                            options.find(
+                                (opt) =>
+                                    opt.id === value ||
+                                    opt.code === value ||
+                                    opt.value === value
+                            )?.label ||
+                            "-"}
+                        <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 pointer-events-none" />
+                    </Listbox.Button>
+                    <Listbox.Options className="absolute mt-1 w-full max-h-60 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow-md z-20">
+                        {options.map((opt) => (
+                            <Listbox.Option
+                                key={opt.id || opt.code || opt.value}
+                                value={opt.id || opt.code || opt.value}
+                                disabled={opt.disabled}
+                                className={listboxOptionClass}
+                            >
+                                {opt.name || opt.label}
+                            </Listbox.Option>
+                        ))}
+                    </Listbox.Options>
+                </div>
+            </Listbox>
+        </div>
+    );
+
     return (
-        <div className="flex flex-wrap justify-center gap-4 mb-6 items-center">
+        <div className="flex flex-wrap my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
+            {/* جستجو */}
             <div className="relative">
                 <input
                     type="text"
@@ -96,73 +171,21 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                     onChange={(e) =>
                         setFilters({ ...filters, query: e.target.value })
                     }
-                    className={`${inputClass} pl-10`}
+                    className={`${inputClass} pl-10 w-40`}
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
             </div>
 
-            <select
-                value={filters.genre}
-                onChange={(e) =>
-                    setFilters({ ...filters, genre: e.target.value })
-                }
-                className={inputClass}
-            >
-                {genres.map((g) => (
-                    <option key={g.id} value={g.id} disabled={g.disabled}>
-                        {g.name}
-                    </option>
-                ))}
-            </select>
+            {/* فیلترها */}
+            {renderListbox(filters.genre, genres, "genre")}
+            {renderListbox(filters.country, countries, "country")}
+            {renderListbox(filters.sortBy, sortOptions, "sortBy")}
+            {renderListbox(filters.year, years, "year")}
 
-            <select
-                value={filters.country}
-                onChange={(e) =>
-                    setFilters({ ...filters, country: e.target.value })
-                }
-                className={inputClass}
-            >
-                {countries.map((c) => (
-                    <option key={c.code} value={c.code} disabled={c.disabled}>
-                        {c.name}
-                    </option>
-                ))}
-            </select>
-
-            <select
-                value={filters.sortBy}
-                onChange={(e) =>
-                    setFilters({ ...filters, sortBy: e.target.value })
-                }
-                className={inputClass}
-            >
-                {sortOptions.map((s) => (
-                    <option key={s.value} value={s.value} disabled={s.disabled}>
-                        {s.label}
-                    </option>
-                ))}
-            </select>
-
-            <select
-                value={filters.year}
-                onChange={(e) =>
-                    setFilters({ ...filters, year: e.target.value })
-                }
-                className={inputClass}
-            >
-                <option value="" disabled>
-                    {t("movies.filters.year.selectYear")}
-                </option>
-                {years.map((year) => (
-                    <option key={year} value={year}>
-                        {year}
-                    </option>
-                ))}
-            </select>
-
+            {/* دکمه جستجو */}
             <button
                 onClick={() => onSubmit(filters)}
-                className="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                className="flex items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
                 <Search className="w-5 h-5" />
                 {t("movies.filters.search")}

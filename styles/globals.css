@@ -24,3 +24,10 @@ html[theme="dark"] body {
 #nprogress .spinner {
     display: none !important;
 }
+
+select,
+input,
+button {
+    all: unset;
+    box-sizing: border-box;
+}

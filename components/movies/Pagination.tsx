@@ -35,29 +35,43 @@ const Pagination: React.FC<PaginationProps> = ({
     };
 
     return (
-        <div className="flex justify-center items-center space-x-2 mt-6">
+        <div className="flex justify-center items-center mt-6 gap-2">
             <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className={`px-3 py-1 rounded border text-sm transition-colors duration-200 ${
+                    currentPage === 1
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-indigo-100 dark:hover:bg-indigo-600"
+                }`}
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
             >
                 Prev
             </button>
-            {pages.map((p) => (
-                <button
-                    key={p}
-                    className={`px-3 py-1  rounded   ${
-                        p === currentPage
-                            ? "bg-indigo-600 text-white"
-                            : "bg-white dark:bg-gray-700"
-                    }`}
-                    onClick={() => handlePageChange(p)}
-                >
-                    {language === "fa" ? toPersianNumber(p) : p}
-                </button>
-            ))}
+
+            {pages.map((p) => {
+                const isActive = p === currentPage;
+                return (
+                    <button
+                        key={p}
+                        className={`px-3 py-1 rounded text-sm transition-colors duration-200
+                ${
+                    isActive
+                        ? "bg-indigo-600 text-white"
+                        : "bg-white text-gray-700 dark:bg-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-600 hover:text-black dark:hover:text-white"
+                }`}
+                        onClick={() => handlePageChange(p)}
+                    >
+                        {language === "fa" ? toPersianNumber(p) : p}
+                    </button>
+                );
+            })}
+
             <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className={`px-3 py-1 rounded border text-sm transition-colors duration-200 ${
+                    currentPage === totalPages
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-indigo-100 dark:hover:bg-indigo-600"
+                }`}
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
             >

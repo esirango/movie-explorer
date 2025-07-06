@@ -1,49 +1,61 @@
-# Movie Explorer
+# 🎬 Movie Explorer
 
-A movie listing application using the real [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api).  
-Features include:
+A sleek and dynamic movie discovery web application built with **Next.js**, designed for seamless exploration of trending movies across different languages and regions.
 
--   **Lazy Loading** for smooth and efficient infinite scrolling
--   **Dark Mode** with easy toggle
--   Data fetching with **Axios**
+## 🌟 Features
 
----
+-   **🌍 Multilingual Support**
 
-## Getting Started
+    -   Fully supports English and Persian (`fa`) with RTL layout for Persian.
+    -   All content and labels adapt based on selected language.
 
-### Prerequisites
+-   **🎨 Dark & Light Mode**
 
--   Node.js v14 or later
--   A TMDb API key from [TMDb API](https://www.themoviedb.org/settings/api)
+    -   Users can toggle between light and dark themes for a personalized experience.
 
-### Installation
+-   **🚀 Lazy Loading**
 
-1. Clone the repository:
+    -   Images and movie data are loaded lazily to improve performance and reduce initial load time.
 
-````bash
-git clone https://github.com/yourusername/movie-explorer.git
-cd movie-explorer
-# Movie Explorer
+-   **🎯 Advanced Movie Filtering**
 
-A movie listing application using the real [The Movie Database (TMDb) API](https://www.themoviedb.org/documentation/api).
-Features include:
-- **Lazy Loading** for smooth and efficient infinite scrolling
-- **Dark Mode** with easy toggle
-- Data fetching with **Axios**
+    -   Filter movies by genre, release status, vote average, and more.
+    -   Filters update results in real-time and adapt to selected language.
 
----
+-   **✨ Interactive Animations**
 
-## Getting Started
+    -   Smooth hover effects, animated transitions, and responsive UI interactions using **Framer Motion** and **TailwindCSS**.
 
-### Prerequisites
+-   **⭐ IMDB Integration**
 
-- Node.js v14 or later
-- A TMDb API key from [TMDb API](https://www.themoviedb.org/settings/api)
+    -   Displays IMDB ratings with official brand styling and icon.
 
-### Installation
+-   **📱 Fully Responsive Design**
 
-1. Clone the repository:
+    -   Optimized for mobile, tablet, and desktop views with utility-first styling.
+
+-   **🎞️ Flickity-powered Movie Slider**
+
+    -   Responsive and autoplay-enabled sliders for trending and related movies.
+
+-   **🔁 Dynamic Routing & Pagination**
+    -   Clean, user-friendly navigation with page-based browsing.
+
+## 🛠️ Tech Stack
+
+-   **Framework**: Next.js
+-   **Styling**: TailwindCSS
+-   **Animations**: Framer Motion, Flickity
+-   **Data Fetching**: SWR, Cookies
+-   **Icons**: Font Awesome (including IMDB brand)
+-   **Localization**: next/router + internal translation logic
+-   **API**: The Movie Database (TMDB)
+
+## 🚀 Getting Started
+
 ```bash
-git clone https://github.com/yourusername/movie-explorer.git
+git clone https://github.com/yourusername/movie-explorer
 cd movie-explorer
-````
+npm install
+npm run dev
+```

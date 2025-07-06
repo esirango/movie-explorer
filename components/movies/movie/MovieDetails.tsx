@@ -1,7 +1,7 @@
 import React from "react";
 import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
-import IMDbLogo from "../IMDbLogo";
+import IMDbVoteAverage from "../IMDbVoteAverage";
 
 function MovieDetails({ movie, related }) {
     const { t } = useLanguage();
@@ -21,11 +21,7 @@ function MovieDetails({ movie, related }) {
                     <p className="text-lg">{movie.overview}</p>
 
                     <div className="flex gap-4 text-sm flex-wrap items-center">
-                        <span className="flex gap-1 items-center">
-                            <IMDbLogo />
-                            {movie.vote_average.toFixed(1)}{" "}
-                            <span className="icon-text">⭐</span>
-                        </span>
+                        <IMDbVoteAverage voteAverage={movie.vote_average} />
                         <span className="icon-text">
                             📅 {t("movieDetail.release")}: {movie.release_date}
                         </span>

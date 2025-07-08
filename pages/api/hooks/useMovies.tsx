@@ -34,7 +34,24 @@ export const useMovies = (
 
     if (query) params.query = query;
     if (genre) params.with_genres = genre;
-    if (country) params.with_original_language = country.toLowerCase();
+
+    // استفاده از مپ برای تبدیل country به زبان یا کشور
+    const countryToLanguageMap: Record<string, string> = {
+        FR: "fr",
+        US: "en",
+        JP: "ja",
+        IR: "fa",
+    };
+
+    if (country) {
+        const langCode = countryToLanguageMap[country.toUpperCase()];
+        if (langCode) {
+            params.with_original_language = langCode;
+        } else {
+            params.with_origin_country = country.toUpperCase();
+        }
+    }
+
     if (sortBy) params.sort_by = sortBy;
     if (year) {
         params["primary_release_date.gte"] = `${year}-01-01`;

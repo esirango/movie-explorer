@@ -7,6 +7,7 @@ import Link from "next/link";
 function MovieDetails({ movie, related }) {
     const { t } = useLanguage();
 
+    console.log(movie);
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col md:flex-row gap-8">
@@ -32,6 +33,29 @@ function MovieDetails({ movie, related }) {
                         <span className="icon-text">
                             🎯 {t("movieDetail.status")}: {movie.status}
                         </span>
+
+                        {/* Country */}
+                        {movie.production_countries?.length > 0 && (
+                            <div className="flex items-center flex-wrap gap-2">
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                                    {movie.production_countries.map((c) => (
+                                        <div
+                                            key={c.iso_3166_1}
+                                            className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md"
+                                        >
+                                            <img
+                                                src={`https://flagcdn.com/w40/${c.iso_3166_1.toLowerCase()}.png`}
+                                                alt={c.name}
+                                                className="w-6 h-4 rounded-sm object-cover"
+                                            />
+                                            <span className="text-sm">
+                                                {c.name}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex gap-2 flex-wrap mt-2">

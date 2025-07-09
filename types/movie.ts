@@ -9,6 +9,7 @@ export interface Movie {
     runtime: string;
     status: string;
     backdrop_path: string;
+    original_language: string;
 }
 
 export interface Pagination {

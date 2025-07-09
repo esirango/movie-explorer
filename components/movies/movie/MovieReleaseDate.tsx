@@ -1,5 +1,6 @@
 import React from "react";
 import { useLanguage } from "../../../lang/LanguageContext";
+import { toPersianNumber } from "../../../func/toPersianNumber";
 
 function MovieReleaseDate({
     releaseDate,
@@ -8,7 +9,7 @@ function MovieReleaseDate({
     releaseDate: string;
     type: string;
 }) {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
 
     const year = releaseDate?.slice(0, 4);
     const month = releaseDate?.slice(5, 7);
@@ -18,7 +19,7 @@ function MovieReleaseDate({
     return (
         <span className="icon-text">
             📅 {type === "detail" ? `${t("movieDetail.release")}: ` : ""}{" "}
-            {monthName} {year}
+            {monthName} {language === "fa" ? toPersianNumber(year) : year}
         </span>
     );
 }

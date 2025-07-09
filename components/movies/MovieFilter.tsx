@@ -169,47 +169,51 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     );
 
     return (
-        <div className="flex flex-col  sm:flex-row flex-wrap my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-            {/* جستجو */}
-            <div className="relative">
-                <input
-                    type="text"
-                    placeholder={t("movies.filters.inputSearchPlaceholder")}
-                    value={filters.query}
-                    onChange={(e) =>
-                        setFilters({ ...filters, query: e.target.value })
-                    }
-                    className={`${inputClass} pl-10 w-40`}
-                />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
+        <div className="flex flex-col my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
+            {/* بخش فیلترها و دکمه ریست */}
+            <div className="flex flex-col md:flex-row md:flex-wrap gap-4 justify-center items-center w-full">
+                {/* جستجو */}
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder={t("movies.filters.inputSearchPlaceholder")}
+                        value={filters.query}
+                        onChange={(e) =>
+                            setFilters({ ...filters, query: e.target.value })
+                        }
+                        className={`${inputClass} pl-10 w-40`}
+                    />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
+                </div>
+
+                {/* فیلترها */}
+                {renderListbox(filters.genre, genres, "genre")}
+                {renderListbox(filters.country, countries, "country")}
+                {renderListbox(filters.sortBy, sortOptions, "sortBy")}
+                {renderListbox(filters.year, years, "year")}
+
+                {/* دکمه ریست */}
+                <button
+                    onClick={() => {
+                        setFilters(emptyValues);
+                        onSubmit(emptyValues);
+                    }}
+                    className="md:mt-0 w-60 md:w-auto flex items-center justify-center px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 group"
+                >
+                    <RotateCw className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
+                </button>
             </div>
 
-            {/* فیلترها */}
-            {renderListbox(filters.genre, genres, "genre")}
-            {renderListbox(filters.country, countries, "country")}
-            {renderListbox(filters.sortBy, sortOptions, "sortBy")}
-            {renderListbox(filters.year, years, "year")}
-
-            {/* دکمه ریست */}
-            <button
-                onClick={() => {
-                    setFilters(emptyValues);
-                    onSubmit(emptyValues);
-                }}
-                className="flex items-center justify-center px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 group"
-                title={t("movies.filters.reset")} // برای دسترسی‌پذیری (tooltip)
-            >
-                <RotateCw className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
-            </button>
-
             {/* دکمه جستجو */}
-            <button
-                onClick={() => onSubmit(filters)}
-                className="flex lg:w-auto w-60 cursor-pointer items-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-                <Search className="w-5 h-5" />
-                {t("movies.filters.search")}
-            </button>
+            <div className="w-60 flex  justify-end md:justify-center">
+                <button
+                    onClick={() => onSubmit(filters)}
+                    className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                    <Search className="w-5 h-5" />
+                    {t("movies.filters.search")}
+                </button>
+            </div>
         </div>
     );
 };

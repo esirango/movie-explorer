@@ -39,9 +39,10 @@ function MovieDetails({ movie, related }) {
                             <div className="flex items-center flex-wrap gap-2">
                                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                                     {movie.production_countries.map((c) => (
-                                        <div
+                                        <Link
                                             key={c.iso_3166_1}
-                                            className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md"
+                                            href={`/movies?country=${c.iso_3166_1}`}
+                                            className="inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                                         >
                                             <img
                                                 src={`https://flagcdn.com/w40/${c.iso_3166_1.toLowerCase()}.png`}
@@ -51,7 +52,7 @@ function MovieDetails({ movie, related }) {
                                             <span className="text-sm">
                                                 {c.name}
                                             </span>
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
                             </div>

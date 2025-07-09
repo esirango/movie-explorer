@@ -12,19 +12,22 @@ import MovieFilter from "../../components/movies/MovieFilter";
 
 const MoviesPage = () => {
     const router = useRouter();
+    const { query } = router;
 
     const [page, setPage] = useState(1);
 
     const genreID = +router.query.genre as number | undefined;
     const genreName = router.query.genreName as string | undefined;
 
-    const [filters, setFilters] = useState({
-        query: "",
-        genre: "",
-        country: "",
-        sortBy: "",
-        year: "",
-    });
+    const initialFilters = {
+        query: (query.query as string) || "",
+        genre: (query.genre as string) || "",
+        country: (query.country as string) || "",
+        sortBy: (query.sortBy as string) || "",
+        year: (query.year as string) || "",
+    };
+
+    const [filters, setFilters] = useState(initialFilters);
 
     const { data, isLoading, isError } = useMovies(
         page,
@@ -42,28 +45,21 @@ const MoviesPage = () => {
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
             <Navbar />
             <main className="container mx-auto px-4 py-8 flex-grow">
-                {genreID ? (
-                    <h1 className="text-2xl text-center mb-4 text-indigo-600 dark:text-indigo-300 font-bold">
-                        {genreName}
-                    </h1>
-                ) : (
-                    <LandingMovieSlider movies={movies} />
-                )}
-
-                <MovieFilter
-                    defaultValues={filters}
-                    onSubmit={(newFilters) => {
-                        setFilters(newFilters);
-                        setPage(1);
-                    }}
-                />
-
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : isError || movies.length === 0 ? (
                     <NotFoundMovie />
                 ) : (
                     <>
+                        <LandingMovieSlider movies={movies} />
+
+                        <MovieFilter
+                            defaultValues={filters}
+                            onSubmit={(newFilters) => {
+                                setFilters(newFilters);
+                                setPage(1);
+                            }}
+                        />
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             {movies.map((movie) => (
                                 <MovieCard key={movie.id} movie={movie} />

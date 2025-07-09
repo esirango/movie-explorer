@@ -16,9 +16,6 @@ const MoviesPage = () => {
 
     const [page, setPage] = useState(1);
 
-    const genreID = +router.query.genre as number | undefined;
-    const genreName = router.query.genreName as string | undefined;
-
     const initialFilters = {
         query: (query.query as string) || "",
         genre: (query.genre as string) || "",
@@ -45,21 +42,23 @@ const MoviesPage = () => {
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
             <Navbar />
             <main className="container mx-auto px-4 py-8 flex-grow">
+                <LandingMovieSlider movies={movies} />
+
+                <MovieFilter
+                    defaultValues={filters}
+                    isLoading={isLoading}
+                    onSubmit={(newFilters) => {
+                        setFilters(newFilters);
+                        setPage(1);
+                    }}
+                />
+
                 {isLoading ? (
                     <LoadingSpinner />
                 ) : isError || movies.length === 0 ? (
                     <NotFoundMovie />
                 ) : (
                     <>
-                        <LandingMovieSlider movies={movies} />
-
-                        <MovieFilter
-                            defaultValues={filters}
-                            onSubmit={(newFilters) => {
-                                setFilters(newFilters);
-                                setPage(1);
-                            }}
-                        />
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                             {movies.map((movie) => (
                                 <MovieCard key={movie.id} movie={movie} />

@@ -19,6 +19,7 @@ interface MovieFilterProps {
         sortBy: string;
         year: string;
     }) => void;
+    isLoading: boolean;
 }
 
 const inputClass =
@@ -40,6 +41,7 @@ const listboxOptionClass = ({ active, selected }: any) =>
 const MovieFilter: React.FC<MovieFilterProps> = ({
     defaultValues,
     onSubmit,
+    isLoading,
 }) => {
     const { t } = useLanguage();
     const currentYear = new Date().getFullYear();
@@ -223,6 +225,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                 <button
                     onClick={() => onSubmit(filters)}
                     className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    disabled={isLoading}
                 >
                     <Search className="w-5 h-5" />
                     {t("movies.filters.search")}

@@ -40,10 +40,24 @@
             },
             "country": "Country",
             "countries": {
-                "US": "USA",
+                "US": "United States",
                 "FR": "France",
                 "JP": "Japan",
-                "IR": "Iran"
+                "IR": "Iran",
+                "GB": "United Kingdom",
+                "DE": "Germany",
+                "CA": "Canada",
+                "IT": "Italy",
+                "ES": "Spain",
+                "AU": "Australia",
+                "KR": "South Korea",
+                "CN": "China",
+                "IN": "India",
+                "BR": "Brazil",
+                "RU": "Russia",
+                "MX": "Mexico",
+                "SE": "Sweden",
+                "NL": "Netherlands"
             },
             "sort": "Sort By",
             "sortOptions": {

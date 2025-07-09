@@ -84,6 +84,20 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         { code: "FR", name: t("movies.filters.countries.FR") },
         { code: "JP", name: t("movies.filters.countries.JP") },
         { code: "IR", name: t("movies.filters.countries.IR") },
+        { code: "GB", name: t("movies.filters.countries.GB") },
+        { code: "DE", name: t("movies.filters.countries.DE") },
+        { code: "CA", name: t("movies.filters.countries.CA") },
+        { code: "IT", name: t("movies.filters.countries.IT") },
+        { code: "ES", name: t("movies.filters.countries.ES") },
+        { code: "AU", name: t("movies.filters.countries.AU") },
+        { code: "KR", name: t("movies.filters.countries.KR") },
+        { code: "CN", name: t("movies.filters.countries.CN") },
+        { code: "IN", name: t("movies.filters.countries.IN") },
+        { code: "BR", name: t("movies.filters.countries.BR") },
+        { code: "RU", name: t("movies.filters.countries.RU") },
+        { code: "MX", name: t("movies.filters.countries.MX") },
+        { code: "SE", name: t("movies.filters.countries.SE") },
+        { code: "NL", name: t("movies.filters.countries.NL") },
     ];
 
     const sortOptions = [

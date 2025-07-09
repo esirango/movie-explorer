@@ -2,6 +2,7 @@ import React from "react";
 import { Movie } from "../../types/movie";
 import Link from "next/link";
 import IMDbVoteAverage from "./IMDbVoteAverage";
+import MovieReleaseDate from "./movie/MovieReleaseDate";
 
 interface MovieCardProps {
     movie: Movie;
@@ -32,7 +33,10 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                     </p>
 
                     <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-2">
-                        <span>📅 {movie.release_date}</span>
+                        <MovieReleaseDate
+                            releaseDate={movie.release_date}
+                            type="list"
+                        />
                         <IMDbVoteAverage voteAverage={movie.vote_average} />
                     </div>
                 </div>

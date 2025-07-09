@@ -4,6 +4,7 @@ import { useLanguage } from "../../../lang/LanguageContext";
 import IMDbVoteAverage from "../IMDbVoteAverage";
 import Link from "next/link";
 import { toPersianNumber } from "../../../func/toPersianNumber";
+import MovieReleaseDate from "./MovieReleaseDate";
 
 function MovieDetails({ movie, related }) {
     const { t, language } = useLanguage();
@@ -25,9 +26,10 @@ function MovieDetails({ movie, related }) {
 
                     <div className="flex gap-4 text-sm flex-wrap items-center">
                         <IMDbVoteAverage voteAverage={movie.vote_average} />
-                        <span className="icon-text">
-                            📅 {t("movieDetail.release")}: {movie.release_date}
-                        </span>
+                        <MovieReleaseDate
+                            releaseDate={movie.release_date}
+                            type="detail"
+                        />
                         <span className="icon-text">
                             ⏱ {t("movieDetail.runtime")}:{" "}
                             {language === "fa"

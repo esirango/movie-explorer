@@ -74,7 +74,8 @@
     "movieDetail": {
         "release": "تاریخ انتشار",
         "runtime": "مدت زمان",
-        "status": "وضعیت"
+        "status": "وضعیت",
+        "min": "دقیقه"
     },
     "footer": {
         "firstText": "ساخته شده با",

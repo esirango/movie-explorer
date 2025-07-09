@@ -74,7 +74,8 @@
     "movieDetail": {
         "release": "Release",
         "runtime": "Runtime",
-        "status": "Status"
+        "status": "Status",
+        "min": "min"
     },
     "footer": {
         "firstText": "Made With",

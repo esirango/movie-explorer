@@ -3,9 +3,10 @@ import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
 import IMDbVoteAverage from "../IMDbVoteAverage";
 import Link from "next/link";
+import { toPersianNumber } from "../../../func/toPersianNumber";
 
 function MovieDetails({ movie, related }) {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
 
     console.log(movie);
     return (
@@ -28,7 +29,11 @@ function MovieDetails({ movie, related }) {
                             📅 {t("movieDetail.release")}: {movie.release_date}
                         </span>
                         <span className="icon-text">
-                            ⏱ {t("movieDetail.runtime")}: {movie.runtime} mins
+                            ⏱ {t("movieDetail.runtime")}:{" "}
+                            {language === "fa"
+                                ? toPersianNumber(movie.runtime)
+                                : movie.runtime}{" "}
+                            {t("movieDetail.min")}
                         </span>
                         <span className="icon-text">
                             🎯 {t("movieDetail.status")}: {movie.status}

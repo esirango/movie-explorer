@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../lang/LanguageContext";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, RotateCw } from "lucide-react";
 import { Listbox } from "@headlessui/react";
 import clsx from "clsx";
 
@@ -46,6 +46,14 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
         (currentYear - i).toString()
     );
+
+    const emptyValues = {
+        query: "",
+        genre: "",
+        country: "",
+        sortBy: "",
+        year: "",
+    };
 
     const genres = [
         { id: "", name: t("movies.filters.genre"), disabled: true },
@@ -181,6 +189,18 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
             {renderListbox(filters.country, countries, "country")}
             {renderListbox(filters.sortBy, sortOptions, "sortBy")}
             {renderListbox(filters.year, years, "year")}
+
+            {/* دکمه ریست */}
+            <button
+                onClick={() => {
+                    setFilters(emptyValues);
+                    onSubmit(emptyValues);
+                }}
+                className="flex items-center justify-center px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 group"
+                title={t("movies.filters.reset")} // برای دسترسی‌پذیری (tooltip)
+            >
+                <RotateCw className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
+            </button>
 
             {/* دکمه جستجو */}
             <button

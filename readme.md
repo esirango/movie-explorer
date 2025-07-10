@@ -17,6 +17,11 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 
     -   Images and movie data are loaded lazily to improve performance and reduce initial load time.
 
+-   **💫 Skeleton Loading (Shimmer)**
+
+    -   Beautiful animated placeholders shown while movie data is loading.
+    -   Mimics the layout of real content to provide a smooth and responsive UX.
+
 -   **🎯 Advanced Movie Filtering**
 
     -   Filter movies by genre, release status, vote average, and more.

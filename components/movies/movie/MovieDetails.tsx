@@ -91,10 +91,12 @@ function MovieDetails({ movie, related }) {
                 </div>
             </div>
 
-            <div className="mt-12">
-                <h2 className="text-2xl font-bold mb-4">Related Movies</h2>
-                <MovieSlider movies={related} />
-            </div>
+            {related.length > 0 && (
+                <div className="mt-12">
+                    <h2 className="text-2xl font-bold mb-4">Related Movies</h2>
+                    <MovieSlider movies={related} />
+                </div>
+            )}
         </div>
     );
 }

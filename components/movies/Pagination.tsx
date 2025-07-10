@@ -28,7 +28,12 @@ const Pagination: React.FC<PaginationProps> = ({
         onPageChange(page);
         const topElement = document.getElementById("movie-list-top");
         if (topElement) {
-            topElement.scrollIntoView({ behavior: "smooth" });
+            const yOffset = -80;
+            const y =
+                topElement.getBoundingClientRect().top +
+                window.pageYOffset +
+                yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
         } else {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }

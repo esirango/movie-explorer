@@ -1,6 +1,6 @@
 {
     "global": {
-        "appName": "CinemaApp"
+        "appName": "CozyMovie"
     },
     "header": {
         "links": ["Movies"]

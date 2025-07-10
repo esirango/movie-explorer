@@ -9,6 +9,8 @@ import MovieBanner from "../../../components/movies/movie/MovieBanner";
 import MovieDetails from "../../../components/movies/movie/MovieDetails";
 import { useMovieDetails } from "../../api/hooks/useMovieDetails";
 import { useSimilarMovies } from "../../api/hooks/useSimilarMovies";
+import MovieDetailsSkeleton from "../../../components/movies/shimmer/MovieDetailSkeleton";
+import MovieBannerSkeleton from "../../../components/movies/shimmer/MovieBannerSkeleton";
 
 const MovieDetailPage = () => {
     const router = useRouter();
@@ -41,18 +43,26 @@ const MovieDetailPage = () => {
     return (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
             <Navbar />
-            {loading ? (
-                <div className="h-full my-40">
-                    <LoadingSpinner />
-                </div>
-            ) : !movie || isError ? (
+            {isError ? (
                 <div className="h-full my-32">
                     <NotFoundMovie />
                 </div>
             ) : (
                 <>
-                    <MovieBanner movie={movie} />
-                    <MovieDetails movie={movie} related={similarMovies} />
+                    {loading ? (
+                        <>
+                            <MovieBannerSkeleton />
+                            <MovieDetailsSkeleton />
+                        </>
+                    ) : (
+                        <>
+                            <MovieBanner movie={movie} />
+                            <MovieDetails
+                                movie={movie}
+                                related={similarMovies}
+                            />
+                        </>
+                    )}
                 </>
             )}
             <Footer />

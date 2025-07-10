@@ -28,35 +28,42 @@ function MovieCard({
         }
     }, [inView, index]);
 
+    const imageBoxClass = "aspect-[2/3] min-h-[300px] w-full";
+
     return (
         <Link href={`/movies/${id}/${title}`}>
             <div
                 ref={ref}
-                className={`lg:w-[500px] md:w-[300px] min-w-[200px] rounded-lg overflow-hidden shadow-lg
-      bg-white text-gray-900
-      dark:bg-gray-800 dark:text-gray-100
-      mx-3 my-5 hover:scale-105 cursor-pointer
-      transform transition-all duration-700 ease-out
-      ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-    `}
+                className={`
+        w-[250px] sm:w-[250px] md:w-[300px] lg:w-[500px]
+        rounded-lg overflow-hidden shadow-lg
+        bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100
+        mx-3 my-5 hover:scale-105 cursor-pointer
+        transform transition-all duration-700 ease-out
+        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+      `}
             >
                 {visible ? (
                     !imgError ? (
                         <img
                             src={poster}
                             alt={title}
-                            className="w-full aspect-[2/3] min-h-[300px] md:min-h-auto object-cover"
+                            className={`${imageBoxClass} object-cover`}
                             loading="lazy"
                             draggable={false}
                             onError={() => setImgError(true)}
                         />
                     ) : (
-                        <div className="w-full aspect-[2/3] min-h-[300px] md:min-h-auto flex items-center justify-center bg-gray-300 dark:bg-gray-700">
+                        <div
+                            className={`${imageBoxClass} flex items-center justify-center bg-gray-300 dark:bg-gray-700`}
+                        >
                             <span className="text-5xl">🎬</span>
                         </div>
                     )
                 ) : (
-                    <div className="w-full aspect-[2/3] min-h-[300px] md:min-h-auto bg-gray-200 dark:bg-gray-700 animate-pulse" />
+                    <div
+                        className={`${imageBoxClass} bg-gray-200 dark:bg-gray-700 animate-pulse`}
+                    />
                 )}
                 <div className="p-4">
                     <h3 className="font-semibold text-lg">{title}</h3>
@@ -65,5 +72,4 @@ function MovieCard({
         </Link>
     );
 }
-
 export default MovieCard;

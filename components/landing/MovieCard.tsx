@@ -28,14 +28,14 @@ function MovieCard({
         }
     }, [inView, index]);
 
-    const imageBoxClass = "aspect-[2/3] min-h-[300px] w-full";
+    const imageBoxClass = "aspect-[2/3] min-h-[440px] w-full";
 
     return (
         <Link href={`/movies/${id}/${title}`}>
             <div
                 ref={ref}
                 className={`
-        w-[250px] sm:w-[250px] md:w-[300px] lg:w-[500px]
+        w-[250px] sm:w-[400px] md:w-[450px] lg:w-[500px]
         rounded-lg overflow-hidden shadow-lg
         bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100
         mx-3 my-5 hover:scale-105 cursor-pointer

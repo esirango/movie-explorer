@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
 import IMDbVoteAverage from "../IMDbVoteAverage";
@@ -9,16 +9,25 @@ import MovieReleaseDate from "./MovieReleaseDate";
 function MovieDetails({ movie, related }) {
     const { t, language } = useLanguage();
 
+    const [posterError, setPosterError] = useState<boolean>(false);
+
     console.log(movie);
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col md:flex-row gap-8">
                 {/* Poster */}
-                <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
-                    className="rounded-xl w-full max-w-xs mx-auto md:mx-0"
-                />
+                {!posterError && movie.poster_path ? (
+                    <img
+                        src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                        alt={movie.title}
+                        className="rounded-xl w-full max-w-xs mx-auto md:mx-0"
+                        onError={() => setPosterError(true)}
+                    />
+                ) : (
+                    <div className="rounded-xl w-full max-w-xs mx-auto md:mx-0 h-[450px] bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center text-6xl text-white">
+                        🎬
+                    </div>
+                )}
 
                 {/* Info */}
                 <div className="flex-1 lg:space-y-12 md:space-y-12 space-y-4">

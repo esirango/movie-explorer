@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Movie } from "../../types/movie";
 import Link from "next/link";
 import IMDbVoteAverage from "./IMDbVoteAverage";
@@ -9,18 +9,21 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+    const [imageError, setImageError] = useState(false);
+
     return (
         <Link href={`/movies/${movie.id}/${movie.title}`}>
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer">
-                {movie.poster_path ? (
+                {!imageError && movie.poster_path ? (
                     <img
                         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                         alt={movie.title}
+                        onError={() => setImageError(true)}
                         className="w-full h-64 object-cover"
                     />
                 ) : (
-                    <div className="w-full h-64 flex items-center justify-center bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
-                        No Image
+                    <div className="w-full h-64 flex flex-col items-center justify-center bg-gradient-to-br from-gray-200 to-gray-400 dark:from-gray-700 dark:to-gray-600 text-center px-2">
+                        <div className="text-5xl mb-2">🎬</div>
                     </div>
                 )}
                 <div className="p-4 flex flex-col gap-2">

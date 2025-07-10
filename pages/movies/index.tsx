@@ -9,6 +9,7 @@ import { useMovies } from "../api/hooks/useMovies";
 import LandingMovieSlider from "../../components/movies/landingMoviesSlider";
 import { useRouter } from "next/router";
 import MovieFilter from "../../components/movies/MovieFilter";
+import MovieCardSkeleton from "../../components/movies/shimmer/MovieCardSkeleton";
 
 const MoviesPage = () => {
     const router = useRouter();
@@ -54,7 +55,11 @@ const MoviesPage = () => {
                 />
 
                 {isLoading ? (
-                    <LoadingSpinner />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {Array.from({ length: 8 }).map((_, idx) => (
+                            <MovieCardSkeleton key={idx} />
+                        ))}
+                    </div>
                 ) : isError || movies.length === 0 ? (
                     <NotFoundMovie />
                 ) : (

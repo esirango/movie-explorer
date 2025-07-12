@@ -2,6 +2,10 @@
     "global": {
         "appName": "CozyMovie"
     },
+    "auth": {
+        "register": "register",
+        "login": "login"
+    },
     "header": {
         "links": ["Movies"]
     },

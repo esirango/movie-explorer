@@ -2,6 +2,10 @@
     "global": {
         "appName": "دنج‌فیلم"
     },
+    "auth": {
+        "register": "ثبت‌نام",
+        "login": "ورود"
+    },
     "header": {
         "links": ["فیلم‌ها"]
     },

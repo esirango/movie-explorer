@@ -1,7 +1,7 @@
 import useSWR from "swr";
-import { fetcher } from "../fetcher";
-import { Movie } from "../../../types/movie";
-import { useLang } from "../../../lang/hooks/useLang";
+import { useLang } from "../../../../lang/hooks/useLang";
+import { Movie } from "../../../../types/movie";
+import { fetcher } from "../../fetcher";
 
 interface MoviesResponse {
     results: Movie[];

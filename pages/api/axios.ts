@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import Cookies from "cookies-js";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
@@ -22,10 +21,20 @@ const tmdb = axios.create({
 
 tmdb.interceptors.request.use((config) => {
     const locale = getLocale();
+
     config.params = {
         ...(config.params || {}),
         language: locale,
     };
+
+    const token = Cookies.get("token");
+    if (token) {
+        (config.headers as any) = {
+            ...(config.headers || {}),
+            Authorization: `Bearer ${token}`,
+        };
+    }
+
     return config;
 });
 

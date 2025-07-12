@@ -4,8 +4,14 @@ import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../../lang/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
+import MobileMenu from "./MobileMenu";
+import { useRouter } from "next/router";
 
-const Navbar = () => {
+interface NavbarProps {}
+
+const Navbar: React.FC<NavbarProps> = () => {
+    const router = useRouter();
+
     const [isOpen, setIsOpen] = useState(false);
     const { language, setLanguage, t } = useLanguage();
 
@@ -14,12 +20,15 @@ const Navbar = () => {
             <div className="flex justify-between items-center">
                 <Link
                     href="/"
-                    className="lg:text-2xl text-[18px] font-bold text-indigo-600 dark:text-indigo-400"
+                    className={`lg:text-2xl text-[18px] font-bold ${
+                        router.pathname === "/"
+                            ? "text-indigo-800 dark:text-indigo-300"
+                            : "text-indigo-600 dark:text-indigo-400"
+                    }`}
                 >
                     🎬 {t("global.appName")}
                 </Link>
 
-                {/* دسکتاپ */}
                 <div className="hidden md:flex items-center space-x-6">
                     <LanguageSwitcher
                         type={"desktop"}
@@ -30,10 +39,36 @@ const Navbar = () => {
                     />
                     <Link
                         href="/movies"
-                        className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+                        className={`font-medium transition-colors ${
+                            router.pathname === "/movies"
+                                ? "text-indigo-800 dark:text-indigo-300"
+                                : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                        }`}
                     >
                         {t("header.links")}
                     </Link>
+
+                    {/* لینک ورود */}
+                    <button
+                        className={`font-medium transition-colors ${
+                            router.pathname === "/auth/login"
+                                ? "text-indigo-800 dark:text-indigo-300"
+                                : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                        }`}
+                    >
+                        {t("auth.login")}
+                    </button>
+
+                    {/* لینک ثبت نام */}
+                    <button
+                        className={`font-semibold transition-colors ${
+                            router.pathname === "/auth/register"
+                                ? "text-indigo-900 dark:text-indigo-200 underline"
+                                : "text-indigo-600 dark:text-indigo-400 hover:underline"
+                        }`}
+                    >
+                        {t("auth.register")}
+                    </button>
 
                     <ThemeToggle />
                 </div>
@@ -70,33 +105,12 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* منوی موبایل با انیمیشن */}
             <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.15 }}
-                        className="md:hidden mt-4 bg-gray-50 dark:bg-gray-900 rounded-xl px-5 py-4 shadow-inner flex flex-col space-y-3"
-                    >
-                        <LanguageSwitcher
-                            type={"phone"}
-                            language={language}
-                            setLanguage={setLanguage}
-                            t={t}
-                            closeMenu={() => setIsOpen(false)}
-                        />
-
-                        <Link
-                            href="/movies"
-                            onClick={() => setIsOpen(false)}
-                            className="block text-center text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                        >
-                            🎥 {t("header.links")}
-                        </Link>
-                    </motion.div>
-                )}
+                <AnimatePresence>
+                    {isOpen && (
+                        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+                    )}
+                </AnimatePresence>
             </AnimatePresence>
         </nav>
     );

@@ -6,11 +6,13 @@
         "build": "next build",
         "start": "next start",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "tsc": "tsc --noEmit"
     },
     "homepage": "https://esirango.github.io/movie-explorer",
     "dependencies": {
         "@headlessui/react": "^2.2.4",
+        "@hookform/resolvers": "^5.1.1",
         "axios": "^1.6.0",
         "cookies-js": "^1.2.3",
         "framer-motion": "^12.23.0",
@@ -20,9 +22,11 @@
         "nextjs-progressbar": "^0.0.16",
         "react": "latest",
         "react-dom": "latest",
+        "react-hook-form": "^7.60.0",
         "react-intersection-observer": "^9.16.0",
         "swiper": "^11.2.10",
-        "swr": "^2.3.4"
+        "swr": "^2.3.4",
+        "yup": "^1.6.1"
     },
     "devDependencies": {
         "@types/node": "24.0.10",

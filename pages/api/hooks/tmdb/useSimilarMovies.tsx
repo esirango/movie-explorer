@@ -1,8 +1,7 @@
 import useSWR from "swr";
-import Cookies from "cookies-js";
-import { fetcher } from "../fetcher";
-import { Movie } from "../../../types/movie";
-import { useLang } from "../../../lang/hooks/useLang";
+import { fetcher } from "../../fetcher";
+import { Movie } from "../../../../types/movie";
+import { useLang } from "../../../../lang/hooks/useLang";
 
 interface MoviesResponse {
     results: Movie[];

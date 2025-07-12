@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import Footer from "../../components/layout/Footer";
 import Pagination from "../../components/movies/Pagination";
-import { LoadingSpinner } from "../../components/Loading";
 import Navbar from "../../components/layout/Navbar";
 import NotFoundMovie from "../../components/movies/NotFoundMovie";
 import MovieCard from "../../components/movies/MovieCard";
-import { useMovies } from "../api/hooks/useMovies";
 import LandingMovieSlider from "../../components/movies/landingMoviesSlider";
 import { useRouter } from "next/router";
 import MovieFilter from "../../components/movies/MovieFilter";
 import MovieCardSkeleton from "../../components/movies/shimmer/MovieCardSkeleton";
+import { useMovies } from "../api/hooks/tmdb/useMovies";
 
 const MoviesPage = () => {
     const router = useRouter();

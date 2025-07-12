@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import { fetcher } from "../fetcher";
-import { Movie, Pagination } from "../../../types/movie";
-import { useLang } from "../../../lang/hooks/useLang";
+import { useLang } from "../../../../lang/hooks/useLang";
+import { Pagination, Movie } from "../../../../types/movie";
+import { fetcher } from "../../fetcher";
 
 export interface MoviesResponse extends Pagination {
     results: Movie[];

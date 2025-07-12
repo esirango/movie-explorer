@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </Link>
 
                     {/* لینک ورود */}
-                    <Link
+                    {/* <Link
                         href="/auth/login"
                         className={`font-medium transition-colors ${
                             router.pathname === "/auth/login"
@@ -58,9 +58,9 @@ const Navbar: React.FC<NavbarProps> = () => {
                         }`}
                     >
                         {t("auth.login")}
-                    </Link>
+                    </Link> */}
                     {/* لینک ثبت نام */}
-
+                    {/* 
                     <Link
                         href="/auth/register"
                         className={`font-medium transition-colors ${
@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         }`}
                     >
                         {t("auth.register")}
-                    </Link>
+                    </Link> */}
 
                     <ThemeToggle />
                 </div>

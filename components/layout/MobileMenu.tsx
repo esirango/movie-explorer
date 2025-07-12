@@ -33,22 +33,24 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
             Icon: FilmIcon,
             label: t("header.links"),
             onClick: closeMenu,
+            specialClass: "",
         },
-        {
-            key: "login",
-            href: "/auth/login",
-            Icon: LogInIcon,
-            label: t("auth.login"),
-            onClick: closeMenu,
-        },
-        {
-            key: "register",
-            href: "/auth/register",
-            Icon: UserPlus,
-            label: t("auth.register"),
-            onClick: closeMenu,
-            specialClass: "hover:bg-indigo-100 dark:hover:bg-indigo-900",
-        },
+        // ,
+        // {
+        //     key: "login",
+        //     href: "/auth/login",
+        //     Icon: LogInIcon,
+        //     label: t("auth.login"),
+        //     onClick: closeMenu,
+        // },
+        // {
+        //     key: "register",
+        //     href: "/auth/register",
+        //     Icon: UserPlus,
+        //     label: t("auth.register"),
+        //     onClick: closeMenu,
+        //     specialClass: "hover:bg-indigo-100 dark:hover:bg-indigo-900",
+        // },
     ];
 
     return (

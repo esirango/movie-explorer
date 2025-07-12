@@ -59,7 +59,7 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/yourusername/movie-explorer
+git clone https://github.com/esirango/movie-explorer
 cd movie-explorer
 npm install
 npm run dev

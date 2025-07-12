@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { register as apiRegister } from "../../pages/api/hooks/useAuth";
+import { UserCircle } from "lucide-react";
 
 interface RegisterFormInputs {
     email: string;
@@ -14,15 +16,31 @@ const RegisterForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<RegisterFormInputs>();
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<RegisterFormInputs>({
+        mode: "onChange",
+    });
+
+    const [preview, setPreview] = useState<string | null>(null);
+
+    const profilePicture = watch("profilePicture");
+
+    useEffect(() => {
+        if (profilePicture && profilePicture.length > 0) {
+            const file = profilePicture[0];
+            const url = URL.createObjectURL(file);
+            setPreview(url);
+
+            return () => URL.revokeObjectURL(url);
+        } else {
+            setPreview(null);
+        }
+    }, [profilePicture]);
 
     const onSubmit = async (data: RegisterFormInputs) => {
         try {
-            // اگر میخوای پروفایل عکس اپلود کنی باید جدا روش آپلود بذاری و url عکس رو بفرستی به API
-            // فعلاً فقط ایمیل، پسورد و یوزرنیم میفرستیم
-
-            await (data.email, data.password); // اگه API تو اینا رو قبول می‌کنه
+            await apiRegister(data.email, data.password);
             router.push("/login");
         } catch (error) {
             alert("خطا در ثبت نام، لطفا دوباره تلاش کنید");
@@ -30,89 +48,140 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-50 dark:bg-gray-900">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="bg-white dark:bg-gray-800 p-8 rounded shadow-md w-full max-w-md"
-            >
-                <h2 className="text-2xl font-bold mb-6 text-center text-indigo-600">
-                    ثبت نام
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-900 via-black to-gray-900 px-4">
+            <div className="bg-gray-900 bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-200">
+                <div className="flex justify-center mb-6">
+                    {preview ? (
+                        <img
+                            src={preview}
+                            alt="پیش‌نمایش عکس پروفایل"
+                            className="w-24 h-24 rounded-full border-4 border-indigo-500 object-cover"
+                        />
+                    ) : (
+                        <UserCircle size={96} className="text-indigo-500" />
+                    )}
+                </div>
+                <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-400 tracking-wide">
+                    ثبت نام در سینماپلکس
                 </h2>
 
-                <label className="block mb-2">
-                    ایمیل
-                    <input
-                        type="email"
-                        {...register("email", { required: "ایمیل ضروری است" })}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                    {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.email.message}
-                        </p>
-                    )}
-                </label>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <label className="block mb-4">
+                        <span className="text-sm font-semibold mb-1 block">
+                            ایمیل
+                        </span>
+                        <input
+                            type="email"
+                            placeholder="example@cinema.com"
+                            {...register("email", {
+                                required: "ایمیل ضروری است",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "فرمت ایمیل معتبر نیست",
+                                },
+                            })}
+                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                                errors.email
+                                    ? "border-red-500"
+                                    : "border-gray-700 focus:border-indigo-500"
+                            } text-gray-100 placeholder-gray-400 transition`}
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.email.message}
+                            </p>
+                        )}
+                    </label>
 
-                <label className="block mb-2">
-                    نام کاربری
-                    <input
-                        type="text"
-                        {...register("username", {
-                            required: "نام کاربری ضروری است",
-                        })}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                    {errors.username && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.username.message}
-                        </p>
-                    )}
-                </label>
+                    <label className="block mb-4">
+                        <span className="text-sm font-semibold mb-1 block">
+                            نام کاربری
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="نام کاربری شما"
+                            {...register("username", {
+                                required: "نام کاربری ضروری است",
+                                minLength: {
+                                    value: 3,
+                                    message: "حداقل ۳ کاراکتر وارد کنید",
+                                },
+                            })}
+                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                                errors.username
+                                    ? "border-red-500"
+                                    : "border-gray-700 focus:border-indigo-500"
+                            } text-gray-100 placeholder-gray-400 transition`}
+                        />
+                        {errors.username && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.username.message}
+                            </p>
+                        )}
+                    </label>
 
-                <label className="block mb-2">
-                    رمز عبور
-                    <input
-                        type="password"
-                        {...register("password", {
-                            required: "رمز عبور ضروری است",
-                        })}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                    {errors.password && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.password.message}
-                        </p>
-                    )}
-                </label>
+                    <label className="block mb-4">
+                        <span className="text-sm font-semibold mb-1 block">
+                            رمز عبور
+                        </span>
+                        <input
+                            type="password"
+                            placeholder="رمز عبور قوی انتخاب کنید"
+                            {...register("password", {
+                                required: "رمز عبور ضروری است",
+                                minLength: {
+                                    value: 6,
+                                    message: "حداقل ۶ کاراکتر وارد کنید",
+                                },
+                            })}
+                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                                errors.password
+                                    ? "border-red-500"
+                                    : "border-gray-700 focus:border-indigo-500"
+                            } text-gray-100 placeholder-gray-400 transition`}
+                        />
+                        {errors.password && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.password.message}
+                            </p>
+                        )}
+                    </label>
 
-                <label className="block mb-4">
-                    عکس پروفایل (اختیاری)
-                    <input
-                        type="file"
-                        accept="image/*"
-                        {...register("profilePicture")}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                </label>
+                    <label className="block mb-6">
+                        <span className="text-sm font-semibold mb-1 block">
+                            عکس پروفایل (اختیاری)
+                        </span>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            {...register("profilePicture")}
+                            className="w-full rounded bg-gray-800 border border-gray-700 text-gray-200 p-2 cursor-pointer focus:outline-none focus:border-indigo-500"
+                        />
+                    </label>
 
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded"
-                >
-                    ثبت نام
-                </button>
+                    <button
+                        type="submit"
+                        disabled={!isValid || isSubmitting}
+                        className={`w-full py-3 rounded text-lg font-bold text-white transition ${
+                            isValid
+                                ? "bg-indigo-600 hover:bg-indigo-700"
+                                : "bg-indigo-400 cursor-not-allowed"
+                        }`}
+                    >
+                        {isSubmitting ? "در حال ثبت نام..." : "ثبت نام"}
+                    </button>
+                </form>
 
-                <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-6 text-center text-gray-400 text-sm">
                     قبلا ثبت نام کردی؟{" "}
                     <a
                         href="/login"
-                        className="text-indigo-600 hover:underline"
+                        className="text-indigo-500 hover:underline font-semibold"
                     >
                         وارد شو
                     </a>
                 </p>
-            </form>
+            </div>
         </div>
     );
 };

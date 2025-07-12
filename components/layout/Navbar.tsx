@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         href="/movies"
                         className={`font-medium transition-colors ${
                             router.pathname === "/movies"
-                                ? "text-indigo-800 dark:text-indigo-300"
+                                ? "text-indigo-900 dark:text-indigo-500"
                                 : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
                         }`}
                     >
@@ -49,26 +49,28 @@ const Navbar: React.FC<NavbarProps> = () => {
                     </Link>
 
                     {/* لینک ورود */}
-                    <button
+                    <Link
+                        href="/auth/login"
                         className={`font-medium transition-colors ${
                             router.pathname === "/auth/login"
-                                ? "text-indigo-800 dark:text-indigo-300"
+                                ? "text-indigo-900 dark:text-indigo-500"
                                 : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
                         }`}
                     >
                         {t("auth.login")}
-                    </button>
-
+                    </Link>
                     {/* لینک ثبت نام */}
-                    <button
-                        className={`font-semibold transition-colors ${
+
+                    <Link
+                        href="/auth/register"
+                        className={`font-medium transition-colors ${
                             router.pathname === "/auth/register"
-                                ? "text-indigo-900 dark:text-indigo-200 underline"
-                                : "text-indigo-600 dark:text-indigo-400 hover:underline"
+                                ? "text-indigo-900 dark:text-indigo-500"
+                                : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
                         }`}
                     >
                         {t("auth.register")}
-                    </button>
+                    </Link>
 
                     <ThemeToggle />
                 </div>

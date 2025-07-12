@@ -13,76 +13,103 @@ const LoginPage = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<LoginFormInputs>();
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<LoginFormInputs>({
+        mode: "onChange",
+    });
 
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             await login(data.email, data.password);
-            router.push("/"); // بعد از ورود موفق به صفحه اصلی بره
+            router.push("/");
         } catch (error) {
             alert("خطا در ورود، لطفا دوباره تلاش کنید");
         }
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-50 dark:bg-gray-900">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="bg-white dark:bg-gray-800 p-8 rounded shadow-md w-full max-w-md"
-            >
-                <h2 className="text-2xl font-bold mb-6 text-center text-indigo-600">
-                    ورود
+        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-900 via-black to-gray-900 px-4">
+            <div className="bg-gray-900 bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-200">
+                <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-400 tracking-wide">
+                    ورود به دنیای سینما
                 </h2>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <label className="block mb-4">
+                        <span className="text-sm font-semibold mb-1 block">
+                            ایمیل
+                        </span>
+                        <input
+                            type="email"
+                            placeholder="example@cinema.com"
+                            {...register("email", {
+                                required: "ایمیل ضروری است",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "فرمت ایمیل معتبر نیست",
+                                },
+                            })}
+                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                                errors.email
+                                    ? "border-red-500"
+                                    : "border-gray-700 focus:border-indigo-500"
+                            } text-gray-100 placeholder-gray-400 transition`}
+                        />
+                        {errors.email && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.email.message}
+                            </p>
+                        )}
+                    </label>
 
-                <label className="block mb-2">
-                    ایمیل
-                    <input
-                        type="email"
-                        {...register("email", { required: "ایمیل ضروری است" })}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                    {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.email.message}
-                        </p>
-                    )}
-                </label>
+                    <label className="block mb-6">
+                        <span className="text-sm font-semibold mb-1 block">
+                            رمز عبور
+                        </span>
+                        <input
+                            type="password"
+                            placeholder="رمز عبور خود را وارد کنید"
+                            {...register("password", {
+                                required: "رمز عبور ضروری است",
+                                minLength: {
+                                    value: 6,
+                                    message: "حداقل ۶ کاراکتر وارد کنید",
+                                },
+                            })}
+                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                                errors.password
+                                    ? "border-red-500"
+                                    : "border-gray-700 focus:border-indigo-500"
+                            } text-gray-100 placeholder-gray-400 transition`}
+                        />
+                        {errors.password && (
+                            <p className="text-red-500 text-xs mt-1">
+                                {errors.password.message}
+                            </p>
+                        )}
+                    </label>
 
-                <label className="block mb-4">
-                    رمز عبور
-                    <input
-                        type="password"
-                        {...register("password", {
-                            required: "رمز عبور ضروری است",
-                        })}
-                        className="mt-1 w-full rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 p-2"
-                    />
-                    {errors.password && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.password.message}
-                        </p>
-                    )}
-                </label>
-
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded"
-                >
-                    ورود
-                </button>
-
-                <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
+                    <button
+                        type="submit"
+                        disabled={!isValid || isSubmitting}
+                        className={`w-full py-3 rounded text-lg font-bold text-white transition ${
+                            isValid
+                                ? "bg-indigo-600 hover:bg-indigo-700"
+                                : "bg-indigo-400 cursor-not-allowed"
+                        }`}
+                    >
+                        {isSubmitting ? "در حال ورود..." : "ورود"}
+                    </button>
+                </form>
+                <p className="mt-6 text-center text-gray-400 text-sm">
                     حساب کاربری نداری؟{" "}
                     <a
                         href="/register"
-                        className="text-indigo-600 hover:underline"
+                        className="text-indigo-500 hover:underline font-semibold"
                     >
                         ثبت نام کن
                     </a>
                 </p>
-            </form>
+            </div>
         </div>
     );
 };

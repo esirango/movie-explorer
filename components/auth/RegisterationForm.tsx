@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { register as apiRegister } from "../../pages/api/hooks/useAuth";
-import { PlusCircle, UserCircle } from "lucide-react";
 import Link from "next/link";
 import AnimatedBackground from "../landing/AnimatedBackground";
+import { useLanguage } from "../../lang/LanguageContext";
+import Email from "./fields/Email";
+import Password from "./fields/Password";
+import Username from "./fields/Username";
+import UploadAvatar from "./fields/UploadAvatar";
 
 interface RegisterFormInputs {
     email: string;
@@ -15,6 +19,8 @@ interface RegisterFormInputs {
 
 const RegisterForm = () => {
     const router = useRouter();
+    const { t } = useLanguage();
+
     const {
         register,
         handleSubmit,
@@ -54,9 +60,9 @@ const RegisterForm = () => {
     const onSubmit = async (data: RegisterFormInputs) => {
         try {
             await apiRegister(data.email, data.password);
-            router.push("/login");
+            router.push("/");
         } catch (error) {
-            alert("خطا در ثبت نام، لطفا دوباره تلاش کنید");
+            alert(t("auth.errorInRegisterMsg"));
         }
     };
 
@@ -64,122 +70,23 @@ const RegisterForm = () => {
         <div className="min-h-screen p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-400 via-gray-100 to-gray-300 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-black dark:to-gray-900 px-4 transition-colors duration-300">
             <AnimatedBackground />
             <div className="bg-white z-20 dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
-                <div className="relative flex justify-center mb-6">
-                    {preview ? (
-                        <img
-                            src={preview}
-                            alt="پیش‌نمایش عکس پروفایل"
-                            className="w-24 h-24 rounded-full border-4 border-indigo-500 object-cover"
-                        />
-                    ) : (
-                        <UserCircle size={96} className="text-indigo-500" />
-                    )}
-
-                    <label
-                        htmlFor="profilePicture"
-                        className="absolute bottom-[-5px] left-[140px] bg-indigo-500 hover:bg-indigo-700 text-white p-0.5  dark:text-black  rounded-full cursor-pointer transition"
-                        title="افزودن عکس"
-                    >
-                        <PlusCircle className="w-6 h-6 " />
-                    </label>
-
-                    <input
-                        id="profilePicture"
-                        type="file"
-                        accept="image/*"
-                        {...register("profilePicture")}
-                        className="hidden"
-                        onChange={handleImageChange}
-                    />
-                </div>
+                <UploadAvatar
+                    t={t}
+                    handleImageChange={handleImageChange}
+                    register={register}
+                    preview={preview}
+                />
 
                 <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">
-                    ثبت نام در سینماپلکس
+                    {t("auth.registerTitle")}
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <label className="block mb-4">
-                        <span className="text-sm font-semibold mb-1 block">
-                            ایمیل
-                        </span>
-                        <input
-                            type="email"
-                            placeholder="example@cinema.com"
-                            {...register("email", {
-                                required: "ایمیل ضروری است",
-                                pattern: {
-                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                                    message: "فرمت ایمیل معتبر نیست",
-                                },
-                            })}
-                            className={`w-full rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 border ${
-                                errors.email
-                                    ? "border-red-500"
-                                    : "border-gray-300 dark:border-gray-700 focus:border-indigo-500"
-                            } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition`}
-                        />
-                        {errors.email && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.email.message}
-                            </p>
-                        )}
-                    </label>
+                    <Email t={t} register={register} errors={errors} />
 
-                    {/* Username */}
-                    <label className="block mb-4">
-                        <span className="text-sm font-semibold mb-1 block">
-                            نام کاربری
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="نام کاربری شما"
-                            {...register("username", {
-                                required: "نام کاربری ضروری است",
-                                minLength: {
-                                    value: 3,
-                                    message: "حداقل ۳ کاراکتر وارد کنید",
-                                },
-                            })}
-                            className={`w-full rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 border ${
-                                errors.username
-                                    ? "border-red-500"
-                                    : "border-gray-300 dark:border-gray-700 focus:border-indigo-500"
-                            } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition`}
-                        />
-                        {errors.username && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.username.message}
-                            </p>
-                        )}
-                    </label>
+                    <Username t={t} register={register} errors={errors} />
 
-                    {/* Password */}
-                    <label className="block mb-4">
-                        <span className="text-sm font-semibold mb-1 block">
-                            رمز عبور
-                        </span>
-                        <input
-                            type="password"
-                            placeholder="رمز عبور قوی انتخاب کنید"
-                            {...register("password", {
-                                required: "رمز عبور ضروری است",
-                                minLength: {
-                                    value: 6,
-                                    message: "حداقل ۶ کاراکتر وارد کنید",
-                                },
-                            })}
-                            className={`w-full rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 border ${
-                                errors.password
-                                    ? "border-red-500"
-                                    : "border-gray-300 dark:border-gray-700 focus:border-indigo-500"
-                            } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition`}
-                        />
-                        {errors.password && (
-                            <p className="text-red-500 text-xs mt-1">
-                                {errors.password.message}
-                            </p>
-                        )}
-                    </label>
+                    <Password t={t} register={register} errors={errors} />
 
                     <button
                         type="submit"
@@ -194,7 +101,9 @@ const RegisterForm = () => {
   `}
                     >
                         <span className="relative z-10">
-                            {isSubmitting ? "در حال ثبت نام..." : "ثبت نام"}
+                            {isSubmitting
+                                ? t("auth.registering")
+                                : t("auth.register")}
                         </span>
 
                         {isValid && (
@@ -204,12 +113,12 @@ const RegisterForm = () => {
                 </form>
 
                 <p className="mt-6 text-center text-gray-500 dark:text-gray-400 text-sm">
-                    قبلا ثبت نام کردی؟{" "}
+                    {t("auth.alreadyRegister")}{" "}
                     <Link
                         href="/auth/login"
                         className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
                     >
-                        وارد شو
+                        {t("auth.loginOrder")}
                     </Link>
                 </p>
             </div>

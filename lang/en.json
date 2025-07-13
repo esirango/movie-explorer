@@ -3,8 +3,32 @@
         "appName": "CozyMovie"
     },
     "auth": {
-        "register": "register",
-        "login": "login"
+        "register": "Register",
+        "login": "Login",
+        "errorInRegisterMsg": "Registration error, please try again",
+        "previewAvatarAlt": "Profile picture preview",
+        "addAvatarTitle": "Add picture",
+        "registerTitle": "Register at CozyMovie",
+        "registering": "Registering...",
+        "alreadyRegister": "Already have an account?",
+        "loginOrder": "Login",
+        "loginTitle": "Log in to the world of cinema",
+        "loggingIn": "Logging in...",
+        "errorInLoginMsg": "Login error, please try again",
+        "noAccount": "Don't have an account?",
+        "registerOrder": "Sign up",
+        "fields": {
+            "email": "Email",
+            "requiredEmailMsg": "Email is required",
+            "formatEmailMsg": "Invalid email format",
+            "username": "Username",
+            "usernamePlaceholder": "John Doe",
+            "requiredUsernameMsg": "Username is required",
+            "formatUsernameMsg": "Enter at least 3 characters",
+            "password": "Password",
+            "requiredPasswordMsg": "Password is required",
+            "formatPasswordMsg": "Enter at least 6 characters"
+        }
     },
     "header": {
         "links": ["Movies"]

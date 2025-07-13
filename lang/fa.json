@@ -3,8 +3,32 @@
         "appName": "دنج‌فیلم"
     },
     "auth": {
-        "register": "ثبت‌نام",
-        "login": "ورود"
+        "register": "ثبت‌ نام",
+        "login": "ورود",
+        "errorInRegisterMsg": "خطا در ثبت نام، لطفا دوباره تلاش کنید",
+        "previewAvatarAlt": "پیش‌نمایش عکس پروفایل",
+        "addAvatarTitle": "افزودن عکس",
+        "registerTitle": "ثبت‌نام در دنج‌فیلم",
+        "registering": "در حال ثبت نام...",
+        "alreadyRegister": "قبلا ثبت نام کردی؟",
+        "loginTitle": "ورود به دنیای سینما",
+        "loggingIn": "در حال ورود...",
+        "errorInLoginMsg": "خطا در ورود، لطفا دوباره تلاش کنید",
+        "noAccount": "حساب کاربری نداری؟",
+        "registerOrder": "ثبت نام کن",
+        "loginOrder": "وارد شو",
+        "fields": {
+            "email": "ایمیل",
+            "requiredEmailMsg": "ایمیل ضروری است",
+            "formatEmailMsg": "فرمت ایمیل معتبر نیست",
+            "username": "نام کاربری",
+            "usernamePlaceholder": "جان دو",
+            "requiredUsernameMsg": "نام کاربری ضروری است",
+            "formatUsernameMsg": "حداقل ۳ کاراکتر وارد کنید",
+            "password": "رمز عبور",
+            "requiredPasswordMsg": "رمز عبور ضروری است",
+            "formatPasswordMsg": "حداقل ۶ کاراکتر وارد کنید"
+        }
     },
     "header": {
         "links": ["فیلم‌ها"]

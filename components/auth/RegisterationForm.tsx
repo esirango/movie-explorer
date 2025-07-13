@@ -48,7 +48,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-900 via-black to-gray-900 px-4">
+        <div className="min-h-screen p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-900 via-black to-gray-900 px-4">
             <div className="bg-gray-900 bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-200">
                 <div className="flex justify-center mb-6">
                     {preview ? (

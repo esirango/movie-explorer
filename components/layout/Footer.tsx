@@ -5,7 +5,7 @@ const Footer = () => {
     const { t } = useLanguage();
 
     return (
-        <footer className="py-6 text-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-16 select-none">
+        <footer className="pt-12 pb-8 text-center bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300  select-none">
             <p>
                 {t("footer.firstText")} ❤️ {t("footer.secondText")}
             </p>

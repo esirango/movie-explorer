@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { login } from "../../pages/api/hooks/useAuth";
 import Link from "next/link";
+import AnimatedBackground from "../landing/AnimatedBackground";
 
 interface LoginFormInputs {
     email: string;
@@ -29,9 +30,10 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-400 via-gray-100 to-gray-300 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-black dark:to-gray-900 px-4 transition-colors duration-300">
-            <div className="bg-white dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
-                <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">
+        <div className="min-h-screen p-8 flex flex-col  justify-center items-center bg-gradient-to-tr from-indigo-400 via-gray-100 to-gray-300 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-black dark:to-gray-900 px-4 transition-colors duration-300">
+            <AnimatedBackground />
+            <div className="bg-white z-20 dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
+                <h2 className="text-3xl  font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">
                     ورود به دنیای سینما
                 </h2>
 

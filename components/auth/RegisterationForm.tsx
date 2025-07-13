@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { register as apiRegister } from "../../pages/api/hooks/useAuth";
-import { UserCircle } from "lucide-react";
+import { PlusCircle, UserCircle } from "lucide-react";
 import Link from "next/link";
 
 interface RegisterFormInputs {
@@ -24,6 +24,17 @@ const RegisterForm = () => {
     });
 
     const [preview, setPreview] = useState<string | null>(null);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const profilePicture = watch("profilePicture");
 
@@ -51,7 +62,7 @@ const RegisterForm = () => {
     return (
         <div className="min-h-screen p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-400 via-gray-100 to-gray-300 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-black dark:to-gray-900 px-4 transition-colors duration-300">
             <div className="bg-white dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
-                <div className="flex justify-center mb-6">
+                <div className="relative flex justify-center mb-6">
                     {preview ? (
                         <img
                             src={preview}
@@ -61,7 +72,25 @@ const RegisterForm = () => {
                     ) : (
                         <UserCircle size={96} className="text-indigo-500" />
                     )}
+
+                    <label
+                        htmlFor="profilePicture"
+                        className="absolute bottom-[-5px] left-[140px] bg-indigo-500 hover:bg-indigo-700 text-white p-0.5  dark:text-black  rounded-full cursor-pointer transition"
+                        title="افزودن عکس"
+                    >
+                        <PlusCircle className="w-6 h-6 " />
+                    </label>
+
+                    <input
+                        id="profilePicture"
+                        type="file"
+                        accept="image/*"
+                        {...register("profilePicture")}
+                        className="hidden"
+                        onChange={handleImageChange}
+                    />
                 </div>
+
                 <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">
                     ثبت نام در سینماپلکس
                 </h2>
@@ -148,19 +177,6 @@ const RegisterForm = () => {
                                 {errors.password.message}
                             </p>
                         )}
-                    </label>
-
-                    {/* Profile Picture */}
-                    <label className="block mb-6">
-                        <span className="text-sm font-semibold mb-1 block">
-                            عکس پروفایل (اختیاری)
-                        </span>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            {...register("profilePicture")}
-                            className="w-full rounded bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 p-2 cursor-pointer focus:outline-none focus:border-indigo-500 transition"
-                        />
                     </label>
 
                     <button

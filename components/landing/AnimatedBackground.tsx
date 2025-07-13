@@ -124,6 +124,7 @@ const AnimatedBackground = () => {
                 zIndex: 1,
                 pointerEvents: "none",
             }}
+            className="bg-gray-900"
             aria-hidden="true"
         />
     );

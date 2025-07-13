@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { login } from "../../pages/api/hooks/useAuth";
+import Link from "next/link";
 
 interface LoginFormInputs {
     email: string;
@@ -91,7 +92,7 @@ const LoginPage = () => {
                     <button
                         type="submit"
                         disabled={!isValid || isSubmitting}
-                        className={`w-full py-3 rounded text-lg font-bold text-white transition ${
+                        className={`w-full py-3 text-center rounded text-lg font-bold text-white transition ${
                             isValid
                                 ? "bg-indigo-600 hover:bg-indigo-700"
                                 : "bg-indigo-400 cursor-not-allowed"
@@ -102,12 +103,12 @@ const LoginPage = () => {
                 </form>
                 <p className="mt-6 text-center text-gray-400 text-sm">
                     حساب کاربری نداری؟{" "}
-                    <a
-                        href="/register"
+                    <Link
+                        href="/auth/register"
                         className="text-indigo-500 hover:underline font-semibold"
                     >
                         ثبت نام کن
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

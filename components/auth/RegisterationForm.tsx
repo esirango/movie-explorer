@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { register as apiRegister } from "../../pages/api/hooks/useAuth";
 import { UserCircle } from "lucide-react";
+import Link from "next/link";
 
 interface RegisterFormInputs {
     email: string;
@@ -162,7 +163,7 @@ const RegisterForm = () => {
                     <button
                         type="submit"
                         disabled={!isValid || isSubmitting}
-                        className={`w-full py-3 rounded text-lg font-bold text-white transition ${
+                        className={`w-full py-3 rounded text-center text-lg font-bold text-white transition ${
                             isValid
                                 ? "bg-indigo-600 hover:bg-indigo-700"
                                 : "bg-indigo-400 cursor-not-allowed"
@@ -174,12 +175,12 @@ const RegisterForm = () => {
 
                 <p className="mt-6 text-center text-gray-400 text-sm">
                     قبلا ثبت نام کردی؟{" "}
-                    <a
-                        href="/login"
+                    <Link
+                        href="/auth/login"
                         className="text-indigo-500 hover:underline font-semibold"
                     >
                         وارد شو
-                    </a>
+                    </Link>
                 </p>
             </div>
         </div>

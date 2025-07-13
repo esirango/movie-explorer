@@ -92,17 +92,25 @@ const LoginPage = () => {
                         )}
                     </label>
 
-                    {/* دکمه ارسال */}
                     <button
                         type="submit"
                         disabled={!isValid || isSubmitting}
-                        className={`w-full py-3 text-center rounded text-lg font-bold text-white transition ${
-                            isValid
-                                ? "bg-indigo-600 hover:bg-indigo-700"
-                                : "bg-indigo-400 cursor-not-allowed"
-                        }`}
+                        className={`relative overflow-hidden w-full py-3 rounded-xl text-center text-lg font-bold text-white transition-all duration-300 ease-in-out
+    ${
+        isValid
+            ? "bg-indigo-600 hover:bg-indigo-700 hover:shadow-xl hover:scale-[1.02] active:scale-95 cursor-pointer"
+            : "bg-indigo-400 cursor-not-allowed"
+    }
+    ${isValid ? "animate-pulse-once" : ""}
+  `}
                     >
-                        {isSubmitting ? "در حال ورود..." : "ورود"}
+                        <span className="relative z-10">
+                            {isSubmitting ? "در حال ورود..." : "ورود"}
+                        </span>
+
+                        {isValid && (
+                            <span className="absolute top-0 left-[-75%] w-[50%] h-full bg-white opacity-10 rotate-12 blur-lg animate-shine"></span>
+                        )}
                     </button>
                 </form>
 

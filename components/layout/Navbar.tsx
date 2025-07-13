@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,6 +7,8 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import MobileMenu from "./MobileMenu";
 import { useRouter } from "next/router";
 
+import Cookies from "js-cookie";
+
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
@@ -14,6 +16,18 @@ const Navbar: React.FC<NavbarProps> = () => {
 
     const [isOpen, setIsOpen] = useState(false);
     const { language, setLanguage, t } = useLanguage();
+
+    const [token, setToken] = useState<string | null>();
+
+    useEffect(() => {
+        setToken(Cookies.get("token"));
+    }, []);
+
+    const handleLogout = () => {
+        Cookies.remove("token");
+        setToken(null);
+        router.push("/");
+    };
 
     return (
         <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 sticky top-0 z-50">
@@ -48,29 +62,47 @@ const Navbar: React.FC<NavbarProps> = () => {
                         {t("header.links")}
                     </Link>
 
-                    {/* لینک ورود */}
-                    {/* <Link
-                        href="/auth/login"
-                        className={`font-medium transition-colors ${
-                            router.pathname === "/auth/login"
-                                ? "text-indigo-900 dark:text-indigo-500"
-                                : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
-                        }`}
-                    >
-                        {t("auth.login")}
-                    </Link> */}
-                    {/* لینک ثبت نام */}
-                    {/* 
-                    <Link
-                        href="/auth/register"
-                        className={`font-medium transition-colors ${
-                            router.pathname === "/auth/register"
-                                ? "text-indigo-900 dark:text-indigo-500"
-                                : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
-                        }`}
-                    >
-                        {t("auth.register")}
-                    </Link> */}
+                    {/* {token ? (
+                        <>
+                            <div className="flex items-center space-x-3">
+                                <img
+                                    src="/user-avatar.png"
+                                    alt="User Avatar"
+                                    className="w-8 h-8 rounded-full object-cover"
+                                />
+                                <button
+                                    onClick={handleLogout}
+                                    className="font-medium text-red-600 dark:text-red-400 hover:underline"
+                                >
+                                    {t("auth.logout")}
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                href="/auth/login"
+                                className={`font-medium transition-colors ${
+                                    router.pathname === "/auth/login"
+                                        ? "text-indigo-900 dark:text-indigo-500"
+                                        : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                }`}
+                            >
+                                {t("auth.login")}
+                            </Link>
+
+                            <Link
+                                href="/auth/register"
+                                className={`font-medium transition-colors ${
+                                    router.pathname === "/auth/register"
+                                        ? "text-indigo-900 dark:text-indigo-500"
+                                        : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                }`}
+                            >
+                                {t("auth.register")}
+                            </Link>
+                        </>
+                    )} */}
 
                     <ThemeToggle />
                 </div>
@@ -108,11 +140,14 @@ const Navbar: React.FC<NavbarProps> = () => {
             </div>
 
             <AnimatePresence>
-                <AnimatePresence>
-                    {isOpen && (
-                        <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
-                    )}
-                </AnimatePresence>
+                {isOpen && (
+                    <MobileMenu
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        token={token}
+                        onLogout={handleLogout}
+                    />
+                )}
             </AnimatePresence>
         </nav>
     );

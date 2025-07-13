@@ -5,6 +5,7 @@
     "auth": {
         "register": "Register",
         "login": "Login",
+        "logout": "logout",
         "errorInRegisterMsg": "Registration error, please try again",
         "previewAvatarAlt": "Profile picture preview",
         "addAvatarTitle": "Add picture",

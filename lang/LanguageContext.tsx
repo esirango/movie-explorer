@@ -6,7 +6,7 @@ import React, {
     useEffect,
 } from "react";
 
-import Cookies from "cookies-js";
+import Cookies from "js-cookie";
 
 type Language = "en" | "fa";
 

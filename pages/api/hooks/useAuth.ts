@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { fetcher } from "../fetcher";
-import Cookies from "cookies-js";
+import Cookies from "js-cookie";
 
 interface User {
     email: string;
@@ -28,18 +28,19 @@ export async function login(email: string, password: string) {
         method: "post",
         data: { email, password },
     });
-    Cookies.set("token", data.token, { expires: 7 });
+    Cookies.set("token", data.token, { expires: 7, path: "/" });
 }
 
 // POST ثبت نام
 export async function register(email: string, password: string) {
-    await fetcher("/api/auth/register", {
+    const data = await fetcher("/api/auth/register", {
         method: "post",
         data: { email, password },
     });
+    Cookies.set("token", data.token, { expires: 7, path: "/" });
 }
 
 // خروج
 export function logout() {
-    Cookies.expire("token");
+    Cookies.remove("token");
 }

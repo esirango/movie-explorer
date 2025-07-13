@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "cookies-js";
+import Cookies from "js-cookie";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 const TMDB_BASE_API_URL = process.env.TMDB_BASE_API_URL;

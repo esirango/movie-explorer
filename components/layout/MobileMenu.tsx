@@ -2,16 +2,29 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../lang/LanguageContext";
-import { FilmIcon, LogInIcon, UserPlus, GlobeIcon } from "lucide-react";
+import {
+    FilmIcon,
+    GlobeIcon,
+    LogInIcon,
+    LogOutIcon,
+    UserPlus,
+} from "lucide-react";
 
 interface MobileMenuProps {
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
+    token: string | null;
+    onLogout: () => void;
 }
 
 import { useRouter } from "next/router";
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({
+    isOpen,
+    setIsOpen,
+    token,
+    onLogout,
+}) => {
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
 
@@ -19,7 +32,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
 
     const iconClassName = "text-indigo-600 dark:text-indigo-400 text-xl";
 
-    // به جای استفاده از liTextClassName ثابت، استایل را بر اساس صفحه فعال تغییر می‌دهیم:
     const getTextClassName = (href: string) => {
         if (router.pathname === href)
             return "font-semibold text-indigo-900 dark:text-indigo-300";
@@ -82,6 +94,66 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
                         </Link>
                     )
                 )}
+
+                {/* {token ? (
+                    <>
+                        <div className="flex items-center gap-3 px-6 py-4 cursor-default">
+                            <img
+                                src="/user-avatar.png"
+                                alt="User Avatar"
+                                className="w-8 h-8 rounded-full object-cover"
+                            />
+                            <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+                                User
+                            </span>
+                        </div>
+                        <button
+                            onClick={() => {
+                                onLogout();
+                                closeMenu();
+                            }}
+                            className="flex items-center gap-3 px-6 py-4 cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-800 rounded-b-xl transition-colors"
+                        >
+                            <LogOutIcon className="text-red-600 dark:text-red-400 text-xl" />
+                            <span className="font-semibold">
+                                {t("auth.logout") || "خروج"}
+                            </span>
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Link
+                            href="/auth/login"
+                            onClick={closeMenu}
+                            className={`flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors rounded-none ${
+                                router.pathname === "/auth/login"
+                                    ? "bg-indigo-100 dark:bg-indigo-800"
+                                    : "hover:bg-indigo-50 dark:hover:bg-indigo-800"
+                            }`}
+                        >
+                            <LogInIcon className={iconClassName} />
+                            <span className={getTextClassName("/auth/login")}>
+                                {t("auth.login")}
+                            </span>
+                        </Link>
+                        <Link
+                            href="/auth/register"
+                            onClick={closeMenu}
+                            className={`flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors rounded-none ${
+                                router.pathname === "/auth/register"
+                                    ? "bg-indigo-100 dark:bg-indigo-800"
+                                    : "hover:bg-indigo-50 dark:hover:bg-indigo-800"
+                            }`}
+                        >
+                            <UserPlus className={iconClassName} />
+                            <span
+                                className={getTextClassName("/auth/register")}
+                            >
+                                {t("auth.register")}
+                            </span>
+                        </Link>
+                    </>
+                )} */}
 
                 <div
                     onClick={() => {

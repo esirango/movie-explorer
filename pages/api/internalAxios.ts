@@ -1,5 +1,5 @@
 import axios from "axios";
-import Cookies from "cookies-js";
+import Cookies from "js-cookie";
 
 const INTERNAL_BASE_API_URL =
     process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000";

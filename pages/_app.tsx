@@ -4,8 +4,30 @@ import "../styles/globals.css";
 import NextNProgress from "nextjs-progressbar";
 import { LanguageProvider, useLanguage } from "../lang/LanguageContext";
 import Head from "next/head";
+import useAuthStore, { User } from "../store/useAuthStore";
+import Cookies from "js-cookie";
+import { useCurrentUser } from "./api/hooks/useAuth";
 
 export default function App({ Component, pageProps }) {
+    const { token, setToken, setUser, logout } = useAuthStore();
+
+    const { user }: { user: User | any } = useCurrentUser();
+
+    useEffect(() => {
+        const t = Cookies.get("token");
+        if (t) {
+            setToken(t);
+        } else {
+            logout();
+        }
+    }, [token, Cookies.get("token")]);
+
+    useEffect(() => {
+        if (user) {
+            setUser(user);
+        }
+    }, [user]);
+
     return (
         <LanguageProvider>
             <MetaHead />

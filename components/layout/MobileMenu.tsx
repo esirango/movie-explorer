@@ -13,8 +13,9 @@ import {
 interface MobileMenuProps {
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
-    token: string | null;
     onLogout: () => void;
+    user: any;
+    token: string | null;
 }
 
 import { useRouter } from "next/router";
@@ -22,8 +23,9 @@ import { useRouter } from "next/router";
 const MobileMenu: React.FC<MobileMenuProps> = ({
     isOpen,
     setIsOpen,
-    token,
     onLogout,
+    user,
+    token,
 }) => {
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
@@ -95,16 +97,16 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                     )
                 )}
 
-                {/* {token ? (
+                {/* {token && user ? (
                     <>
-                        <div className="flex items-center gap-3 px-6 py-4 cursor-default">
+                        <div className="flex items-center gap-3 px-6 py-4 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-800 transition-colors ">
                             <img
-                                src="/user-avatar.png"
+                                src={`${user?.avatar}`}
                                 alt="User Avatar"
                                 className="w-8 h-8 rounded-full object-cover"
                             />
                             <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-                                User
+                                {user?.username}
                             </span>
                         </div>
                         <button
@@ -112,10 +114,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                                 onLogout();
                                 closeMenu();
                             }}
-                            className="flex items-center gap-3 px-6 py-4 cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-800 rounded-b-xl transition-colors"
+                            className="flex items-center gap-3 px-6 py-4 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-800 transition-colors"
                         >
-                            <LogOutIcon className="text-red-600 dark:text-red-400 text-xl" />
-                            <span className="font-semibold">
+                            <LogOutIcon className={iconClassName} />
+                            <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                                 {t("auth.logout") || "خروج"}
                             </span>
                         </button>

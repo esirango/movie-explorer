@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { register as apiRegister } from "../../pages/api/hooks/useAuth";
+import { useRegister } from "../../pages/api/hooks/useAuth";
 import Link from "next/link";
 import AnimatedBackground from "../landing/AnimatedBackground";
 import { useLanguage } from "../../lang/LanguageContext";
@@ -14,12 +14,14 @@ interface RegisterFormInputs {
     email: string;
     password: string;
     username: string;
-    profilePicture?: FileList;
+    avatar?: FileList;
 }
 
 const RegisterForm = () => {
     const router = useRouter();
     const { t } = useLanguage();
+
+    const { apiRegister, loading, error } = useRegister();
 
     const {
         register,
@@ -43,11 +45,11 @@ const RegisterForm = () => {
         }
     };
 
-    const profilePicture = watch("profilePicture");
+    const avatar = watch("avatar");
 
     useEffect(() => {
-        if (profilePicture && profilePicture.length > 0) {
-            const file = profilePicture[0];
+        if (avatar && avatar.length > 0) {
+            const file = avatar[0];
             const url = URL.createObjectURL(file);
             setPreview(url);
 
@@ -55,11 +57,17 @@ const RegisterForm = () => {
         } else {
             setPreview(null);
         }
-    }, [profilePicture]);
+    }, [avatar]);
 
     const onSubmit = async (data: RegisterFormInputs) => {
         try {
-            await apiRegister(data.email, data.password);
+            await apiRegister(
+                data.email,
+                data.password,
+                data.username,
+                data.avatar
+            );
+
             router.push("/");
         } catch (error) {
             alert(error?.response?.data?.msg);
@@ -71,6 +79,7 @@ const RegisterForm = () => {
             <AnimatedBackground />
             <div className="bg-white z-20 dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
                 <UploadAvatar
+                    loading={loading}
                     t={t}
                     handleImageChange={handleImageChange}
                     register={register}
@@ -82,11 +91,26 @@ const RegisterForm = () => {
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <Email t={t} register={register} errors={errors} />
+                    <Email
+                        loading={loading}
+                        t={t}
+                        register={register}
+                        errors={errors}
+                    />
 
-                    <Username t={t} register={register} errors={errors} />
+                    <Username
+                        loading={loading}
+                        t={t}
+                        register={register}
+                        errors={errors}
+                    />
 
-                    <Password t={t} register={register} errors={errors} />
+                    <Password
+                        loading={loading}
+                        t={t}
+                        register={register}
+                        errors={errors}
+                    />
 
                     <button
                         type="submit"

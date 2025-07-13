@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,6 +8,7 @@ import MobileMenu from "./MobileMenu";
 import { useRouter } from "next/router";
 
 import Cookies from "js-cookie";
+import useAuthStore from "../../store/useAuthStore";
 
 interface NavbarProps {}
 
@@ -17,15 +18,11 @@ const Navbar: React.FC<NavbarProps> = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { language, setLanguage, t } = useLanguage();
 
-    const [token, setToken] = useState<string | null>();
-
-    useEffect(() => {
-        setToken(Cookies.get("token"));
-    }, []);
+    const { user, token, logout } = useAuthStore();
 
     const handleLogout = () => {
         Cookies.remove("token");
-        setToken(null);
+        logout();
         router.push("/");
     };
 
@@ -66,7 +63,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                         <>
                             <div className="flex items-center space-x-3">
                                 <img
-                                    src="/user-avatar.png"
+                                    src={`${process.env.NEXT_PUBLIC_API_BASE}/${user?.avatar}`}
                                     alt="User Avatar"
                                     className="w-8 h-8 rounded-full object-cover"
                                 />
@@ -142,9 +139,10 @@ const Navbar: React.FC<NavbarProps> = () => {
             <AnimatePresence>
                 {isOpen && (
                     <MobileMenu
+                        user={user}
+                        token={token}
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}
-                        token={token}
                         onLogout={handleLogout}
                     />
                 )}

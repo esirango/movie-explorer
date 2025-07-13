@@ -1,43 +1,103 @@
 import useSWR from "swr";
 import { fetcher } from "../fetcher";
 import Cookies from "js-cookie";
+import { useState } from "react";
 
 interface User {
+    _id: string;
     email: string;
-    password: string;
-    // بقیه فیلدها
+    username: string;
+    avatar?: FileList;
 }
 
 // GET یوزر فعلی
 export function useCurrentUser() {
-    const { data, error, mutate } = useSWR<User>("/api/auth/me", fetcher, {
-        revalidateOnFocus: false,
-    });
+    const token = typeof window !== "undefined" ? Cookies.get("token") : null;
+
+    const { data, error, mutate } = useSWR<User>(
+        token ? "/api/auth/me" : null,
+        fetcher,
+        { revalidateOnFocus: false }
+    );
 
     return {
         user: data,
-        isLoading: !error && !data,
+        isLoading: !error && !data && !!token,
         isError: error,
         mutate,
     };
 }
 
-// POST لاگین
-export async function login(email: string, password: string) {
-    const data = await fetcher<{ token: string }>("/api/auth/login", {
-        method: "post",
-        data: { email, password },
-    });
-    Cookies.set("token", data.token, { expires: 7, path: "/" });
+// لاگین با مدیریت لودینگ
+export function useLogin() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    async function login(email: string, password: string) {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await fetcher<{ token: string }>("/api/auth/login", {
+                method: "post",
+                data: { email, password },
+            });
+
+            Cookies.set("token", data.token, { expires: 7, path: "/" });
+            setLoading(false);
+            return data;
+        } catch (err) {
+            setError(err);
+            setLoading(false);
+            throw err;
+        }
+    }
+
+    return { login, loading, error };
 }
 
-// POST ثبت نام
-export async function register(email: string, password: string) {
-    const data = await fetcher("/api/auth/register", {
-        method: "post",
-        data: { email, password },
-    });
-    Cookies.set("token", data.token, { expires: 7, path: "/" });
+// ثبت نام با مدیریت لودینگ
+export function useRegister() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    async function apiRegister(
+        email: string,
+        password: string,
+        username: string,
+        avatarFile?: FileList
+    ) {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("password", password);
+            formData.append("username", username);
+
+            if (avatarFile) {
+                formData.append("avatar", avatarFile[0]);
+            }
+
+            const data = await fetcher<{ token: string }>(
+                "/api/auth/register",
+                {
+                    method: "post",
+                    data: formData,
+                }
+            );
+
+            Cookies.set("token", data.token, { expires: 7, path: "/" });
+            setLoading(false);
+            return data;
+        } catch (err) {
+            setError(err);
+            setLoading(false);
+            throw err;
+        }
+    }
+
+    return { apiRegister, loading, error };
 }
 
 // خروج

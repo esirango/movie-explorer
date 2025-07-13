@@ -1,6 +1,6 @@
 import React from "react";
 
-function Email({ t, register, errors }) {
+function Email({ t, register, errors, loading }) {
     return (
         <label className="block mb-4">
             <span className="text-sm font-semibold mb-1 block">
@@ -9,6 +9,7 @@ function Email({ t, register, errors }) {
             <input
                 type="email"
                 placeholder="example@cinema.com"
+                readOnly={loading}
                 {...register("email", {
                     required: t("auth.fields.requiredEmailMsg"),
                     pattern: {

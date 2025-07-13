@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { login } from "../../pages/api/hooks/useAuth";
+import { useLogin } from "../../pages/api/hooks/useAuth";
 import Link from "next/link";
 import AnimatedBackground from "../landing/AnimatedBackground";
 import { useLanguage } from "../../lang/LanguageContext";
@@ -16,6 +16,8 @@ interface LoginFormInputs {
 const LoginPage = () => {
     const router = useRouter();
     const { t } = useLanguage();
+
+    const { login, loading, error } = useLogin();
 
     const {
         register,
@@ -43,9 +45,19 @@ const LoginPage = () => {
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <Email t={t} register={register} errors={errors} />
+                    <Email
+                        loading={loading}
+                        t={t}
+                        register={register}
+                        errors={errors}
+                    />
 
-                    <Password t={t} register={register} errors={errors} />
+                    <Password
+                        loading={loading}
+                        t={t}
+                        register={register}
+                        errors={errors}
+                    />
 
                     <button
                         type="submit"

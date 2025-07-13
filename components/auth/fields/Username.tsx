@@ -1,6 +1,6 @@
 import React from "react";
 
-function Username({ t, register, errors }) {
+function Username({ t, register, errors, loading }) {
     return (
         <label className="block mb-4">
             <span className="text-sm font-semibold mb-1 block">
@@ -8,6 +8,7 @@ function Username({ t, register, errors }) {
             </span>
             <input
                 type="text"
+                readOnly={loading}
                 placeholder={t("auth.fields.usernamePlaceholder")}
                 {...register("username", {
                     required: t("auth.fields.requiredUsernameMsg"),

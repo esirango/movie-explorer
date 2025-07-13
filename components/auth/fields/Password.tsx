@@ -1,6 +1,6 @@
 import React from "react";
 
-function Password({ t, register, errors }) {
+function Password({ t, register, errors, loading }) {
     return (
         <label className="block mb-4">
             <span className="text-sm font-semibold mb-1 block">
@@ -9,6 +9,7 @@ function Password({ t, register, errors }) {
             <input
                 type="password"
                 placeholder="******"
+                readOnly={loading}
                 {...register("password", {
                     required: t("auth.fields.requiredPasswordMsg"),
                     minLength: {

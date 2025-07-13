@@ -62,7 +62,7 @@ const RegisterForm = () => {
             await apiRegister(data.email, data.password);
             router.push("/");
         } catch (error) {
-            alert(t("auth.errorInRegisterMsg"));
+            alert(error?.response?.data?.msg);
         }
     };
 

@@ -30,7 +30,7 @@ const LoginPage = () => {
             await login(data.email, data.password);
             router.push("/");
         } catch (error) {
-            alert(t("auth.errorInLoginMsg"));
+            alert(error?.response?.data?.msg);
         }
     };
 

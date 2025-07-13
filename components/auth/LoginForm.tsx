@@ -29,12 +29,14 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-900 via-black to-gray-900 px-4">
-            <div className="bg-gray-900 bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-200">
-                <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-400 tracking-wide">
+        <div className="min-h-screen p-8 flex flex-col justify-center items-center bg-gradient-to-tr from-indigo-400 via-gray-100 to-gray-300 dark:bg-gradient-to-tr dark:from-indigo-900 dark:via-black dark:to-gray-900 px-4 transition-colors duration-300">
+            <div className="bg-white dark:bg-gray-900 dark:bg-opacity-80 p-10 rounded-xl shadow-lg w-full max-w-md text-gray-800 dark:text-gray-200 transition-colors duration-300">
+                <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">
                     ورود به دنیای سینما
                 </h2>
+
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    {/* ایمیل */}
                     <label className="block mb-4">
                         <span className="text-sm font-semibold mb-1 block">
                             ایمیل
@@ -49,11 +51,11 @@ const LoginPage = () => {
                                     message: "فرمت ایمیل معتبر نیست",
                                 },
                             })}
-                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                            className={`w-full rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 border ${
                                 errors.email
                                     ? "border-red-500"
-                                    : "border-gray-700 focus:border-indigo-500"
-                            } text-gray-100 placeholder-gray-400 transition`}
+                                    : "border-gray-300 dark:border-gray-700 focus:border-indigo-500"
+                            } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition`}
                         />
                         {errors.email && (
                             <p className="text-red-500 text-xs mt-1">
@@ -62,6 +64,7 @@ const LoginPage = () => {
                         )}
                     </label>
 
+                    {/* رمز عبور */}
                     <label className="block mb-6">
                         <span className="text-sm font-semibold mb-1 block">
                             رمز عبور
@@ -76,11 +79,11 @@ const LoginPage = () => {
                                     message: "حداقل ۶ کاراکتر وارد کنید",
                                 },
                             })}
-                            className={`w-full rounded px-3 py-2 bg-gray-800 border ${
+                            className={`w-full rounded px-3 py-2 bg-gray-100 dark:bg-gray-800 border ${
                                 errors.password
                                     ? "border-red-500"
-                                    : "border-gray-700 focus:border-indigo-500"
-                            } text-gray-100 placeholder-gray-400 transition`}
+                                    : "border-gray-300 dark:border-gray-700 focus:border-indigo-500"
+                            } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition`}
                         />
                         {errors.password && (
                             <p className="text-red-500 text-xs mt-1">
@@ -89,6 +92,7 @@ const LoginPage = () => {
                         )}
                     </label>
 
+                    {/* دکمه ارسال */}
                     <button
                         type="submit"
                         disabled={!isValid || isSubmitting}
@@ -101,11 +105,12 @@ const LoginPage = () => {
                         {isSubmitting ? "در حال ورود..." : "ورود"}
                     </button>
                 </form>
-                <p className="mt-6 text-center text-gray-400 text-sm">
+
+                <p className="mt-6 text-center text-gray-500 dark:text-gray-400 text-sm">
                     حساب کاربری نداری؟{" "}
                     <Link
                         href="/auth/register"
-                        className="text-indigo-500 hover:underline font-semibold"
+                        className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
                     >
                         ثبت نام کن
                     </Link>

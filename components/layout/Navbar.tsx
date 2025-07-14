@@ -88,16 +88,14 @@ const Navbar: React.FC = () => {
 
                             <button
                                 onClick={() => {
-                                    handleLogout;
+                                    handleLogout();
                                 }}
                                 className="group flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors duration-300"
                             >
                                 <LogOutIcon
                                     className={`${iconClassName} group-hover:text-indigo-800`}
                                 />
-                                <span className="font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 group-hover:underline decoration-current">
-                                    {/* {t("auth.logout") || "خروج"} */}
-                                </span>
+                                <span className="font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 group-hover:underline decoration-current"></span>
                             </button>
                         </div>
                     ) : (

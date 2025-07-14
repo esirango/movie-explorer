@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useLogin } from "../../pages/api/hooks/useAuth";
@@ -7,6 +7,7 @@ import AnimatedBackground from "../landing/AnimatedBackground";
 import { useLanguage } from "../../lang/LanguageContext";
 import Email from "./fields/Email";
 import Password from "./fields/Password";
+import useAuthStore from "../../store/useAuthStore";
 
 interface LoginFormInputs {
     email: string;
@@ -17,7 +18,15 @@ const LoginPage = () => {
     const router = useRouter();
     const { t } = useLanguage();
 
-    const { login, loading, error } = useLogin();
+    const { token } = useAuthStore();
+
+    useEffect(() => {
+        if (token) {
+            router.replace("/");
+        }
+    }, [token]);
+
+    const { login, loading } = useLogin();
 
     const {
         register,

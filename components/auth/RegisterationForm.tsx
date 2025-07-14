@@ -9,6 +9,7 @@ import Email from "./fields/Email";
 import Password from "./fields/Password";
 import Username from "./fields/Username";
 import UploadAvatar from "./fields/UploadAvatar";
+import useAuthStore from "../../store/useAuthStore";
 
 interface RegisterFormInputs {
     email: string;
@@ -21,7 +22,15 @@ const RegisterForm = () => {
     const router = useRouter();
     const { t } = useLanguage();
 
-    const { apiRegister, loading, error } = useRegister();
+    const { token } = useAuthStore();
+
+    useEffect(() => {
+        if (token) {
+            router.replace("/");
+        }
+    }, [token]);
+
+    const { apiRegister, loading } = useRegister();
 
     const {
         register,

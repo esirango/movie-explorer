@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
     const { language, setLanguage, t } = useLanguage();
     const { user, token, logout } = useAuthStore();
 
-    const iconClassName = "text-indigo-600 dark:text-indigo-400 text-xl";
+    const iconClassName = "text-indigo-600 dark:text-indigo-400";
 
     const handleLogout = () => {
         Cookies.remove("token");
@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
                         {t("header.links")}
                     </Link>
 
-                    {!token && user ? (
+                    {token && user ? (
                         <div className="flex items-center ">
                             <img
                                 src={user?.avatar}
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
                                 onClick={() => {
                                     handleLogout();
                                 }}
-                                className="group flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors duration-300"
+                                className="group flex items-center gap-1 px-5  cursor-pointer transition-colors duration-200"
                             >
                                 <LogOutIcon
                                     className={`${iconClassName} group-hover:text-indigo-800`}

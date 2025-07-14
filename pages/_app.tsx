@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }) {
     }, [token, Cookies.get("token")]);
 
     useEffect(() => {
-        if (user) {
+        if (user && token) {
             setUser(user);
         }
     }, [user]);

@@ -16,6 +16,7 @@ interface MobileMenuProps {
     onLogout: () => void;
     user: any;
     token: string | null;
+    iconClassName: string;
 }
 
 import { useRouter } from "next/router";
@@ -26,13 +27,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     onLogout,
     user,
     token,
+    iconClassName,
 }) => {
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
 
     const closeMenu = () => setIsOpen(false);
-
-    const iconClassName = "text-indigo-600 dark:text-indigo-400 text-xl";
 
     const getTextClassName = (href: string) => {
         if (router.pathname === href)
@@ -75,53 +75,34 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             className="fixed top-16 -translate-x-1/2 z-50 w-80 min-w-[90vw] bg-white dark:bg-gray-900 rounded-b-xl shadow-lg ring-1 ring-black ring-opacity-5"
         >
             <nav className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
-                {menuItems.map(
-                    ({ key, href, Icon, label, onClick, specialClass }) => (
-                        <Link
-                            href={href}
-                            key={key}
-                            onClick={onClick}
-                            className={`flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors rounded-none ${
-                                specialClass ?? ""
-                            } ${
-                                router.pathname === href
-                                    ? "bg-indigo-100 dark:bg-indigo-800"
-                                    : "hover:bg-indigo-50 dark:hover:bg-indigo-800"
-                            }`}
-                        >
-                            <Icon className={iconClassName} />
-                            <span className={getTextClassName(href)}>
-                                {label}
-                            </span>
-                        </Link>
-                    )
-                )}
-
-                {/* {token && user ? (
-                    <>
-                        <div className="flex items-center gap-3 px-6 py-4 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-800 transition-colors ">
+                {token && user ? (
+                    <div className="flex justify-between">
+                        <div className="group flex items-center gap-3 px-6 py-4 cursor-pointer transition-all duration-3000">
                             <img
                                 src={`${user?.avatar}`}
-                                alt="User Avatar"
-                                className="w-8 h-8 rounded-full object-cover"
+                                alt={t("auth.previewAvatarAlt")}
+                                className="w-9 h-9 rounded-full border-2 border-indigo-500 object-cover"
                             />
-                            <span className="font-semibold text-indigo-600 dark:text-indigo-400">
+                            <span className="font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 group-hover:underline decoration-current">
                                 {user?.username}
                             </span>
                         </div>
+
                         <button
                             onClick={() => {
                                 onLogout();
                                 closeMenu();
                             }}
-                            className="flex items-center gap-3 px-6 py-4 cursor-pointer hover:bg-indigo-50 dark:hover:bg-indigo-800 transition-colors"
+                            className="group flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors duration-300"
                         >
-                            <LogOutIcon className={iconClassName} />
-                            <span className="font-semibold text-indigo-600 dark:text-indigo-400">
-                                {t("auth.logout") || "خروج"}
+                            <LogOutIcon
+                                className={`${iconClassName} group-hover:text-indigo-800`}
+                            />
+                            <span className="font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 group-hover:underline decoration-current">
+                                {/* {t("auth.logout") || "خروج"} */}
                             </span>
                         </button>
-                    </>
+                    </div>
                 ) : (
                     <>
                         <Link
@@ -155,7 +136,28 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                             </span>
                         </Link>
                     </>
-                )} */}
+                )}
+                {menuItems.map(
+                    ({ key, href, Icon, label, onClick, specialClass }) => (
+                        <Link
+                            href={href}
+                            key={key}
+                            onClick={onClick}
+                            className={`flex items-center gap-3 px-6 py-4 cursor-pointer transition-colors rounded-none ${
+                                specialClass ?? ""
+                            } ${
+                                router.pathname === href
+                                    ? "bg-indigo-100 dark:bg-indigo-800"
+                                    : "hover:bg-indigo-50 dark:hover:bg-indigo-800"
+                            }`}
+                        >
+                            <Icon className={iconClassName} />
+                            <span className={getTextClassName(href)}>
+                                {label}
+                            </span>
+                        </Link>
+                    )
+                )}
 
                 <div
                     onClick={() => {

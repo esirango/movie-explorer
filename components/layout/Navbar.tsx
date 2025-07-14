@@ -27,8 +27,8 @@ const Navbar: React.FC = () => {
 
     const isActive = (path: string) =>
         router.pathname === path
-            ? "text-indigo-900 dark:text-indigo-400"
-            : "text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400";
+            ? "text-indigo-600 dark:text-indigo-400"
+            : "text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400";
 
     const authLinks = [
         {
@@ -100,25 +100,15 @@ const Navbar: React.FC = () => {
                         </div>
                     ) : (
                         <>
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-5">
                                 {authLinks.map(({ href, icon }) => {
-                                    const isActive = router.pathname === href;
-                                    const baseClasses =
-                                        "flex items-center p-2  rounded-full transition-colors duration-200";
-                                    const activeClasses =
-                                        "bg-indigo-500  dark:bg-indigo-700 text-white";
-                                    const inactiveClasses =
-                                        " text-indigo-700  dark:text-indigo-400 ";
-
                                     return (
                                         <Link
                                             key={href}
                                             href={href}
-                                            className={`${baseClasses} ${
-                                                isActive
-                                                    ? activeClasses
-                                                    : inactiveClasses
-                                            }`}
+                                            className={`font-medium ${isActive(
+                                                href
+                                            )}`}
                                         >
                                             {icon}
                                         </Link>

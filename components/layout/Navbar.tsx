@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
                         {t("header.links")}
                     </Link>
 
-                    {token && user ? (
+                    {!token && user ? (
                         <div className="flex items-center ">
                             <img
                                 src={user?.avatar}
@@ -100,11 +100,11 @@ const Navbar: React.FC = () => {
                         </div>
                     ) : (
                         <>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
                                 {authLinks.map(({ href, icon }) => {
                                     const isActive = router.pathname === href;
                                     const baseClasses =
-                                        "flex items-center gap-2 px-1.5 py-1.5 rounded-md transition-colors duration-200";
+                                        "flex items-center p-2  rounded-full transition-colors duration-200";
                                     const activeClasses =
                                         "bg-indigo-500  dark:bg-indigo-700 text-white";
                                     const inactiveClasses =

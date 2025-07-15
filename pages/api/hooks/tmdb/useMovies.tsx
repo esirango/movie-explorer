@@ -17,7 +17,7 @@ const countryToLanguageMap: Record<string, string> = {
 
 export const useMovies = (
     page: number,
-    genre?: number,
+    genre?: number[],
     query?: string,
     country?: string,
     sortBy?: string,
@@ -31,7 +31,7 @@ export const useMovies = (
 
     const endpoint = query?.trim()
         ? "/search/movie"
-        : genre || country || sortBy || year
+        : genre?.length || country || sortBy || year
         ? "/discover/movie"
         : "/trending/movie/week";
 
@@ -44,7 +44,7 @@ export const useMovies = (
     if (query) params.query = query;
 
     if (!query) {
-        if (genre) params.with_genres = genre;
+        if (genre?.length) params.with_genres = genre.join(",");
 
         if (country) {
             const langCode = countryToLanguageMap[country.toUpperCase()];
@@ -79,10 +79,11 @@ export const useMovies = (
         if (query?.trim()) {
             let filteredResults = data.results;
 
-            if (genre)
+            if (genre?.length) {
                 filteredResults = filteredResults.filter((movie) =>
-                    movie.genre_ids.includes(genre)
+                    genre.some((g) => movie.genre_ids.includes(g))
                 );
+            }
 
             if (year)
                 filteredResults = filteredResults.filter((movie) => {

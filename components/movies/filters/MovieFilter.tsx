@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useLanguage } from "../../lang/LanguageContext";
+import { useLanguage } from "../../../lang/LanguageContext";
 import { Search, ChevronDown, RotateCw } from "lucide-react";
 import { Listbox } from "@headlessui/react";
 import clsx from "clsx";
+import GenreTags from "./GenreTags";
+import { useRouter } from "next/router";
+import {
+    countries,
+    genres,
+    sortOptions,
+} from "../../../store/filters/movieFilterData";
+
+export interface GenreOption {
+    id: string;
+    name: string;
+    disabled?: boolean;
+}
 
 interface MovieFilterProps {
     defaultValues: {
         query: string;
-        genre: string;
+        genre: GenreOption[];
         country: string;
         sortBy: string;
         year: string;
     };
     onSubmit: (filters: {
         query: string;
-        genre: string;
+        genre: GenreOption[];
         country: string;
         sortBy: string;
         year: string;
@@ -43,6 +56,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     onSubmit,
     isLoading,
 }) => {
+    const router = useRouter();
     const { t } = useLanguage();
     const currentYear = new Date().getFullYear();
     const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
@@ -51,72 +65,11 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
 
     const emptyValues = {
         query: "",
-        genre: "",
+        genre: [],
         country: "",
         sortBy: "",
         year: "",
     };
-
-    const genres = [
-        { id: "", name: t("movies.filters.genre"), disabled: true },
-        { id: "28", name: t("movies.filters.genres.28") },
-        { id: "12", name: t("movies.filters.genres.12") },
-        { id: "16", name: t("movies.filters.genres.16") },
-        { id: "35", name: t("movies.filters.genres.35") },
-        { id: "80", name: t("movies.filters.genres.80") },
-        { id: "99", name: t("movies.filters.genres.99") },
-        { id: "18", name: t("movies.filters.genres.18") },
-        { id: "10751", name: t("movies.filters.genres.10751") },
-        { id: "14", name: t("movies.filters.genres.14") },
-        { id: "36", name: t("movies.filters.genres.36") },
-        { id: "27", name: t("movies.filters.genres.27") },
-        { id: "10402", name: t("movies.filters.genres.10402") },
-        { id: "9648", name: t("movies.filters.genres.9648") },
-        { id: "10749", name: t("movies.filters.genres.10749") },
-        { id: "878", name: t("movies.filters.genres.878") },
-        { id: "10770", name: t("movies.filters.genres.10770") },
-        { id: "53", name: t("movies.filters.genres.53") },
-        { id: "10752", name: t("movies.filters.genres.10752") },
-        { id: "37", name: t("movies.filters.genres.37") },
-    ];
-
-    const countries = [
-        { code: "", name: t("movies.filters.country"), disabled: true },
-        { code: "US", name: t("movies.filters.countries.US") },
-        { code: "FR", name: t("movies.filters.countries.FR") },
-        { code: "JP", name: t("movies.filters.countries.JP") },
-        { code: "IR", name: t("movies.filters.countries.IR") },
-        { code: "GB", name: t("movies.filters.countries.GB") },
-        { code: "DE", name: t("movies.filters.countries.DE") },
-        { code: "CA", name: t("movies.filters.countries.CA") },
-        { code: "IT", name: t("movies.filters.countries.IT") },
-        { code: "ES", name: t("movies.filters.countries.ES") },
-        { code: "AU", name: t("movies.filters.countries.AU") },
-        { code: "KR", name: t("movies.filters.countries.KR") },
-        { code: "CN", name: t("movies.filters.countries.CN") },
-        { code: "IN", name: t("movies.filters.countries.IN") },
-        { code: "BR", name: t("movies.filters.countries.BR") },
-        { code: "RU", name: t("movies.filters.countries.RU") },
-        { code: "MX", name: t("movies.filters.countries.MX") },
-        { code: "SE", name: t("movies.filters.countries.SE") },
-        { code: "NL", name: t("movies.filters.countries.NL") },
-    ];
-
-    const sortOptions = [
-        { value: "", label: t("movies.filters.sort"), disabled: true },
-        {
-            value: "popularity.desc",
-            label: t("movies.filters.sortOptions.popularity"),
-        },
-        {
-            value: "release_date.desc",
-            label: t("movies.filters.sortOptions.release_date"),
-        },
-        {
-            value: "vote_average.desc",
-            label: t("movies.filters.sortOptions.vote_average"),
-        },
-    ];
 
     const years = [
         {
@@ -127,11 +80,61 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         ...yearsList.map((y) => ({ value: y, label: y })),
     ];
 
-    const [filters, setFilters] = useState(defaultValues);
+    const [filters, setFilters] = useState({
+        ...defaultValues,
+        genre: defaultValues.genre || [],
+    });
 
     useEffect(() => {
-        setFilters(defaultValues);
+        setFilters({
+            ...defaultValues,
+            genre: defaultValues.genre || [],
+        });
     }, [defaultValues]);
+
+    const renderGenreListbox = (genres: GenreOption[]) => (
+        <div className={dropdownClass}>
+            <Listbox
+                value={filters.genre}
+                onChange={(selectedGenres: GenreOption[]) => {
+                    setFilters((prev) => ({
+                        ...prev,
+                        genre: selectedGenres,
+                    }));
+                }}
+                multiple
+            >
+                <div className="relative">
+                    <Listbox.Button className={listboxButtonClass}>
+                        {filters?.genre?.length > 0
+                            ? filters.genre[filters.genre.length - 1].name
+                            : t("movies.filters.genre")}
+                        <ChevronDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 pointer-events-none" />
+                    </Listbox.Button>
+                    <Listbox.Options className="absolute mt-1 w-full max-h-60 overflow-auto bg-white dark:bg-gray-800 rounded-lg shadow-md z-20">
+                        {genres.map((opt) => (
+                            <Listbox.Option
+                                key={opt.id}
+                                value={opt}
+                                disabled={opt.disabled}
+                                className={listboxOptionClass}
+                            >
+                                <span
+                                    className={clsx(
+                                        filters.genre.some(
+                                            (g) => g.id === opt.id
+                                        ) && "font-semibold"
+                                    )}
+                                >
+                                    {opt.name}
+                                </span>
+                            </Listbox.Option>
+                        ))}
+                    </Listbox.Options>
+                </div>
+            </Listbox>
+        </div>
+    );
 
     const renderListbox = (
         value: string,
@@ -186,9 +189,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
 
     return (
         <div className="flex flex-col my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
-            {/* بخش فیلترها و دکمه ریست */}
             <div className="flex flex-col md:flex-row md:flex-wrap gap-4 justify-center items-center w-full">
-                {/* جستجو */}
                 <div className="relative">
                     <input
                         type="text"
@@ -202,25 +203,45 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
                 </div>
 
-                {/* فیلترها */}
-                {renderListbox(filters.genre, genres, "genre")}
+                {renderGenreListbox(genres)}
                 {renderListbox(filters.country, countries, "country")}
                 {renderListbox(filters.sortBy, sortOptions, "sortBy")}
                 {renderListbox(filters.year, years, "year")}
-
-                {/* دکمه ریست */}
+                <div className="block md:hidden">
+                    <GenreTags
+                        filters={filters}
+                        setFilters={setFilters}
+                        genres={genres}
+                    />
+                </div>
                 <button
                     onClick={() => {
                         setFilters(emptyValues);
                         onSubmit(emptyValues);
+                        router.push(
+                            {
+                                pathname: "/movies",
+                                query: {
+                                    page: 1,
+                                },
+                            },
+                            undefined,
+                            { shallow: true }
+                        );
                     }}
                     className="md:mt-0 w-60 md:w-auto flex items-center justify-center px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 group"
                 >
                     <RotateCw className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" />
                 </button>
             </div>
+            <div className="hidden md:block">
+                <GenreTags
+                    filters={filters}
+                    setFilters={setFilters}
+                    genres={genres}
+                />
+            </div>
 
-            {/* دکمه جستجو */}
             <div className="w-60 flex  justify-end md:justify-center">
                 <button
                     onClick={() => onSubmit(filters)}

@@ -38,7 +38,7 @@ interface MovieFilterProps {
 const inputClass =
     "w-60 appearance-none px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 text-sm";
 
-const dropdownClass = "relative w-60 text-sm z-100";
+const dropdownClass = "outline-none relative w-60 text-sm z-100";
 
 const listboxButtonClass =
     "w-60 py-2 pl-4 pr-10  rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
@@ -96,15 +96,19 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         });
     }, [defaultValues]);
 
+    const [listboxKey, setListboxKey] = useState(0);
+
     const renderGenreListbox = (genres: GenreOption[]) => (
         <div className={dropdownClass}>
             <Listbox
+                key={listboxKey}
                 value={filters.genre}
                 onChange={(selectedGenres: GenreOption[]) => {
                     setFilters((prev) => ({
                         ...prev,
                         genre: selectedGenres,
                     }));
+                    setListboxKey((prev) => prev + 1);
                 }}
                 multiple
             >

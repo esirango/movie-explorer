@@ -6,9 +6,9 @@ import clsx from "clsx";
 import GenreTags from "./GenreTags";
 import { useRouter } from "next/router";
 import {
-    countries,
-    genres,
-    sortOptions,
+    getGenres,
+    getCountries,
+    getSortOptions,
 } from "../../../store/filters/movieFilterData";
 
 export interface GenreOption {
@@ -62,6 +62,10 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
         (currentYear - i).toString()
     );
+
+    const genres = getGenres(t);
+    const countries = getCountries(t);
+    const sortOptions = getSortOptions(t);
 
     const emptyValues = {
         query: "",

@@ -9,7 +9,8 @@ import { useRouter } from "next/router";
 import MovieFilter from "../../components/movies/filters/MovieFilter";
 import MovieCardSkeleton from "../../components/movies/shimmer/MovieCardSkeleton";
 import { useMovies } from "../api/hooks/tmdb/useMovies";
-import { genres } from "../../store/filters/movieFilterData";
+import { getGenres } from "../../store/filters/movieFilterData";
+import { useLanguage } from "../../lang/LanguageContext";
 interface GenreOption {
     id: string;
     name: string;
@@ -19,8 +20,11 @@ interface GenreOption {
 const MoviesPage = () => {
     const router = useRouter();
     const { query } = router;
+    const { t } = useLanguage();
 
     const [page, setPage] = useState(1);
+
+    const genres = getGenres(t);
 
     const parseGenreFromQuery = (
         genreQuery: string | string[] | undefined

@@ -1,57 +1,61 @@
-import { GenreOption } from "../../components/movies/filters/MovieFilter";
-
-export const genres: GenreOption[] = [
-    { id: "", name: "Genre", disabled: true },
-    { id: "28", name: "Action" },
-    { id: "12", name: "Adventure" },
-    { id: "16", name: "Animation" },
-    { id: "35", name: "Comedy" },
-    { id: "80", name: "Crime" },
-    { id: "99", name: "Documentary" },
-    { id: "18", name: "Drama" },
-    { id: "10751", name: "Family" },
-    { id: "14", name: "Fantasy" },
-    { id: "36", name: "History" },
-    { id: "27", name: "Horror" },
-    { id: "10402", name: "Music" },
-    { id: "9648", name: "Mystery" },
-    { id: "10749", name: "Romance" },
-    { id: "878", name: "Science Fiction" },
-    { id: "10770", name: "TV Movie" },
-    { id: "53", name: "Thriller" },
-    { id: "10752", name: "War" },
-    { id: "37", name: "Western" },
+// filtersOptions.ts
+export const getGenres = (t: (key: string) => string) => [
+    { id: "", name: t("movies.filters.genre"), disabled: true },
+    { id: "28", name: t("movies.filters.genres.28") },
+    { id: "12", name: t("movies.filters.genres.12") },
+    { id: "16", name: t("movies.filters.genres.16") },
+    { id: "35", name: t("movies.filters.genres.35") },
+    { id: "80", name: t("movies.filters.genres.80") },
+    { id: "99", name: t("movies.filters.genres.99") },
+    { id: "18", name: t("movies.filters.genres.18") },
+    { id: "10751", name: t("movies.filters.genres.10751") },
+    { id: "14", name: t("movies.filters.genres.14") },
+    { id: "36", name: t("movies.filters.genres.36") },
+    { id: "27", name: t("movies.filters.genres.27") },
+    { id: "10402", name: t("movies.filters.genres.10402") },
+    { id: "9648", name: t("movies.filters.genres.9648") },
+    { id: "10749", name: t("movies.filters.genres.10749") },
+    { id: "878", name: t("movies.filters.genres.878") },
+    { id: "10770", name: t("movies.filters.genres.10770") },
+    { id: "53", name: t("movies.filters.genres.53") },
+    { id: "10752", name: t("movies.filters.genres.10752") },
+    { id: "37", name: t("movies.filters.genres.37") },
 ];
 
-// کشورها
-export const countries = [
-    { code: "", name: "Country", disabled: true },
-    { code: "US", name: "United States" },
-    { code: "FR", name: "France" },
-    { code: "JP", name: "Japan" },
-    { code: "IR", name: "Iran" },
-    { code: "GB", name: "United Kingdom" },
-    { code: "DE", name: "Germany" },
-    { code: "CA", name: "Canada" },
-    { code: "IT", name: "Italy" },
-    { code: "ES", name: "Spain" },
-    { code: "AU", name: "Australia" },
-    { code: "KR", name: "South Korea" },
-    { code: "CN", name: "China" },
-    { code: "IN", name: "India" },
-    { code: "BR", name: "Brazil" },
-    { code: "RU", name: "Russia" },
-    { code: "MX", name: "Mexico" },
-    { code: "SE", name: "Sweden" },
-    { code: "NL", name: "Netherlands" },
+export const getCountries = (t: (key: string) => string) => [
+    { code: "", name: t("movies.filters.country"), disabled: true },
+    { code: "US", name: t("movies.filters.countries.US") },
+    { code: "FR", name: t("movies.filters.countries.FR") },
+    { code: "JP", name: t("movies.filters.countries.JP") },
+    { code: "IR", name: t("movies.filters.countries.IR") },
+    { code: "GB", name: t("movies.filters.countries.GB") },
+    { code: "DE", name: t("movies.filters.countries.DE") },
+    { code: "CA", name: t("movies.filters.countries.CA") },
+    { code: "IT", name: t("movies.filters.countries.IT") },
+    { code: "ES", name: t("movies.filters.countries.ES") },
+    { code: "AU", name: t("movies.filters.countries.AU") },
+    { code: "KR", name: t("movies.filters.countries.KR") },
+    { code: "CN", name: t("movies.filters.countries.CN") },
+    { code: "IN", name: t("movies.filters.countries.IN") },
+    { code: "BR", name: t("movies.filters.countries.BR") },
+    { code: "RU", name: t("movies.filters.countries.RU") },
+    { code: "MX", name: t("movies.filters.countries.MX") },
+    { code: "SE", name: t("movies.filters.countries.SE") },
+    { code: "NL", name: t("movies.filters.countries.NL") },
 ];
 
-// گزینه‌های مرتب‌سازی
-export const sortOptions = [
-    { value: "", label: "Sort", disabled: true },
-    { value: "popularity.desc", label: "Popularity" },
-    { value: "release_date.desc", label: "Release Date" },
-    { value: "vote_average.desc", label: "Vote Average" },
+export const getSortOptions = (t: (key: string) => string) => [
+    { value: "", label: t("movies.filters.sort"), disabled: true },
+    {
+        value: "popularity.desc",
+        label: t("movies.filters.sortOptions.popularity"),
+    },
+    {
+        value: "release_date.desc",
+        label: t("movies.filters.sortOptions.release_date"),
+    },
+    {
+        value: "vote_average.desc",
+        label: t("movies.filters.sortOptions.vote_average"),
+    },
 ];
-
-// سال‌ها رو در کامپوننت می‌سازی چون مقدارش داینامیکه، اما اگر خواستی میتونی اینم جدا کنی

@@ -28,14 +28,19 @@ const LanguageContext = createContext<LanguageContextProps>({
 });
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-    const [language, setLanguage] = useState<Language>("en");
+    const [language, setLanguageState] = useState<Language>("en");
 
     useEffect(() => {
         const lang = Cookies.get("lang");
         if (lang === "en" || lang === "fa") {
-            setLanguage(lang);
+            setLanguageState(lang);
         }
     }, []);
+
+    const setLanguage = (lang: Language) => {
+        setLanguageState(lang);
+        Cookies.set("lang", lang); // 👈 ذخیره در کوکی
+    };
 
     const t = (key: string): string => {
         const keys = key.split(".");
@@ -47,7 +52,6 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
         }
 
         if (Array.isArray(text)) return text.join(", ");
-
         return text;
     };
 

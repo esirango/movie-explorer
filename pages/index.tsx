@@ -6,13 +6,13 @@ import Landing from "../components/landing/Landing";
 import { useTrendingMovies } from "./api/hooks/tmdb/useTrendingMovies";
 
 export default function Home() {
-    const { trendingMovies } = useTrendingMovies();
+    const { trendingMovies, isLoading } = useTrendingMovies();
 
     return (
         <div className="relative min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 overflow-x-hidden">
             <Navbar />
             <Landing />
-            <TrendingMovies sampleMovies={trendingMovies} />
+            <TrendingMovies sampleMovies={trendingMovies} loading={isLoading} />
             <Footer />
         </div>
     );

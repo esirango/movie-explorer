@@ -3,12 +3,14 @@ import MovieCard from "./MovieCard";
 import { useLanguage } from "../../lang/LanguageContext";
 import { Movie } from "../../types/movie";
 import NotFoundMovie from "../movies/NotFoundMovie";
+import { LoadingSpinner } from "../Loading";
 
 interface HomeProps {
     sampleMovies: Movie[];
+    loading: boolean;
 }
 
-function TrendingMovies({ sampleMovies = [] }: HomeProps) {
+function TrendingMovies({ sampleMovies = [], loading }: HomeProps) {
     const { t } = useLanguage();
     return (
         <section className="bg-gray-100 dark:bg-gray-800 py-16">
@@ -22,7 +24,7 @@ function TrendingMovies({ sampleMovies = [] }: HomeProps) {
                 {sampleMovies.length > 0 ? (
                     sampleMovies
                         .slice(0, 6)
-                        .map((movie, idx) => (
+                        .map((movie) => (
                             <MovieCard
                                 id={movie.id}
                                 key={movie.id}
@@ -30,6 +32,8 @@ function TrendingMovies({ sampleMovies = [] }: HomeProps) {
                                 poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             />
                         ))
+                ) : loading ? (
+                    <LoadingSpinner />
                 ) : (
                     <NotFoundMovie />
                 )}

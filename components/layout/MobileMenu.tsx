@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
@@ -38,6 +38,29 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     const closeMenu = () => setIsOpen(false);
     const [avatarLoading, setAvatarLoading] = useState(true);
 
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpen]);
+
     const getTextClassName = (href: string) =>
         router.pathname === href
             ? "font-semibold text-indigo-900 dark:text-indigo-300"
@@ -56,6 +79,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
     return (
         <motion.div
+            ref={menuRef}
             initial={{ opacity: 0, y: -20 }}
             animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}

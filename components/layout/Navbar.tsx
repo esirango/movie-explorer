@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
@@ -16,6 +16,10 @@ const Navbar: React.FC = () => {
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
     const { user, token, tokenLoading, logout } = useAuthStore();
+
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const [avatarLoading, setAvatarLoading] = useState<boolean>(true);
 
@@ -136,32 +140,36 @@ const Navbar: React.FC = () => {
                 {/* موبایل */}
                 <div className="md:hidden flex items-center space-x-3">
                     <ThemeToggle />
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="relative z-50 flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
-                        aria-label={isOpen ? "Close menu" : "Open menu"}
-                    >
-                        <motion.span
-                            animate={
-                                isOpen
-                                    ? { rotate: 45, y: 6 }
-                                    : { rotate: 0, y: 0 }
-                            }
-                            className="w-6 h-[2px] bg-indigo-500 mb-1 origin-center rounded"
-                        />
-                        <motion.span
-                            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-                            className="w-6 h-[2px] bg-indigo-500 mb-1 rounded"
-                        />
-                        <motion.span
-                            animate={
-                                isOpen
-                                    ? { rotate: -45, y: -6 }
-                                    : { rotate: 0, y: 0 }
-                            }
-                            className="w-6 h-[2px] bg-indigo-500 rounded"
-                        />
-                    </button>
+                    <div ref={menuRef} onClick={() => setIsOpen(!isOpen)}>
+                        <button
+                            ref={menuButtonRef}
+                            className="relative z-50 flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
+                            aria-label={isOpen ? "Close menu" : "Open menu"}
+                        >
+                            <motion.span
+                                animate={
+                                    isOpen
+                                        ? { rotate: 45, y: 6 }
+                                        : { rotate: 0, y: 0 }
+                                }
+                                className="w-6 h-[2px] bg-indigo-500 mb-1 origin-center rounded"
+                            />
+                            <motion.span
+                                animate={
+                                    isOpen ? { opacity: 0 } : { opacity: 1 }
+                                }
+                                className="w-6 h-[2px] bg-indigo-500 mb-1 rounded"
+                            />
+                            <motion.span
+                                animate={
+                                    isOpen
+                                        ? { rotate: -45, y: -6 }
+                                        : { rotate: 0, y: 0 }
+                                }
+                                className="w-6 h-[2px] bg-indigo-500 rounded"
+                            />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -175,6 +183,7 @@ const Navbar: React.FC = () => {
                         iconClassName={iconClassName}
                         tokenLoading={tokenLoading}
                         defaultAvatar={defaultAvatar}
+                        menuButtonRef={menuButtonRef}
                         setIsOpen={setIsOpen}
                         onLogout={handleLogout}
                     />

@@ -20,6 +20,7 @@ interface MobileMenuProps {
     tokenLoading: boolean;
     iconClassName: string;
     defaultAvatar: string;
+    menuButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -31,6 +32,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     tokenLoading,
     iconClassName,
     defaultAvatar,
+    menuButtonRef,
 }) => {
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
@@ -42,9 +44,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
+
             if (
                 menuRef.current &&
-                !menuRef.current.contains(event.target as Node)
+                !menuRef.current.contains(target) &&
+                (!menuButtonRef.current ||
+                    !menuButtonRef.current.contains(target))
             ) {
                 setIsOpen(false);
             }
@@ -52,14 +58,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
         if (isOpen) {
             document.addEventListener("mousedown", handleClickOutside);
-        } else {
-            document.removeEventListener("mousedown", handleClickOutside);
         }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [isOpen]);
+    }, [isOpen, menuButtonRef]);
 
     const getTextClassName = (href: string) =>
         router.pathname === href

@@ -9,24 +9,34 @@ import Cookies from "js-cookie";
 import { useCurrentUser } from "./api/hooks/useAuth";
 
 export default function App({ Component, pageProps }) {
-    const { token, setToken, setUser, logout } = useAuthStore();
+    const { token, setToken, setUser, logout, setTokenLoading, tokenLoading } =
+        useAuthStore();
 
-    const { user }: { user: User | any } = useCurrentUser();
+    const { user, isLoading }: { user: User | any; isLoading: boolean } =
+        useCurrentUser();
+
+    console.log(tokenLoading);
+
+    const cookieToken = Cookies.get("token");
 
     useEffect(() => {
-        const t = Cookies.get("token");
-        if (t) {
-            setToken(t);
+        if (cookieToken) {
+            setTokenLoading(true);
+            setToken(cookieToken);
+            if (!isLoading) {
+                setTokenLoading(false);
+            }
         } else {
+            setTokenLoading(false);
             logout();
         }
-    }, [token, Cookies.get("token")]);
+    }, [token, cookieToken, isLoading]);
 
     useEffect(() => {
         if (user && token) {
             setUser(user);
         }
-    }, [user]);
+    }, [user, token]);
 
     return (
         <LanguageProvider>

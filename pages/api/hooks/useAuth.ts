@@ -14,7 +14,7 @@ interface User {
 export function useCurrentUser() {
     const token = typeof window !== "undefined" ? Cookies.get("token") : null;
 
-    const { data, error, mutate } = useSWR<User>(
+    const { data, error, mutate, isLoading } = useSWR<User>(
         token ? "/api/auth/me" : null,
         fetcher,
         { revalidateOnFocus: false }
@@ -22,7 +22,7 @@ export function useCurrentUser() {
 
     return {
         user: data,
-        isLoading: !error && !data && !!token,
+        isLoading: isLoading,
         isError: error,
         mutate,
     };

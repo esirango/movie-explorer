@@ -15,9 +15,13 @@ const Navbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
     const { language, setLanguage, t } = useLanguage();
-    const { user, token, logout } = useAuthStore();
+    const { user, token, tokenLoading, logout } = useAuthStore();
+
+    const [avatarLoading, setAvatarLoading] = useState<boolean>(true);
 
     const iconClassName = "text-indigo-600 dark:text-indigo-400";
+
+    const defaultAvatar = "/assets/images/avatars/4.png";
 
     const handleLogout = () => {
         Cookies.remove("token");
@@ -78,44 +82,54 @@ const Navbar: React.FC = () => {
                         {t("header.links")}
                     </Link>
 
-                    {token && user ? (
-                        <div className="flex items-center ">
-                            <img
-                                src={user?.avatar}
-                                alt={t("auth.previewAvatarAlt")}
-                                className="w-10 h-10 cursor-pointer rounded-full border-2 border-indigo-500 object-cover"
-                            />
+                    {tokenLoading ? (
+                        <div className="w-10 h-10 rounded-full border-2 border-indigo-500 animate-pulse bg-gray-700"></div>
+                    ) : !tokenLoading && user && token ? (
+                        <div className="flex items-center gap-3">
+                            <div className="relative w-10 h-10">
+                                {avatarLoading && (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-6 h-6 border-2 border-t-indigo-500 border-indigo-200 rounded-full animate-spin"></div>
+                                    </div>
+                                )}
+                                <img
+                                    src={
+                                        user?.avatar && !avatarLoading
+                                            ? user.avatar
+                                            : defaultAvatar
+                                    }
+                                    alt={t("auth.previewAvatarAlt")}
+                                    onLoad={() => setAvatarLoading(false)}
+                                    onError={() => setAvatarLoading(false)}
+                                    className={`w-10 h-10 cursor-pointer rounded-full border-2 border-indigo-500 object-cover transition-opacity duration-300  ${
+                                        avatarLoading
+                                            ? "opacity-0"
+                                            : "opacity-100"
+                                    }`}
+                                />
+                            </div>
 
                             <button
-                                onClick={() => {
-                                    handleLogout();
-                                }}
-                                className="group flex items-center gap-1 px-5  cursor-pointer transition-colors duration-200"
+                                onClick={() => handleLogout()}
+                                className="group flex items-center gap-1 px-5 cursor-pointer transition-colors duration-200"
                             >
                                 <LogOutIcon
                                     className={`${iconClassName} group-hover:text-indigo-800`}
                                 />
-                                <span className="font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-800 group-hover:underline decoration-current"></span>
                             </button>
                         </div>
                     ) : (
-                        <>
-                            <div className="flex items-center gap-5">
-                                {authLinks.map(({ href, icon }) => {
-                                    return (
-                                        <Link
-                                            key={href}
-                                            href={href}
-                                            className={`font-medium ${isActive(
-                                                href
-                                            )}`}
-                                        >
-                                            {icon}
-                                        </Link>
-                                    );
-                                })}
-                            </div>
-                        </>
+                        <div className="flex items-center gap-5">
+                            {authLinks.map(({ href, icon }) => (
+                                <Link
+                                    key={href}
+                                    href={href}
+                                    className={`font-medium ${isActive(href)}`}
+                                >
+                                    {icon}
+                                </Link>
+                            ))}
+                        </div>
                     )}
                 </div>
 
@@ -159,6 +173,8 @@ const Navbar: React.FC = () => {
                         token={token}
                         isOpen={isOpen}
                         iconClassName={iconClassName}
+                        tokenLoading={tokenLoading}
+                        defaultAvatar={defaultAvatar}
                         setIsOpen={setIsOpen}
                         onLogout={handleLogout}
                     />

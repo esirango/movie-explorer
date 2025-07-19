@@ -6,7 +6,6 @@
         "register": "Register",
         "login": "Login",
         "logout": "logout",
-        "errorInRegisterMsg": "Registration error, please try again",
         "previewAvatarAlt": "Profile picture preview",
         "addAvatarTitle": "Add picture",
         "registerTitle": "Register at CozyMovie",
@@ -15,7 +14,10 @@
         "loginOrder": "Login",
         "loginTitle": "Log in to the world of cinema",
         "loggingIn": "Logging in...",
+        "errorInRegisterMsg": "Registration error, please try again",
         "errorInLoginMsg": "Login error, please try again",
+        "successInRegisterMsg": "You have successfully signed up. Welcome",
+        "successInLoginMsg": "Login successful. Welcome back",
         "noAccount": "Don't have an account?",
         "registerOrder": "Sign up",
         "fields": {

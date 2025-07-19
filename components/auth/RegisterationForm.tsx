@@ -10,6 +10,7 @@ import Password from "./fields/Password";
 import Username from "./fields/Username";
 import UploadAvatar from "./fields/UploadAvatar";
 import useAuthStore from "../../store/useAuthStore";
+import toast from "react-hot-toast";
 
 interface RegisterFormInputs {
     email: string;
@@ -76,10 +77,14 @@ const RegisterForm = () => {
                 data.username,
                 data.avatar
             );
-
+            toast.success(t("auth.successInRegisterMsg"));
             router.push("/");
         } catch (error) {
-            alert(error?.response?.data?.msg);
+            toast.error(
+                error.response.data.msg
+                    ? error.response.data.msg
+                    : t("auth.errorInLoginMsg")
+            );
         }
     };
 

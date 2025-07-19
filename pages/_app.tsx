@@ -7,6 +7,7 @@ import Head from "next/head";
 import useAuthStore, { User } from "../store/useAuthStore";
 import Cookies from "js-cookie";
 import { useCurrentUser } from "./api/hooks/useAuth";
+import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }) {
     const { token, setToken, setUser, logout, setTokenLoading, tokenLoading } =
@@ -51,6 +52,29 @@ export default function App({ Component, pageProps }) {
                     showOnShallow={true}
                 />
                 <Component {...pageProps} />
+                <Toaster
+                    position="top-center"
+                    toastOptions={{
+                        className: `
+          px-4 py-3 rounded-2xl shadow-md border
+          bg-white text-black border-gray-300
+          dark:bg-zinc-800 dark:text-white dark:border-zinc-700
+        `,
+                        duration: 4000,
+                        success: {
+                            iconTheme: {
+                                primary: "#10b981",
+                                secondary: "#fff",
+                            },
+                        },
+                        error: {
+                            iconTheme: {
+                                primary: "#ef4444",
+                                secondary: "#fff",
+                            },
+                        },
+                    }}
+                />
             </ThemeProvider>
         </LanguageProvider>
     );

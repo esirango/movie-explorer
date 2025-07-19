@@ -8,6 +8,7 @@ import { useLanguage } from "../../lang/LanguageContext";
 import Email from "./fields/Email";
 import Password from "./fields/Password";
 import useAuthStore from "../../store/useAuthStore";
+import toast from "react-hot-toast";
 
 interface LoginFormInputs {
     email: string;
@@ -39,9 +40,14 @@ const LoginPage = () => {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             await login(data.email, data.password);
+            toast.success(t("auth.successInLoginMsg"));
             router.push("/");
         } catch (error) {
-            alert(error?.response?.data?.msg);
+            toast.error(
+                error.response.data.msg
+                    ? error.response.data.msg
+                    : t("auth.errorInLoginMsg")
+            );
         }
     };
 

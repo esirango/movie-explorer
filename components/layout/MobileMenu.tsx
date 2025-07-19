@@ -105,40 +105,46 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                         <div className="w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse ml-auto" />
                     </div>
                 ) : token && user ? (
-                    <div className="flex justify-between items-center px-6 py-4">
-                        <div className="relative w-10 h-10">
-                            {avatarLoading && (
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="w-5 h-5 border-2 border-t-indigo-500 border-indigo-200 rounded-full animate-spin"></div>
-                                </div>
+                    <div className="flex items-center px-6 py-4">
+                        {/* Avatar + Username */}
+                        <div className="flex items-center gap-3">
+                            <div className="relative w-10 h-10 shrink-0">
+                                {avatarLoading && (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-5 h-5 border-2 border-t-indigo-500 border-indigo-200 rounded-full animate-spin"></div>
+                                    </div>
+                                )}
+                                <img
+                                    src={
+                                        user?.avatar && !avatarLoading
+                                            ? user.avatar
+                                            : defaultAvatar
+                                    }
+                                    alt={t("auth.previewAvatarAlt")}
+                                    onLoad={() => setAvatarLoading(false)}
+                                    onError={() => setAvatarLoading(false)}
+                                    className={`w-10 h-10 rounded-full border-2 border-indigo-500 object-cover transition-opacity duration-300 ${
+                                        avatarLoading
+                                            ? "opacity-0"
+                                            : "opacity-100"
+                                    }`}
+                                />
+                            </div>
+
+                            {!avatarLoading && (
+                                <span className="font-semibold text-indigo-600 dark:text-indigo-400 truncate">
+                                    {user?.username}
+                                </span>
                             )}
-                            <img
-                                src={
-                                    user?.avatar && !avatarLoading
-                                        ? user.avatar
-                                        : defaultAvatar
-                                }
-                                alt={t("auth.previewAvatarAlt")}
-                                onLoad={() => setAvatarLoading(false)}
-                                onError={() => setAvatarLoading(false)}
-                                className={`w-10 h-10 rounded-full border-2 border-indigo-500 object-cover transition-opacity duration-300 ${
-                                    avatarLoading ? "opacity-0" : "opacity-100"
-                                }`}
-                            />
                         </div>
 
-                        {!avatarLoading && (
-                            <span className="font-semibold text-indigo-600 dark:text-indigo-400 truncate ml-3">
-                                {user?.username}
-                            </span>
-                        )}
-
+                        {/* Logout Button */}
                         <button
                             onClick={() => {
                                 onLogout();
                                 closeMenu();
                             }}
-                            className="group flex items-center gap-2 ml-auto"
+                            className="group flex items-center gap-2 ms-auto"
                         >
                             <LogOutIcon
                                 className={`${iconClassName} group-hover:text-indigo-800`}

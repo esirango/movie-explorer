@@ -114,27 +114,31 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                                         <div className="w-5 h-5 border-2 border-t-indigo-500 border-indigo-200 rounded-full animate-spin"></div>
                                     </div>
                                 )}
-                                <img
-                                    src={
-                                        user?.avatar && !avatarLoading
-                                            ? user.avatar
-                                            : defaultAvatar
-                                    }
-                                    alt={t("auth.previewAvatarAlt")}
-                                    onLoad={() => setAvatarLoading(false)}
-                                    onError={() => setAvatarLoading(false)}
-                                    className={`w-10 h-10 rounded-full border-2 border-indigo-500 object-cover transition-opacity duration-300 ${
-                                        avatarLoading
-                                            ? "opacity-0"
-                                            : "opacity-100"
-                                    }`}
-                                />
+                                <Link href={"/panel"}>
+                                    <img
+                                        src={
+                                            user?.avatar && !avatarLoading
+                                                ? user.avatar
+                                                : defaultAvatar
+                                        }
+                                        alt={t("auth.previewAvatarAlt")}
+                                        onLoad={() => setAvatarLoading(false)}
+                                        onError={() => setAvatarLoading(false)}
+                                        className={`w-10 h-10 rounded-full border-2 border-indigo-500 object-cover transition-opacity duration-300 ${
+                                            avatarLoading
+                                                ? "opacity-0"
+                                                : "opacity-100"
+                                        }`}
+                                    />
+                                </Link>
                             </div>
 
                             {!avatarLoading && (
-                                <span className="font-semibold text-indigo-600 dark:text-indigo-400 truncate">
-                                    {user?.username}
-                                </span>
+                                <Link href={"/panel"}>
+                                    <span className="font-semibold text-indigo-600 dark:text-indigo-400 truncate">
+                                        {user?.username}
+                                    </span>
+                                </Link>
                             )}
                         </div>
 

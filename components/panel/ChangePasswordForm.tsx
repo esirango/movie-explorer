@@ -14,7 +14,7 @@ const ChangePasswordForm = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white dark:bg-gray-800 shadow p-4 rounded"
+            className="bg-white dark:bg-gray-800 shadow p-4 rounded w-1/2"
         >
             <h3 className="text-lg font-bold mb-4">
                 {t("panel.changePassword")}

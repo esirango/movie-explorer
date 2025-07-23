@@ -25,7 +25,7 @@ const UserInfoCard = ({ user }: Props) => {
     };
 
     return (
-        <div className="bg-white dark:bg-gray-800 shadow p-4 rounded mb-6">
+        <div className="bg-white dark:bg-gray-800 shadow p-4 rounded mb-6 w-1/2">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                     <label className="block font-semibold mb-1">

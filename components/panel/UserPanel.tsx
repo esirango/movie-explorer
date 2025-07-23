@@ -11,21 +11,21 @@ const UserPanel = () => {
     const { user, isLoading, isError, mutate } = useCurrentUser();
     const { t } = useLanguage();
 
-    if (!isLoading)
+    if (isLoading)
         return (
-            <div className=" max-w-3xl min-h-[100vh] mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
+            <div className="h-screen mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
                 <LoadingSpinner />
             </div>
         );
     if (isError || !user)
         return (
-            <div className="p-6 max-w-3xl max-h-[100vh] mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
+            <div className="p-6 max-h-[100vh] mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
                 <PanelError retry={() => mutate()} />
             </div>
         );
 
     return (
-        <div className="p-6 max-w-3xl mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
+        <div className="p-6 mx-auto flex flex-col justify-center items-center text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
             <h2 className="text-2xl font-bold mb-6 text-center">
                 {t("panel.title")}
             </h2>

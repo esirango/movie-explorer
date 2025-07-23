@@ -70,7 +70,7 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
                     </button>
                     <button
                         onClick={handleCancel}
-                        className="bg-gray-400 text-white px-4 py-1 rounded hover:bg-gray-500 transition"
+                        className="bg-gray-100 dark:bg-gray-600 dark:text-white px-4 py-1 rounded hover:bg-gray-50 dark:hover:bg-gray-500 transition"
                     >
                         {t("cancel")}
                     </button>

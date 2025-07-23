@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../lang/LanguageContext";
 import { useCurrentUser } from "../../pages/api/hooks/useAuth";
 import AvatarSelector from "./AvatarSelector";
@@ -8,8 +8,17 @@ import { LoadingSpinner } from "../Loading";
 import PanelError from "./PanelError";
 
 const UserPanel = () => {
+    const [isClient, setIsClient] = useState(false);
     const { user, isLoading, isError, mutate } = useCurrentUser();
     const { t } = useLanguage();
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null;
+    }
 
     if (isLoading)
         return (

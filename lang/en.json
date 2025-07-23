@@ -143,6 +143,10 @@
         "tryAgainLater": "Please try again later.",
         "backHome": "Back to Home"
     },
+    "notFoundMovie": {
+        "title": "No movies found",
+        "description": "Try adjusting your search or filters."
+    },
     "footer": {
         "firstText": "Made With",
         "secondText": "by esirango"

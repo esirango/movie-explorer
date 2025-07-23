@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Footer from "../../components/layout/Footer";
 import Pagination from "../../components/movies/Pagination";
 import Navbar from "../../components/layout/Navbar";
-import NotFoundMovie from "../../components/movies/NotFoundMovie";
 import MovieCard from "../../components/movies/MovieCard";
 import LandingMovieSlider from "../../components/movies/landingMoviesSlider";
 import { useRouter } from "next/router";
@@ -11,6 +10,7 @@ import MovieCardSkeleton from "../../components/movies/shimmer/MovieCardSkeleton
 import { useMovies } from "../api/hooks/tmdb/useMovies";
 import { getGenres } from "../../store/filters/movieFilterData";
 import { useLanguage } from "../../lang/LanguageContext";
+import GenericError from "../../components/error/GenericError";
 interface GenreOption {
     id: string;
     name: string;
@@ -164,7 +164,11 @@ const MoviesPage = () => {
                         ))}
                     </div>
                 ) : isError || movies.length === 0 ? (
-                    <NotFoundMovie />
+                    <GenericError
+                        title={t("notFoundMovie.title")}
+                        message={t("notFoundMovie.description")}
+                        noBackground
+                    />
                 ) : (
                     <>
                         <div

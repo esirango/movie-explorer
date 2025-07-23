@@ -2,8 +2,8 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { useLanguage } from "../../lang/LanguageContext";
 import { Movie } from "../../types/movie";
-import NotFoundMovie from "../movies/NotFoundMovie";
 import { LoadingSpinner } from "../Loading";
+import GenericError from "../error/GenericError";
 
 interface HomeProps {
     sampleMovies: Movie[];
@@ -35,7 +35,11 @@ function TrendingMovies({ sampleMovies = [], loading }: HomeProps) {
                 ) : loading ? (
                     <LoadingSpinner />
                 ) : (
-                    <NotFoundMovie />
+                    <GenericError
+                        title={t("notFoundMovie.title")}
+                        message={t("notFoundMovie.description")}
+                        noBackground
+                    />
                 )}
             </div>
         </section>

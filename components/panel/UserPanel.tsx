@@ -5,7 +5,7 @@ import AvatarSelector from "./AvatarSelector";
 import UserInfoCard from "./UserInfoCard";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { LoadingSpinner } from "../Loading";
-import PanelError from "./PanelError";
+import GenericError from "../error/GenericError";
 
 const UserPanel = () => {
     const [isClient, setIsClient] = useState(false);
@@ -22,14 +22,24 @@ const UserPanel = () => {
 
     if (isLoading)
         return (
-            <div className="h-screen mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
+            <div
+                className="flex items-center justify-center h-screen
+                    bg-gray-200 dark:bg-[#1f293f] text-gray-800 dark:text-gray-200"
+            >
                 <LoadingSpinner />
             </div>
         );
+
     if (isError || !user)
         return (
-            <div className="p-6 max-h-[100vh] mx-auto text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
-                <PanelError retry={() => mutate()} />
+            <div
+                className="flex items-center justify-center h-screen
+                    bg-gray-200 dark:bg-[#1f293f] text-gray-800 dark:text-gray-200"
+            >
+                <GenericError
+                    title={t("panel.panelTitle")}
+                    message={t("panel.panelMessage")}
+                />
             </div>
         );
 

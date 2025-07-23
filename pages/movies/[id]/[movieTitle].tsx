@@ -4,16 +4,19 @@ import { LoadingSpinner } from "../../../components/Loading";
 
 import Navbar from "../../../components/layout/Navbar";
 import Footer from "../../../components/layout/Footer";
-import NotFoundMovie from "../../../components/movies/NotFoundMovie";
 import MovieBanner from "../../../components/movies/movie/MovieBanner";
 import MovieDetails from "../../../components/movies/movie/MovieDetails";
 import { useMovieDetails } from "../../api/hooks/tmdb/useMovieDetails";
 import { useSimilarMovies } from "../../api/hooks/tmdb/useSimilarMovies";
 import MovieDetailsSkeleton from "../../../components/movies/shimmer/MovieDetailSkeleton";
 import MovieBannerSkeleton from "../../../components/movies/shimmer/MovieBannerSkeleton";
+import GenericError from "../../../components/error/GenericError";
+import { useLanguage } from "../../../lang/LanguageContext";
 
 const MovieDetailPage = () => {
     const router = useRouter();
+
+    const { t } = useLanguage();
 
     if (!router.isReady) {
         return (
@@ -44,7 +47,11 @@ const MovieDetailPage = () => {
             <Navbar />
             {isError ? (
                 <div className="h-full my-32">
-                    <NotFoundMovie />
+                    <GenericError
+                        title={t("notFoundMovie.title")}
+                        message={t("notFoundMovie.description")}
+                        noBackground
+                    />
                 </div>
             ) : (
                 <>

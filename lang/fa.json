@@ -143,6 +143,10 @@
         "tryAgainLater": "لطفاً بعداً دوباره تلاش کنید.",
         "backHome": "بازگشت به خانه"
     },
+    "notFoundMovie": {
+        "title": "هیچ فیلمی یافت نشد",
+        "description": "لطفاً جستجو یا فیلترهای خود را تغییر دهید."
+    },
     "footer": {
         "firstText": "ساخته شده با",
         "secondText": "توسط esirango"

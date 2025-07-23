@@ -16,8 +16,6 @@ export default function App({ Component, pageProps }) {
     const { user, isLoading }: { user: User | any; isLoading: boolean } =
         useCurrentUser();
 
-    console.log(tokenLoading);
-
     const cookieToken = Cookies.get("token");
 
     useEffect(() => {

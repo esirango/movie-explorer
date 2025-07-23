@@ -33,6 +33,20 @@
             "formatPasswordMsg": "Enter at least 6 characters"
         }
     },
+    "panel": {
+        "title": "User Panel",
+        "username": "Username",
+        "email": "Email",
+        "changePassword": "Change Password",
+        "newPassword": "New Password",
+        "chooseAvatar": "Choose an Avatar",
+        "panelTitle": "Failed to Load Data",
+        "panelMessage": "There was a problem connecting to the server. Please try again later.",
+        "retry": "Retry",
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Edit"
+    },
     "header": {
         "links": ["Movies"]
     },
@@ -121,6 +135,13 @@
             "11": "November",
             "12": "December"
         }
+    },
+    "errorPage": {
+        "pageNotFound": "Page Not Found",
+        "pageNotFoundDesc": "The page you're looking for doesn't exist or has been removed.",
+        "somethingWentWrong": "Something went wrong!",
+        "tryAgainLater": "Please try again later.",
+        "backHome": "Back to Home"
     },
     "footer": {
         "firstText": "Made With",

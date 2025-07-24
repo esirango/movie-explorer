@@ -1,8 +1,12 @@
 import React from "react";
 
-const SpinningFilmReel = () => {
+const SpinningFilmReel = ({ size }: { size?: string }) => {
     return (
-        <div className="max-w-40 h-36 mb-6 mx-auto">
+        <div
+            className={`w-${size ? size : 40} h-${
+                size ? size : 36
+            } flex-shrink-0`}
+        >
             <svg
                 viewBox="0 0 64 64"
                 className="w-full h-full spinning-svg"
@@ -39,7 +43,6 @@ const SpinningFilmReel = () => {
                 .spinning-svg {
                     animation: spin 4s linear infinite;
                     transform-origin: 50% 50%;
-                    cursor: pointer;
                     transition: animation-duration 0.3s ease;
                 }
 
@@ -51,7 +54,6 @@ const SpinningFilmReel = () => {
                     from {
                         transform: rotate(0deg);
                     }
-
                     to {
                         transform: rotate(360deg);
                     }

@@ -35,7 +35,7 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
     };
 
     return (
-        <div className="mb-6 text-center">
+        <div className="mb-6 text-center w-full">
             <img
                 src={preview || "/avatars/default.png"}
                 alt="Avatar"

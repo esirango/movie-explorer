@@ -39,6 +39,7 @@
         "email": "Email",
         "changePassword": "Change Password",
         "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
         "chooseAvatar": "Choose an Avatar",
         "panelTitle": "Failed to Load Data",
         "panelMessage": "There was a problem connecting to the server. Please try again later.",

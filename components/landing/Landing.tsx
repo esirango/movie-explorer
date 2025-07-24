@@ -10,7 +10,7 @@ export default function Landing() {
             <InteractiveCinemaBackground />
 
             <div
-                className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full  left-1/2 top-[40%] bg-gradient-to-tr from-indigo-500 via-purple-700 to-indigo-600 opacity-60 blur-2xl"
+                className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full left-1/2 top-[40%] bg-gradient-to-tr from-indigo-500 via-purple-700 to-indigo-600 opacity-60 blur-2xl"
                 style={{
                     transform: `translate(-50%, -50%) scale(1.1)`,
                     transition: "transform 0.15s ease-out",

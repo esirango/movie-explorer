@@ -39,6 +39,7 @@
         "email": "ایمیل",
         "changePassword": "تغییر رمز عبور",
         "newPassword": "رمز عبور جدید",
+        "confirmPassword": "تایید رمز عبور",
         "chooseAvatar": "انتخاب آواتار",
         "panelTitle": "خطا در دریافت اطلاعات",
         "panelMessage": "مشکلی در ارتباط با سرور پیش آمده. لطفاً بعداً تلاش کنید.",

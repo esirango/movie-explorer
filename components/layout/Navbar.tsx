@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
         },
     ];
     return (
-        <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 sticky top-0 z-50">
+        <nav className="bg-gray-100 dark:bg-gray-800 shadow-md py-4 px-6 fixed w-full top-0 z-50">
             <div className="flex justify-between items-center">
                 {/* برند */}
                 <div className="flex gap-4 items-center">

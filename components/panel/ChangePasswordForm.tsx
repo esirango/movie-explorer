@@ -7,10 +7,10 @@ const ChangePasswordForm = () => {
 
     const { register, handleSubmit, reset, watch } = useForm();
     const newPassword = watch("password");
-    const repeatPassword = watch("repeat");
+    const confirmPassword = watch("confirm");
 
     const onSubmit = (data) => {
-        if (data.password !== data.repeat)
+        if (data.password !== data.confirm)
             return alert("Passwords do not match!");
         console.log("Password changed:", data);
         reset();
@@ -19,7 +19,7 @@ const ChangePasswordForm = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg space-y-4"
+            className="bg-white w-full dark:bg-gray-800 shadow-md p-6 rounded-lg space-y-4"
         >
             <h3 className="text-lg font-bold">{t("panel.changePassword")}</h3>
             <input
@@ -30,9 +30,9 @@ const ChangePasswordForm = () => {
             />
             <input
                 type="password"
-                {...register("repeat", { required: true })}
+                {...register("confirm", { required: true })}
                 className="w-full p-2 rounded border dark:bg-gray-700"
-                placeholder={t("panel.repeatPassword") || ""}
+                placeholder={t("panel.confirmPassword") || ""}
             />
             <div className="text-end">
                 <button type="submit" className="btn-primary">

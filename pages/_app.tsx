@@ -8,6 +8,7 @@ import useAuthStore, { User } from "../store/useAuthStore";
 import Cookies from "js-cookie";
 import { useCurrentUser } from "./api/hooks/useAuth";
 import { Toaster } from "react-hot-toast";
+import Layout from "../components/layout/Layout";
 
 export default function App({ Component, pageProps }) {
     const { token, setToken, setUser, logout, setTokenLoading, tokenLoading } =
@@ -42,37 +43,39 @@ export default function App({ Component, pageProps }) {
             <MetaHead />
             <DirectionSetter />
             <ThemeProvider>
-                <NextNProgress
-                    color="#6366f1"
-                    startPosition={0.3}
-                    stopDelayMs={200}
-                    height={3}
-                    showOnShallow={true}
-                />
-                <Component {...pageProps} />
-                <Toaster
-                    position="top-center"
-                    toastOptions={{
-                        className: `
+                <Layout>
+                    <NextNProgress
+                        color="#6366f1"
+                        startPosition={0.3}
+                        stopDelayMs={200}
+                        height={3}
+                        showOnShallow={true}
+                    />
+                    <Component {...pageProps} />
+                    <Toaster
+                        position="top-center"
+                        toastOptions={{
+                            className: `
           px-4 py-3 rounded-2xl shadow-md border
           bg-white text-black border-gray-300
           dark:bg-zinc-800 dark:text-white dark:border-zinc-700
         `,
-                        duration: 4000,
-                        success: {
-                            iconTheme: {
-                                primary: "#10b981",
-                                secondary: "#fff",
+                            duration: 4000,
+                            success: {
+                                iconTheme: {
+                                    primary: "#10b981",
+                                    secondary: "#fff",
+                                },
                             },
-                        },
-                        error: {
-                            iconTheme: {
-                                primary: "#ef4444",
-                                secondary: "#fff",
+                            error: {
+                                iconTheme: {
+                                    primary: "#ef4444",
+                                    secondary: "#fff",
+                                },
                             },
-                        },
-                    }}
-                />
+                        }}
+                    />
+                </Layout>
             </ThemeProvider>
         </LanguageProvider>
     );

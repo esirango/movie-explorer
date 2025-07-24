@@ -2,8 +2,6 @@ import React from "react";
 import { useRouter } from "next/router";
 import { LoadingSpinner } from "../../../components/Loading";
 
-import Navbar from "../../../components/layout/Navbar";
-import Footer from "../../../components/layout/Footer";
 import MovieBanner from "../../../components/movies/movie/MovieBanner";
 import MovieDetails from "../../../components/movies/movie/MovieDetails";
 import { useMovieDetails } from "../../api/hooks/tmdb/useMovieDetails";
@@ -24,7 +22,6 @@ const MovieDetailPage = () => {
                 <div className="h-full my-40">
                     <LoadingSpinner />
                 </div>
-                <Footer />
             </div>
         );
     }
@@ -44,7 +41,6 @@ const MovieDetailPage = () => {
 
     return (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">
-            <Navbar />
             {isError ? (
                 <div className="h-full my-32">
                     <GenericError
@@ -71,7 +67,6 @@ const MovieDetailPage = () => {
                     )}
                 </>
             )}
-            <Footer />
         </div>
     );
 };

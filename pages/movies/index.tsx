@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Footer from "../../components/layout/Footer";
 import Pagination from "../../components/movies/Pagination";
-import Navbar from "../../components/layout/Navbar";
 import MovieCard from "../../components/movies/MovieCard";
 import LandingMovieSlider from "../../components/movies/landingMoviesSlider";
 import { useRouter } from "next/router";
@@ -11,6 +9,7 @@ import { useMovies } from "../api/hooks/tmdb/useMovies";
 import { getGenres } from "../../store/filters/movieFilterData";
 import { useLanguage } from "../../lang/LanguageContext";
 import GenericError from "../../components/error/GenericError";
+
 interface GenreOption {
     id: string;
     name: string;
@@ -147,7 +146,6 @@ const MoviesPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col">
-            <Navbar />
             <main className="container mx-auto px-4 py-8 flex-grow">
                 <LandingMovieSlider movies={movies} />
 
@@ -188,7 +186,6 @@ const MoviesPage = () => {
                     </>
                 )}
             </main>
-            <Footer />
         </div>
     );
 };

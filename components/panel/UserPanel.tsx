@@ -44,8 +44,8 @@ const UserPanel = () => {
         );
 
     return (
-        <div className="p-6 mx-auto flex flex-col justify-center items-center text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-200">
-            <h2 className="text-2xl font-bold mb-6 text-center">
+        <div className="p-6 max-w-3xl w-full mx-auto flex flex-col gap-8 text-gray-800 dark:text-gray-200 dark:bg-[#1f293f] bg-gray-100">
+            <h2 className="text-3xl font-extrabold text-center">
                 {t("panel.title")}
             </h2>
             <AvatarSelector currentAvatar={String(user.avatar)} />

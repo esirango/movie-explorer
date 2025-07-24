@@ -25,39 +25,43 @@ const UserInfoCard = ({ user }: Props) => {
     };
 
     return (
-        <div className="bg-white dark:bg-gray-800 shadow p-4 rounded mb-6 w-1/2">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
                     <label className="block font-semibold mb-1">
                         {t("panel.username")}
                     </label>
                     {isEditing ? (
                         <input
                             {...register("username", { required: true })}
-                            className="w-full p-2 rounded border dark:bg-gray-700"
+                            className="w-full p-2 rounded border focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
                         />
                     ) : (
-                        <p>{user.username}</p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            {user.username}
+                        </p>
                     )}
                 </div>
 
-                <div className="mb-4">
+                <div>
                     <label className="block font-semibold mb-1">
                         {t("panel.email")}
                     </label>
-                    <p>{user.email}</p>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        {user.email}
+                    </p>
                 </div>
 
-                <div className="flex justify-end space-x-2 gap-4">
+                <div className="flex justify-end gap-3 pt-2">
                     {isEditing ? (
                         <>
-                            <button type="submit" className="text-blue-600">
+                            <button type="submit" className="btn-primary">
                                 {t("panel.save")}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsEditing(false)}
-                                className="gray-red-600"
+                                className="btn-secondary"
                             >
                                 {t("panel.cancel")}
                             </button>
@@ -66,7 +70,7 @@ const UserInfoCard = ({ user }: Props) => {
                         <button
                             type="button"
                             onClick={() => setIsEditing(true)}
-                            className="text-blue-600"
+                            className="btn-primary"
                         >
                             {t("panel.edit")}
                         </button>

@@ -4,9 +4,14 @@ import { useLanguage } from "../../lang/LanguageContext";
 
 const ChangePasswordForm = () => {
     const { t } = useLanguage();
-    const { register, handleSubmit, reset } = useForm();
 
-    const onSubmit = (data: any) => {
+    const { register, handleSubmit, reset, watch } = useForm();
+    const newPassword = watch("password");
+    const repeatPassword = watch("repeat");
+
+    const onSubmit = (data) => {
+        if (data.password !== data.repeat)
+            return alert("Passwords do not match!");
         console.log("Password changed:", data);
         reset();
     };
@@ -14,23 +19,26 @@ const ChangePasswordForm = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-white dark:bg-gray-800 shadow p-4 rounded w-1/2"
+            className="bg-white dark:bg-gray-800 shadow-md p-6 rounded-lg space-y-4"
         >
-            <h3 className="text-lg font-bold mb-4">
-                {t("panel.changePassword")}
-            </h3>
+            <h3 className="text-lg font-bold">{t("panel.changePassword")}</h3>
             <input
                 type="password"
                 {...register("password", { required: true })}
-                className="w-full mb-3 p-2 rounded border dark:bg-gray-700"
+                className="w-full p-2 rounded border dark:bg-gray-700"
                 placeholder={t("panel.newPassword") || ""}
             />
-            <button
-                type="submit"
-                className="bg-indigo-600 text-white py-2 px-4 rounded"
-            >
-                {t("panel.save")}
-            </button>
+            <input
+                type="password"
+                {...register("repeat", { required: true })}
+                className="w-full p-2 rounded border dark:bg-gray-700"
+                placeholder={t("panel.repeatPassword") || ""}
+            />
+            <div className="text-end">
+                <button type="submit" className="btn-primary">
+                    {t("panel.save")}
+                </button>
+            </div>
         </form>
     );
 };

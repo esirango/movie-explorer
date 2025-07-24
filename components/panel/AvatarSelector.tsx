@@ -42,7 +42,7 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
                 className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover"
             />
             <h3 className="mb-2 font-medium">{t("panel.chooseAvatar")}</h3>
-            <div className="flex justify-center gap-4 mb-4 flex-wrap">
+            <div className="flex justify-center gap-4 mb-2 mt-8 flex-wrap">
                 {defaultAvatars.map((url) => (
                     <button
                         key={url}
@@ -61,17 +61,11 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
             </div>
 
             {selected && (
-                <div className="flex justify-center gap-4">
-                    <button
-                        onClick={handleSubmit}
-                        className="bg-indigo-600 text-white px-4 py-1 rounded hover:bg-indigo-700 transition"
-                    >
+                <div className="flex justify-center gap-4 mt-8">
+                    <button onClick={handleSubmit} className="btn-primary">
                         {t("save")}
                     </button>
-                    <button
-                        onClick={handleCancel}
-                        className="bg-gray-100 dark:bg-gray-600 dark:text-white px-4 py-1 rounded hover:bg-gray-50 dark:hover:bg-gray-500 transition"
-                    >
+                    <button onClick={handleCancel} className="btn-secondary">
                         {t("cancel")}
                     </button>
                 </div>

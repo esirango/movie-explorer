@@ -3,9 +3,9 @@
         "relation": ["delegate_permission/common.handle_all_urls"],
         "target": {
             "namespace": "android_app",
-            "package_name": "https://movie-explorer-rho-tan.vercel.app/",
+            "package_name": "app.vercel.movie_explorer_rho_tan.twa",
             "sha256_cert_fingerprints": [
-                "12:34:56:78:90:AB:CD:EF:12:34:56:78:90:AB:CD:EF:12:34:56:78:90:AB:CD:EF:12:34:56:78:90:AB:CD:EF"
+                "E9:2D:FB:97:80:77:B5:3A:86:9B:7C:AB:11:42:39:53:28:07:E0:67:7C:6D:6E:1E:BF:DB:35:5A:A9:5D:8E:5E"
             ]
         }
     }

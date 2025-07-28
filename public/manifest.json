@@ -19,5 +19,25 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ]
+    ],
+    "lang": "en-US",
+    "categories": ["entertainment", "video"],
+    "screenshots": [
+        {
+            "src": "assets/screenshots/screen1.png",
+            "sizes": "640x480",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/screenshots/screen2.png",
+            "sizes": "640x480",
+            "type": "image/png"
+        }
+    ],
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "iarc_rating_id": "e.g., your_rating_id_here",
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    }
 }

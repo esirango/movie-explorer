@@ -1,0 +1,23 @@
+{
+    "name": "CozyMovie",
+    "short_name": "CozyMovie",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#1F2937",
+    "theme_color": "#4F46E5",
+    "description": "Explore, filter, and discover movies with ease. Find exactly what you're looking for among thousands of titles — and add them to your watchlist instantly.",
+    "icons": [
+        {
+            "src": "assets/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

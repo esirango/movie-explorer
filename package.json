@@ -18,6 +18,7 @@
         "js-cookie": "^3.0.5",
         "lucide-react": "^0.525.0",
         "next": "latest",
+        "next-pwa": "^5.6.0",
         "nextjs-progressbar": "^0.0.16",
         "react": "latest",
         "react-dom": "latest",

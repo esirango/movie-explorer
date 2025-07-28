@@ -100,6 +100,9 @@ function MetaHead() {
                 href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
                 rel="stylesheet"
             />
+            <link rel="manifest" href="/manifest.json" />
+            <meta name="theme-color" content="#4F46E5" />
+            <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         </Head>
     );
 }

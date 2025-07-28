@@ -3,7 +3,7 @@ import SpinningFilmReel from "./error/SpinnerFilmReel";
 
 export const LoadingSpinner = () => {
     return (
-        <div className="flex justify-center items-center py-20 gap-4 ">
+        <div className="flex justify-center items-center py-20 gap-4">
             {/* <motion.div
                 className="w-16 h-16 border-4 mx-4 border-indigo-600 border-t-transparent rounded-full"
                 animate={{ rotate: 360 }}

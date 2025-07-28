@@ -108,6 +108,10 @@ function MetaHead() {
     return (
         <Head>
             <title>{t("global.appName")}</title>
+            <meta
+                name="description"
+                content="Explore, filter, and discover movies with ease. Find exactly what you're looking for among thousands of titles — and add them to your watchlist instantly."
+            />
             <link
                 rel="stylesheet"
                 href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css"

@@ -1,6 +1,7 @@
 {
     "name": "CozyMovie",
     "short_name": "CozyMovie",
+    "id": "cozymovie",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",

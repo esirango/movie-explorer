@@ -51,7 +51,7 @@ const UserPanel = () => {
                 <h2 className="text-3xl font-extrabold text-center">
                     {t("panel.title")}
                 </h2>
-                <div className="z-[2] flex flex-col items-center w-1/2 gap-y-6">
+                <div className="z-[2] flex flex-col items-center lg:w-1/2 w-full gap-y-6">
                     <AvatarSelector currentAvatar={String(user.avatar)} />
                     <UserInfoCard user={user} />
                     <ChangePasswordForm />

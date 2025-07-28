@@ -39,5 +39,7 @@
     "iarc_rating_id": "e.g., your_rating_id_here",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "dir": "ltr",
+    "scope_extensions": []
 }

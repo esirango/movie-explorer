@@ -5,8 +5,8 @@ const URLS_TO_CACHE = [
     "/styles.css",
     "/assets/icons/icon-192x192.png",
     "/assets/icons/icon-512x512.png",
-    "/main.js",
-    // سایر فایل‌های استاتیک مهم را اینجا اضافه کنید
+    "/404.tsx",
+    "/index.tsx",
 ];
 
 // هنگام نصب سرویس ورکر، فایل‌ها کش می‌شوند

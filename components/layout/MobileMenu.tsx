@@ -92,17 +92,21 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             <nav className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
                 {tokenLoading ? (
                     <div className="flex items-center gap-4 px-6 py-4">
-                        {/* شبیه آواتار */}
+                        {/* avatar shimmer*/}
                         <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse" />
 
-                        {/* شبیه اسم */}
+                        {/* username shimmer*/}
                         <div
                             className="flex-1 h-4 bg-gray-300 dark:bg-gray-700 rounded animate-pulse"
                             style={{ maxWidth: "100px" }}
                         />
 
-                        {/* شبیه آیکون خروج */}
-                        <div className="w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse ml-auto" />
+                        {/* logout icon shimmer */}
+                        <div
+                            className={`w-6 h-6 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse ${
+                                language === "fa" ? "mr-auto" : "ml-auto"
+                            } `}
+                        />
                     </div>
                 ) : token && user ? (
                     <div className="flex items-center px-6 py-4">
@@ -114,7 +118,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                                         <div className="w-5 h-5 border-2 border-t-indigo-500 border-indigo-200 rounded-full animate-spin"></div>
                                     </div>
                                 )}
-                                <Link href={"/panel"}>
+                                <Link href={"/panel"} onClick={closeMenu}>
                                     <img
                                         src={
                                             user?.avatar && !avatarLoading
@@ -134,7 +138,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                             </div>
 
                             {!avatarLoading && (
-                                <Link href={"/panel"}>
+                                <Link href={"/panel"} onClick={closeMenu}>
                                     <span className="font-semibold text-indigo-600 dark:text-indigo-400 truncate">
                                         {user?.username}
                                     </span>

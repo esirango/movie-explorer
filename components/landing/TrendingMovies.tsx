@@ -37,7 +37,7 @@ function TrendingMovies({ sampleMovies = [], loading }: HomeProps) {
                 ) : (
                     <GenericError
                         title={t("notFoundMovie.title")}
-                        message={t("notFoundMovie.description")}
+                        message={t("errorPage.tryAgainLater")}
                         noBackground
                     />
                 )}

@@ -148,6 +148,9 @@
         "title": "No movies found",
         "description": "Try adjusting your search or filters."
     },
+    "loading": {
+        "title": "Loading"
+    },
     "footer": {
         "firstText": "Made With",
         "secondText": "by esirango"

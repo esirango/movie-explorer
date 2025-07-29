@@ -63,10 +63,10 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
             {selected && (
                 <div className="flex justify-center gap-4 mt-8">
                     <button onClick={handleSubmit} className="btn-primary">
-                        {t("save")}
+                        {t("panel.save")}
                     </button>
                     <button onClick={handleCancel} className="btn-secondary">
-                        {t("cancel")}
+                        {t("panel.cancel")}
                     </button>
                 </div>
             )}

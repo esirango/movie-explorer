@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import SpinningFilmReel from "./error/SpinnerFilmReel";
+import { useLanguage } from "../lang/LanguageContext";
 
 export const LoadingSpinner = () => {
+    const { t } = useLanguage();
     return (
         <div className="flex justify-center items-center py-20 gap-4">
             {/* <motion.div
@@ -24,7 +26,7 @@ export const LoadingSpinner = () => {
                     ease: "easeInOut",
                 }}
             >
-                Loading...
+                {t("loading.title")}...
             </motion.span>
         </div>
     );

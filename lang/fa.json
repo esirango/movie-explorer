@@ -57,7 +57,7 @@
         "bannerButton": "کاوش فیلم‌ها"
     },
     "trendingMoviesSection": {
-        "title": "فیلم‌های محبوب"
+        "title": "جدیدترین ها"
     },
     "movies": {
         "filters": {
@@ -147,6 +147,9 @@
     "notFoundMovie": {
         "title": "هیچ فیلمی یافت نشد",
         "description": "لطفاً جستجو یا فیلترهای خود را تغییر دهید."
+    },
+    "loading": {
+        "title": "درحال بارگزاری"
     },
     "footer": {
         "firstText": "ساخته شده با",

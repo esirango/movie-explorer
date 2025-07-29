@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLanguage } from "../../lang/LanguageContext";
+import UploadAvatar from "../auth/fields/UploadAvatar";
 
 const defaultAvatars = [
     "/assets/images/avatars/1.png",
@@ -8,44 +10,67 @@ const defaultAvatars = [
     "/assets/images/avatars/4.png",
 ];
 
-const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
+interface Props {
+    currentAvatar: string;
+}
+
+const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
     const { t } = useLanguage();
     const [selected, setSelected] = useState<string | null>(null);
     const [preview, setPreview] = useState<string>(currentAvatar);
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
-    const handleSelect = (avatar: string) => {
-        setSelected(avatar);
-        setPreview(avatar);
-    };
+    const { register, handleSubmit } = useForm();
 
-    const handleSubmit = async () => {
-        try {
-            // اینجا باید ریکوئست به API ارسال بشه
-            console.log("Submitting avatar:", selected);
-            // فرضاً آپدیت انجام شد، مقدار ثابت می‌مونه
-            setSelected(null);
-        } catch (error) {
-            console.error("خطا در ثبت آواتار:", error);
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreview(url);
+            setUploadedFile(file);
+            setSelected(null); // لغو حالت انتخاب از آواتارهای پیش‌فرض
         }
     };
 
-    const handleCancel = () => {
-        setPreview(currentAvatar);
-        setSelected(null);
+    const handleSelect = (url: string) => {
+        setSelected(url);
+        setPreview(url);
+        setUploadedFile(null); // لغو حالت انتخاب از سیستم
+    };
+
+    const onSubmit = async () => {
+        try {
+            if (uploadedFile) {
+                const formData = new FormData();
+                formData.append("avatar", uploadedFile);
+                console.log("Uploading file:", uploadedFile.name);
+                // await axios.post("/api/upload-avatar", formData);
+            } else if (selected) {
+                console.log("Setting predefined avatar:", selected);
+                // await axios.post("/api/set-avatar", { url: selected });
+            }
+        } catch (error) {
+            console.error("خطا در ذخیره آواتار:", error);
+        }
     };
 
     return (
-        <div className="mb-6 text-center w-full">
-            <img
-                src={preview || "/avatars/default.png"}
-                alt="Avatar"
-                className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover"
+        <form onSubmit={handleSubmit(onSubmit)} className="text-center w-full">
+            <UploadAvatar
+                preview={preview}
+                loading={false}
+                t={t}
+                register={register}
+                handleImageChange={handleImageChange}
             />
-            <h3 className="mb-2 font-medium">{t("panel.chooseAvatar")}</h3>
-            <div className="flex justify-center gap-4 mb-2 mt-8 flex-wrap">
+
+            <h3 className="mb-8 font-medium">{t("panel.chooseAvatar")}</h3>
+
+            <div className="flex justify-center gap-4 mb-4 flex-wrap mt-4">
                 {defaultAvatars.map((url) => (
                     <button
                         key={url}
+                        type="button"
                         onClick={() => handleSelect(url)}
                         className={`rounded-full ${
                             selected === url ? "ring-4 ring-indigo-500" : ""
@@ -54,23 +79,31 @@ const AvatarSelector = ({ currentAvatar }: { currentAvatar: string }) => {
                         <img
                             src={url}
                             alt="Avatar option"
-                            className="w-12 h-12 rounded-full border-0 hover:ring-2 ring-indigo-400 transition"
+                            className="w-12 h-12 rounded-full hover:ring-2 ring-indigo-400 transition"
                         />
                     </button>
                 ))}
             </div>
 
-            {selected && (
-                <div className="flex justify-center gap-4 mt-8">
-                    <button onClick={handleSubmit} className="btn-primary">
+            {(uploadedFile || selected) && (
+                <div className="flex justify-center gap-4 mt-6">
+                    <button type="submit" className="btn-primary">
                         {t("panel.save")}
                     </button>
-                    <button onClick={handleCancel} className="btn-secondary">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setPreview(currentAvatar);
+                            setUploadedFile(null);
+                            setSelected(null);
+                        }}
+                        className="btn-secondary"
+                    >
                         {t("panel.cancel")}
                     </button>
                 </div>
             )}
-        </div>
+        </form>
     );
 };
 

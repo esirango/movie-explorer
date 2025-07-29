@@ -1,4 +1,14 @@
-import { PlusCircle, UserCircle } from "lucide-react";
+import {
+    Camera,
+    CameraIcon,
+    CameraOffIcon,
+    LucideCamera,
+    LucideSwitchCamera,
+    Plus,
+    PlusCircle,
+    SwitchCamera,
+    UserCircle,
+} from "lucide-react";
 import React from "react";
 
 function UploadAvatar({ preview, loading, t, register, handleImageChange }) {
@@ -16,10 +26,13 @@ function UploadAvatar({ preview, loading, t, register, handleImageChange }) {
 
             <label
                 htmlFor="avatar"
-                className="absolute bottom-[-5px] left-[140px] bg-indigo-500 hover:bg-indigo-700 text-white p-0.5  dark:text-black  rounded-full cursor-pointer transition"
+                className="absolute bottom-[-5px] right-1/2 -translate-x-1/2  bg-indigo-500 hover:bg-indigo-700 text-white p-1 dark:text-black rounded-full cursor-pointer transition"
                 title={t("auth.addAvatarTitle")}
             >
-                <PlusCircle className="w-6 h-6 " />
+                <div className="relative w-6 h-6">
+                    <Camera className="w-6 h-6" />
+                    <Plus className="w-3 h-3 absolute -top-0 -right-[3px] bg-indigo-600 rounded-full" />
+                </div>
             </label>
 
             <input

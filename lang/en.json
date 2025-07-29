@@ -41,6 +41,7 @@
         "newPassword": "New Password",
         "confirmPassword": "Confirm Password",
         "chooseAvatar": "Choose an Avatar",
+        "uploadAvatar": "Upload from device",
         "panelTitle": "Failed to Load Data",
         "panelMessage": "There was a problem connecting to the server. Please try again later.",
         "retry": "Retry",

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLanguage } from "../../lang/LanguageContext";
 import UploadAvatar from "../auth/fields/UploadAvatar";
+import toast from "react-hot-toast";
+import { useUpdateAvatar } from "../../pages/api/hooks/useUpdateAvatar";
 
 const defaultAvatars = [
     "/assets/images/avatars/1.png",
@@ -28,29 +30,28 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
             const url = URL.createObjectURL(file);
             setPreview(url);
             setUploadedFile(file);
-            setSelected(null); // لغو حالت انتخاب از آواتارهای پیش‌فرض
+            setSelected(null);
         }
     };
 
     const handleSelect = (url: string) => {
         setSelected(url);
         setPreview(url);
-        setUploadedFile(null); // لغو حالت انتخاب از سیستم
+        setUploadedFile(null);
     };
+
+    const { updateAvatar, loading } = useUpdateAvatar();
 
     const onSubmit = async () => {
         try {
             if (uploadedFile) {
-                const formData = new FormData();
-                formData.append("avatar", uploadedFile);
-                console.log("Uploading file:", uploadedFile.name);
-                // await axios.post("/api/upload-avatar", formData);
+                await updateAvatar({ file: uploadedFile });
             } else if (selected) {
-                console.log("Setting predefined avatar:", selected);
-                // await axios.post("/api/set-avatar", { url: selected });
+                await updateAvatar({ url: selected });
             }
-        } catch (error) {
-            console.error("خطا در ذخیره آواتار:", error);
+            toast.success("آواتار با موفقیت ذخیره شد");
+        } catch (e) {
+            toast.error("مشکلی در ذخیره آواتار پیش آمد");
         }
     };
 
@@ -87,9 +88,14 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
 
             {(uploadedFile || selected) && (
                 <div className="flex justify-center gap-4 mt-6">
-                    <button type="submit" className="btn-primary">
-                        {t("panel.save")}
+                    <button
+                        type="submit"
+                        className="btn-primary"
+                        disabled={loading}
+                    >
+                        {loading ? t("global.loading") : t("panel.save")}
                     </button>
+
                     <button
                         type="button"
                         onClick={() => {

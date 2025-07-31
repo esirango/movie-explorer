@@ -3,7 +3,7 @@ import MovieSlider from "./MovieSlider";
 import { useLanguage } from "../../../lang/LanguageContext";
 import IMDbVoteAverage from "../IMDbVoteAverage";
 import Link from "next/link";
-import { toPersianNumber } from "../../../func/toPersianNumber";
+import { toPersianNumber } from "../../../funcs/toPersianNumber";
 import MovieReleaseDate from "./MovieReleaseDate";
 
 function MovieDetails({ movie, related }) {

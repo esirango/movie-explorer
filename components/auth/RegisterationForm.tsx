@@ -44,7 +44,7 @@ const RegisterForm = () => {
 
     const [preview, setPreview] = useState<string | null>(null);
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (e: { target: { files: File[] } }) => {
         const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();

@@ -22,7 +22,7 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
 
     const { register, handleSubmit } = useForm();
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (e: { target: { files: File[] } }) => {
         const file = e.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);

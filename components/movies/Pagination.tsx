@@ -1,6 +1,6 @@
 import React from "react";
 import { useLanguage } from "../../lang/LanguageContext";
-import { toPersianNumber } from "../../func/toPersianNumber";
+import { toPersianNumber } from "../../funcs/toPersianNumber";
 
 interface PaginationProps {
     currentPage: number;

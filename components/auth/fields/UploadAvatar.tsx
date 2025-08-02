@@ -91,12 +91,6 @@ const UploadAvatar: React.FC<UploadAvatarProps> = ({
                 />
             )}
 
-            {/* {!isConverting && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none rounded-full">
-                    <Loader2 className="animate-spin text-indigo-600 w-8 h-8" />
-                </div>
-            )} */}
-
             <label
                 htmlFor="avatar"
                 className={`${

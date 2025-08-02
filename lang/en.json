@@ -50,7 +50,11 @@
         "retry": "Retry",
         "save": "Save",
         "cancel": "Cancel",
-        "edit": "Edit"
+        "edit": "Edit",
+        "toastMessages": {
+            "avatarSavedSuccess": "Avatar saved successfully.",
+            "avatarSaveError": "There was a problem saving the avatar."
+        }
     },
     "header": {
         "links": ["Movies"]

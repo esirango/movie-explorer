@@ -50,7 +50,11 @@
         "retry": "تلاش مجدد",
         "save": "ذخیره",
         "cancel": "لغو",
-        "edit": "ویرایش"
+        "edit": "ویرایش",
+        "toastMessages": {
+            "avatarSavedSuccess": "آواتار با موفقیت ذخیره شد.",
+            "avatarSaveError": "مشکلی در ذخیره آواتار پیش آمد."
+        }
     },
     "header": {
         "links": ["فیلم‌ها"]

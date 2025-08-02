@@ -1,48 +1,48 @@
-import { useState } from "react";
-import { fetcher } from "../fetcher";
+import useSWRMutation from "swr/mutation";
 import Cookies from "js-cookie";
+import { fetcher } from "../fetcher";
 import { useCurrentUser } from "./useAuth";
 
-export function useUpdateAvatar() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
-    const { mutate } = useCurrentUser();
+type AvatarInput = {
+    file?: File;
+    url?: string;
+};
 
-    async function updateAvatar(data: {
-        file?: File;
-        url?: string;
-    }): Promise<{ avatar: string }> {
-        setLoading(true);
-        setError(null);
-
-        try {
-            const formData = new FormData();
-            if (data.file) {
-                formData.append("avatar", data.file);
-            } else if (data.url) {
-                formData.append("url", data.url);
-            } else {
-                throw new Error("No avatar data provided");
-            }
-
-            const token = Cookies.get("token");
-            const res = await fetcher<{ avatar: string }>("/api/user/avatar", {
-                method: "patch",
-                data: formData,
-                headers: {
-                    Authorization: token ? `Bearer ${token}` : "",
-                },
-            });
-
-            await mutate();
-            setLoading(false);
-            return res;
-        } catch (err: any) {
-            setError(err);
-            setLoading(false);
-            throw err;
-        }
+async function updateAvatarFn(
+    url: string,
+    { arg }: { arg: AvatarInput }
+): Promise<{ avatar: string }> {
+    const formData = new FormData();
+    if (arg.file) {
+        formData.append("avatar", arg.file);
+    } else if (arg.url) {
+        formData.append("url", arg.url);
+    } else {
+        throw new Error("No avatar data provided");
     }
+
+    const token = Cookies.get("token");
+    return fetcher<{ avatar: string }>(url, {
+        method: "patch",
+        data: formData,
+        headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+        },
+    });
+}
+
+export function useUpdateAvatar() {
+    const { mutate: mutateUser } = useCurrentUser();
+
+    const {
+        trigger: updateAvatar,
+        isMutating: loading,
+        error,
+    } = useSWRMutation("/api/user/avatar", updateAvatarFn, {
+        onSuccess: async () => {
+            await mutateUser();
+        },
+    });
 
     return { updateAvatar, loading, error };
 }

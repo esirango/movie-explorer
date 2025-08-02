@@ -40,7 +40,7 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
         setUploadedFile(null);
     };
 
-    const { updateAvatar, loading } = useUpdateAvatar();
+    const { updateAvatar, loading, error } = useUpdateAvatar();
 
     const onSubmit = async () => {
         try {
@@ -49,9 +49,9 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
             } else if (selected) {
                 await updateAvatar({ url: selected });
             }
-            toast.success("آواتار با موفقیت ذخیره شد");
+            toast.success(t("panel.toastMessages.avatarSavedSuccess"));
         } catch (e) {
-            toast.error("مشکلی در ذخیره آواتار پیش آمد");
+            toast.error("panel.toastMessages.avatarSaveError");
         }
     };
 
@@ -92,8 +92,9 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
                         type="submit"
                         className="btn-primary"
                         disabled={loading}
+                        style={loading ? { opacity: 0.5 } : {}}
                     >
-                        {loading ? t("global.loading") : t("panel.save")}
+                        {loading ? t("loading.title") : t("panel.save")}
                     </button>
 
                     <button

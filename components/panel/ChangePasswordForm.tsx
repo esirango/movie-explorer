@@ -24,8 +24,7 @@ const ChangePasswordForm = () => {
                 confirmPassword: data.confirm,
             });
             toast.success(t("panel.toastMessages.passwordUpdated"));
-            setShowConfirm(false);
-            setShowPassword(false);
+            reset();
         } catch (e) {
             toast.error(e.response.data.msg);
         }

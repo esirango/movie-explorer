@@ -51,6 +51,11 @@
         "save": "ذخیره",
         "cancel": "لغو",
         "edit": "ویرایش",
+        "errors": {
+            "required": "این فیلد الزامی است",
+            "passwordMinLength": "رمز عبور باید حداقل ۶ کاراکتر باشد",
+            "passwordsMismatch": "رمزهای عبور مطابقت ندارند"
+        },
         "toastMessages": {
             "avatarSavedSuccess": "آواتار با موفقیت ذخیره شد.",
             "avatarSaveError": "مشکلی در ذخیره آواتار پیش آمد.",

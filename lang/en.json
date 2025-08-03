@@ -51,6 +51,11 @@
         "save": "Save",
         "cancel": "Cancel",
         "edit": "Edit",
+        "errors": {
+            "required": "This field is required",
+            "passwordMinLength": "Password must be at least 6 characters",
+            "passwordsMismatch": "Passwords do not match"
+        },
         "toastMessages": {
             "avatarSavedSuccess": "Avatar saved successfully.",
             "avatarSaveError": "There was a problem saving the avatar.",

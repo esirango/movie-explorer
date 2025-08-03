@@ -53,7 +53,9 @@
         "edit": "Edit",
         "toastMessages": {
             "avatarSavedSuccess": "Avatar saved successfully.",
-            "avatarSaveError": "There was a problem saving the avatar."
+            "avatarSaveError": "There was a problem saving the avatar.",
+            "usernameUpdated": "Username updated!",
+            "passwordUpdated": "Password updated!"
         }
     },
     "header": {
@@ -159,6 +161,7 @@
     "loading": {
         "title": "Loading"
     },
+
     "footer": {
         "firstText": "Made With",
         "secondText": "by esirango"

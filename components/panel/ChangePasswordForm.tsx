@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLanguage } from "../../lang/LanguageContext";
-import { Eye, EyeOff } from "lucide-react";
 import PasswordToggle from "../auth/fields/PasswordToggle";
+import { useUpdatePassword } from "../../pages/api/hooks/useUpdatePassword";
+import toast from "react-hot-toast";
 
 const ChangePasswordForm = () => {
     const { t } = useLanguage();
@@ -14,11 +15,20 @@ const ChangePasswordForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-    const onSubmit = (data: any) => {
-        if (data.password !== data.confirm)
-            return alert("Passwords do not match!");
-        console.log("Password changed:", data);
-        reset();
+    const { updatePassword, loading, error } = useUpdatePassword();
+
+    const onSubmit = async (data: any) => {
+        try {
+            await updatePassword({
+                newPassword: data.password,
+                confirmPassword: data.confirm,
+            });
+            toast.success(t("panel.toastMessages.passwordUpdated"));
+            setShowConfirm(false);
+            setShowPassword(false);
+        } catch (e) {
+            toast.error(e.response.data.msg);
+        }
     };
 
     return (
@@ -55,8 +65,12 @@ const ChangePasswordForm = () => {
             </div>
 
             <div className="text-end">
-                <button type="submit" className="btn-primary">
-                    {t("panel.save")}
+                <button
+                    type="submit"
+                    className="btn-primary"
+                    style={loading ? { opacity: 0.5 } : {}}
+                >
+                    {loading ? t("loading.title") : t("panel.save")}
                 </button>
             </div>
         </form>

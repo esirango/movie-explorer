@@ -53,7 +53,9 @@
         "edit": "ویرایش",
         "toastMessages": {
             "avatarSavedSuccess": "آواتار با موفقیت ذخیره شد.",
-            "avatarSaveError": "مشکلی در ذخیره آواتار پیش آمد."
+            "avatarSaveError": "مشکلی در ذخیره آواتار پیش آمد.",
+            "usernameUpdated": "نام کاربری با موفقیت به‌روزرسانی شد!",
+            "passwordUpdated": "رمز عبور با موفقیت به‌روزرسانی شد!"
         }
     },
     "header": {

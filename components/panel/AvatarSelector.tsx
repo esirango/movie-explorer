@@ -105,6 +105,8 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
                             setSelected(null);
                         }}
                         className="btn-secondary"
+                        disabled={loading}
+                        style={loading ? { opacity: 0.5 } : {}}
                     >
                         {t("panel.cancel")}
                     </button>

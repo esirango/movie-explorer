@@ -84,6 +84,8 @@ const UserInfoCard = ({ user }: Props) => {
                                     setIsEditing(false);
                                 }}
                                 className="btn-secondary"
+                                disabled={loading}
+                                style={loading ? { opacity: 0.5 } : {}}
                             >
                                 {t("panel.cancel")}
                             </button>

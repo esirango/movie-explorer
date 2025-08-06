@@ -5,10 +5,10 @@ import IMDbVoteAverage from "../IMDbVoteAverage";
 import Link from "next/link";
 import { toPersianNumber } from "../../../funcs/toPersianNumber";
 import MovieReleaseDate from "./MovieReleaseDate";
+import AddToFavorites from "../AddToFavorites";
 
-function MovieDetails({ movie, related }) {
+function MovieDetails({ movie, related, userToken, userFavorites = [] }) {
     const { t, language } = useLanguage();
-
     const [posterError, setPosterError] = useState<boolean>(false);
 
     return (
@@ -30,6 +30,21 @@ function MovieDetails({ movie, related }) {
 
                 {/* Info */}
                 <div className="flex-1 lg:space-y-12 md:space-y-12 space-y-4">
+                    {/* Title + Favorite */}
+                    <div className="flex items-center lg:gap-4 md:gap-4 lg:justify-start md:justify-start justify-between">
+                        <h1 className="text-2xl font-bold">{movie.title}</h1>
+                        <AddToFavorites
+                            movieId={movie.id}
+                            movieTitle={movie.title}
+                            userToken={userToken}
+                            initialIsFavorited={userFavorites.includes(
+                                movie.id
+                            )}
+                            size={24}
+                            inline
+                        />
+                    </div>
+
                     <p className="text-lg">{movie.overview}</p>
 
                     <div className="flex gap-4 text-sm flex-wrap items-center">
@@ -74,25 +89,27 @@ function MovieDetails({ movie, related }) {
                         )}
                     </div>
 
+                    {/* Genres */}
                     <div className="flex gap-2 flex-wrap mt-2">
-                        {movie.genres.map(
-                            (genre: { id: React.Key; name: string }) => (
-                                <Link
-                                    key={genre.id}
-                                    href={`/movies?genre=${genre.id}&genreName=${genre.name}`}
-                                    className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs hover:bg-indigo-200 dark:hover:bg-indigo-700 transition"
-                                >
-                                    {genre.name}
-                                </Link>
-                            )
-                        )}
+                        {movie.genres.map((genre) => (
+                            <Link
+                                key={genre.id}
+                                href={`/movies?genre=${genre.id}&genreName=${genre.name}`}
+                                className="px-3 py-1 bg-indigo-100 dark:bg-indigo-800 text-indigo-800 dark:text-white rounded-full text-xs hover:bg-indigo-200 dark:hover:bg-indigo-700 transition"
+                            >
+                                {genre.name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>
 
+            {/* Related */}
             {related.length > 0 && (
                 <div className="mt-12">
-                    <h2 className="text-2xl font-bold mb-4">Related Movies</h2>
+                    <h2 className="text-2xl font-bold mb-4">
+                        {t("related_movies")}
+                    </h2>
                     <MovieSlider movies={related} />
                 </div>
             )}

@@ -7,6 +7,7 @@ import { Heart, HeartOff } from "lucide-react";
 import toast from "react-hot-toast";
 import useAuthStore from "../../store/useAuthStore";
 import { useLanguage } from "../../lang/LanguageContext";
+import AddToFavorites from "./AddToFavorites";
 
 interface MovieCardProps {
     movie: Movie;
@@ -48,19 +49,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, userFavorites = [] }) => {
     return (
         <Link href={`/movies/${movie.id}/${movie.title}`}>
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">
-                {/* آیکون قلب */}
-                <button
-                    onClick={toggleFavorite}
-                    className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-transform duration-300
-                        ${
-                            isFavorited
-                                ? "scale-110 text-red-500"
-                                : "text-gray-400 group-hover:text-red-400"
-                        }
-                        hover:scale-125 bg-white/80 dark:bg-gray-700/70 backdrop-blur`}
-                >
-                    {isFavorited ? <Heart fill="currentColor" /> : <Heart />}
-                </button>
+                <AddToFavorites
+                    movieId={movie.id}
+                    movieTitle={movie.title}
+                    userToken={token}
+                    initialIsFavorited={userFavorites.includes(movie.id)}
+                />
 
                 {!imageError && movie.poster_path ? (
                     <img

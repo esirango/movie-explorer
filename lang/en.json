@@ -169,6 +169,7 @@
     "toastMsgs": {
         "favorite_added": "added to favorites ",
         "favorite_removed": "removed from favorites ",
+        "favorite_error": "Error adding to favorites.",
         "favorite_need_login": "Please log in to add to favorites."
     },
     "footer": {

@@ -10,10 +10,11 @@ import MovieDetailsSkeleton from "../../../components/movies/shimmer/MovieDetail
 import MovieBannerSkeleton from "../../../components/movies/shimmer/MovieBannerSkeleton";
 import GenericError from "../../../components/error/GenericError";
 import { useLanguage } from "../../../lang/LanguageContext";
+import useAuthStore from "../../../store/useAuthStore";
 
 const MovieDetailPage = () => {
     const router = useRouter();
-
+    const { token } = useAuthStore();
     const { t } = useLanguage();
 
     if (!router.isReady) {
@@ -61,6 +62,7 @@ const MovieDetailPage = () => {
                             <MovieBanner movie={movie} />
                             <MovieDetails
                                 movie={movie}
+                                userToken={token}
                                 related={similarMovies}
                             />
                         </>

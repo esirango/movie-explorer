@@ -169,6 +169,7 @@
     "toastMsgs": {
         "favorite_added": "به علاقه‌مندی‌ها افزوده شد ",
         "favorite_removed": "از علاقه‌مندی‌ها حذف شد ",
+        "favorite_error": "خطا در افزودن به علاقه‌مندی‌ها.",
         "favorite_need_login": "برای افزودن به علاقه‌مندی ابتدا وارد شوید."
     },
     "footer": {

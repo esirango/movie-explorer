@@ -166,6 +166,11 @@
     "loading": {
         "title": "درحال بارگزاری"
     },
+    "toastMsgs": {
+        "favorite_added": "به علاقه‌مندی‌ها افزوده شد ",
+        "favorite_removed": "از علاقه‌مندی‌ها حذف شد ",
+        "favorite_need_login": "برای افزودن به علاقه‌مندی ابتدا وارد شوید."
+    },
     "footer": {
         "firstText": "ساخته شده با",
         "secondText": "توسط esirango"

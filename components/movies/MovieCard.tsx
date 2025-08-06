@@ -3,13 +3,42 @@ import { Movie } from "../../types/movie";
 import Link from "next/link";
 import IMDbVoteAverage from "./IMDbVoteAverage";
 import MovieReleaseDate from "./movie/MovieReleaseDate";
+import { Heart, HeartOff } from "lucide-react";
+import toast from "react-hot-toast";
+import useAuthStore from "../../store/useAuthStore";
+import { useLanguage } from "../../lang/LanguageContext";
 
 interface MovieCardProps {
     movie: Movie;
+    userFavorites?: number[];
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, userFavorites = [] }) => {
     const [imageError, setImageError] = useState(false);
+    const [isFavorited, setIsFavorited] = useState(
+        userFavorites.includes(movie.id)
+    );
+
+    const { t } = useLanguage();
+
+    const { token } = useAuthStore();
+
+    const toggleFavorite = (e: React.MouseEvent) => {
+        e.preventDefault();
+
+        if (!token) {
+            toast.error(t("toastMsgs.favorite_need_login"));
+            return;
+        }
+
+        setIsFavorited((prev) => !prev);
+
+        if (!isFavorited) {
+            toast.success(`${movie.title} ${t("toastMsgs.favorite_added")}`);
+        } else {
+            toast.error(`${movie.title} ${t("toastMsgs.favorite_removed")}`);
+        }
+    };
 
     function truncateText(text: string, maxLength: number) {
         if (text.length <= maxLength) return text;
@@ -18,7 +47,21 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
 
     return (
         <Link href={`/movies/${movie.id}/${movie.title}`}>
-            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer">
+            <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">
+                {/* آیکون قلب */}
+                <button
+                    onClick={toggleFavorite}
+                    className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-transform duration-300
+                        ${
+                            isFavorited
+                                ? "scale-110 text-red-500"
+                                : "text-gray-400 group-hover:text-red-400"
+                        }
+                        hover:scale-125 bg-white/80 dark:bg-gray-700/70 backdrop-blur`}
+                >
+                    {isFavorited ? <Heart fill="currentColor" /> : <Heart />}
+                </button>
+
                 {!imageError && movie.poster_path ? (
                     <img
                         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}

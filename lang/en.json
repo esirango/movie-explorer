@@ -166,7 +166,11 @@
     "loading": {
         "title": "Loading"
     },
-
+    "toastMsgs": {
+        "favorite_added": "added to favorites ",
+        "favorite_removed": "removed from favorites ",
+        "favorite_need_login": "Please log in to add to favorites."
+    },
     "footer": {
         "firstText": "Made With",
         "secondText": "by esirango"

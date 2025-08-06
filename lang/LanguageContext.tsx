@@ -39,7 +39,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
     const setLanguage = (lang: Language) => {
         setLanguageState(lang);
-        Cookies.set("lang", lang); // 👈 ذخیره در کوکی
+        Cookies.set("lang", lang);
     };
 
     const t = (key: string): string => {

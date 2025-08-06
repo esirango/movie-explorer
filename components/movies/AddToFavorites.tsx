@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useLanguage } from "../../lang/LanguageContext";
+import confetti from "canvas-confetti";
 
 interface AddToFavoritesProps {
     movieId: number;
@@ -9,7 +10,7 @@ interface AddToFavoritesProps {
     userToken?: string;
     initialIsFavorited?: boolean;
     size?: number;
-    inline?: boolean; // ✅ اضافه شده برای کنترل استایل
+    inline?: boolean;
 }
 
 const AddToFavorites: React.FC<AddToFavoritesProps> = ({
@@ -23,6 +24,26 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     const { t } = useLanguage();
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
     const [loading, setLoading] = useState(false);
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const triggerConfettiAroundButton = () => {
+        if (!buttonRef.current) return;
+
+        const rect = buttonRef.current.getBoundingClientRect();
+        const x = (rect.left + rect.width / 2) / window.innerWidth;
+        const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+        confetti({
+            particleCount: 25,
+            startVelocity: 25,
+            spread: 40,
+            ticks: 50,
+            gravity: 0.6,
+            origin: { x, y },
+            scalar: 0.5,
+        });
+    };
 
     const toggleFavorite = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -38,13 +59,11 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
         setLoading(true);
 
         try {
-            // در اینجا API واقعی برای افزودن/حذف علاقه‌مندی رو صدا بزن
-            // مثلا await fetch(`/api/favorites`, { method: isFavorited ? "DELETE" : "POST", body: ... })
-
             setIsFavorited(!isFavorited);
 
             if (!isFavorited) {
                 toast.success(`${movieTitle} ${t("toastMsgs.favorite_added")}`);
+                triggerConfettiAroundButton();
             } else {
                 toast.error(`${movieTitle} ${t("toastMsgs.favorite_removed")}`);
             }
@@ -57,6 +76,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
 
     return (
         <button
+            ref={buttonRef}
             onClick={toggleFavorite}
             disabled={loading}
             title={t("add_to_favorites")}

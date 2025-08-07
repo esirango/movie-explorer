@@ -5,10 +5,10 @@ import { useLanguage } from "../../lang/LanguageContext";
 import confetti from "canvas-confetti";
 import { useAddFavorite } from "../../pages/api/hooks/favorites/useAddFavorite";
 import { useRemoveFavorite } from "../../pages/api/hooks/favorites/useRemoveFavorites";
+import { Movie } from "../../types/movie";
 
 interface AddToFavoritesProps {
-    movieId: number;
-    movieTitle: string;
+    movie: Movie;
     userToken?: string;
     initialIsFavorited?: boolean;
     size?: number;
@@ -16,8 +16,7 @@ interface AddToFavoritesProps {
 }
 
 const AddToFavorites: React.FC<AddToFavoritesProps> = ({
-    movieId,
-    movieTitle,
+    movie,
     userToken,
     initialIsFavorited = false,
     size = 20,
@@ -27,6 +26,17 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
     const [loading, setLoading] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const { trigger, isMutating, error } = useAddFavorite();
+
+    const handleAddFavorite = () => {
+        return trigger({
+            movieId: String(movie.id),
+            title: movie.title,
+            poster_path: movie.poster_path,
+            vote_average: movie.vote_average,
+        });
+    };
 
     const triggerConfettiAroundButton = () => {
         if (!buttonRef.current) return;
@@ -53,7 +63,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
         e.stopPropagation();
 
         if (!userToken) {
-            toast.error(t("favorite_need_login"));
+            toast.error(t("toastMsgs.favorite_need_login"));
             return;
         }
 
@@ -61,14 +71,18 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
 
         try {
             if (!isFavorited) {
-                await useAddFavorite(String(movieId));
+                await handleAddFavorite();
                 setIsFavorited(true);
-                toast.success(`${movieTitle} ${t("toastMsgs.favorite_added")}`);
+                toast.success(
+                    `${movie.title} ${t("toastMsgs.favorite_added")}`
+                );
                 triggerConfettiAroundButton();
             } else {
-                await useRemoveFavorite(String(movieId));
+                await useRemoveFavorite(String(movie.id));
                 setIsFavorited(false);
-                toast.error(`${movieTitle} ${t("toastMsgs.favorite_removed")}`);
+                toast.error(
+                    `${movie.title} ${t("toastMsgs.favorite_removed")}`
+                );
             }
         } catch (error) {
             toast.error(t("toastMsgs.favorite_error"));

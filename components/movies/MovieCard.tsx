@@ -50,8 +50,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, userFavorites = [] }) => {
         <Link href={`/movies/${movie.id}/${movie.title}`}>
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">
                 <AddToFavorites
-                    movieId={movie.id}
-                    movieTitle={movie.title}
+                    movie={movie}
                     userToken={token}
                     initialIsFavorited={userFavorites.includes(movie.id)}
                 />

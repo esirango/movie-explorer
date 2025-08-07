@@ -34,8 +34,7 @@ function MovieDetails({ movie, related, userToken, userFavorites = [] }) {
                     <div className="flex items-center lg:gap-4 md:gap-4 lg:justify-start md:justify-start justify-between">
                         <h1 className="text-2xl font-bold">{movie.title}</h1>
                         <AddToFavorites
-                            movieId={movie.id}
-                            movieTitle={movie.title}
+                            movie={movie}
                             userToken={userToken}
                             initialIsFavorited={userFavorites.includes(
                                 movie.id

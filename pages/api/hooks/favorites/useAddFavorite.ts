@@ -1,8 +1,24 @@
+import useSWRMutation from "swr/mutation";
 import { fetcher } from "../../fetcher";
+import Cookies from "js-cookie";
 
-export async function useAddFavorite(movieId: string) {
-    return fetcher("/api/favorites", {
+interface AddFavoriteArgs {
+    movieId: string;
+    title: string;
+    poster_path: string;
+    vote_average: number;
+}
+
+async function addFavoriteFetcher(
+    url: string,
+    { arg }: { arg: AddFavoriteArgs }
+) {
+    return fetcher(url, {
         method: "post",
-        data: { movieId },
+        data: arg,
     });
+}
+
+export function useAddFavorite() {
+    return useSWRMutation("/api/favorites/add", addFavoriteFetcher);
 }

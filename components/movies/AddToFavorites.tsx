@@ -3,6 +3,8 @@ import { Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useLanguage } from "../../lang/LanguageContext";
 import confetti from "canvas-confetti";
+import { useAddFavorite } from "../../pages/api/hooks/favorites/useAddFavorite";
+import { useRemoveFavorite } from "../../pages/api/hooks/favorites/useRemoveFavorites";
 
 interface AddToFavoritesProps {
     movieId: number;
@@ -24,7 +26,6 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     const { t } = useLanguage();
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
     const [loading, setLoading] = useState(false);
-
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const triggerConfettiAroundButton = () => {
@@ -59,16 +60,18 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
         setLoading(true);
 
         try {
-            setIsFavorited(!isFavorited);
-
             if (!isFavorited) {
+                await useAddFavorite(String(movieId));
+                setIsFavorited(true);
                 toast.success(`${movieTitle} ${t("toastMsgs.favorite_added")}`);
                 triggerConfettiAroundButton();
             } else {
+                await useRemoveFavorite(String(movieId));
+                setIsFavorited(false);
                 toast.error(`${movieTitle} ${t("toastMsgs.favorite_removed")}`);
             }
         } catch (error) {
-            toast.error(t("favorite_error"));
+            toast.error(t("toastMsgs.favorite_error"));
         } finally {
             setLoading(false);
         }

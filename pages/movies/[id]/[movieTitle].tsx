@@ -11,11 +11,26 @@ import MovieBannerSkeleton from "../../../components/movies/shimmer/MovieBannerS
 import GenericError from "../../../components/error/GenericError";
 import { useLanguage } from "../../../lang/LanguageContext";
 import useAuthStore from "../../../store/useAuthStore";
+import { useLang } from "../../../lang/hooks/useLang";
 
 const MovieDetailPage = () => {
     const router = useRouter();
     const { token } = useAuthStore();
     const { t } = useLanguage();
+    const lang = useLang();
+
+    const { id } = router.query;
+    const movieId = typeof id === "string" ? id : null;
+
+    const {
+        movie,
+        isLoading: isLoadingMovie,
+        isError,
+    } = useMovieDetails(movieId, lang);
+    const { similarMovies, isLoading: isLoadingSimilar } =
+        useSimilarMovies(movieId);
+
+    const loading = isLoadingMovie || isLoadingSimilar;
 
     if (!router.isReady) {
         return (
@@ -26,19 +41,6 @@ const MovieDetailPage = () => {
             </div>
         );
     }
-
-    const { id } = router.query;
-    const movieId = typeof id === "string" ? id : null;
-
-    const {
-        movie,
-        isLoading: isLoadingMovie,
-        isError,
-    } = useMovieDetails(movieId);
-    const { similarMovies, isLoading: isLoadingSimilar } =
-        useSimilarMovies(movieId);
-
-    const loading = isLoadingMovie || isLoadingSimilar;
 
     return (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen">

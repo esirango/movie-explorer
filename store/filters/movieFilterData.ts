@@ -1,4 +1,3 @@
-// filtersOptions.ts
 export const getGenres = (t: (key: string) => string) => [
     { id: "", name: t("movies.filters.genre"), disabled: true },
     { id: "28", name: t("movies.filters.genres.28") },

@@ -28,15 +28,6 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     const genres = getGenres(t);
     const countries = getCountries(t);
     const sortOptions = getSortOptions(t);
-
-    const emptyValues = {
-        query: "",
-        genre: [],
-        country: "",
-        sortBy: "",
-        year: "",
-    };
-
     const years = [
         {
             value: "",
@@ -45,6 +36,20 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         },
         ...yearsList.map((y) => ({ value: y, label: y })),
     ];
+
+    const listBoxTitles = [
+        { title: "country", options: countries },
+        { title: "sortBy", options: sortOptions },
+        { title: "year", options: years },
+    ];
+
+    const emptyValues = {
+        query: "",
+        genre: [],
+        country: "",
+        sortBy: "",
+        year: "",
+    };
 
     const [filters, setFilters] = useState({
         ...defaultValues,
@@ -81,29 +86,15 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                     t={t}
                 />
 
-                <ListBox
-                    options={countries}
-                    value={filters.country}
-                    setFilters={setFilters}
-                    filters={filters}
-                    keyName="country"
-                />
-
-                <ListBox
-                    options={sortOptions}
-                    value={filters.sortBy}
-                    setFilters={setFilters}
-                    filters={filters}
-                    keyName="sortBy"
-                />
-
-                <ListBox
-                    options={years}
-                    value={filters.year}
-                    setFilters={setFilters}
-                    filters={filters}
-                    keyName="year"
-                />
+                {listBoxTitles.map((listBox) => (
+                    <ListBox
+                        options={listBox.options}
+                        value={filters[listBox.title]}
+                        setFilters={setFilters}
+                        filters={filters}
+                        keyName={listBox.title}
+                    />
+                ))}
 
                 <div className="block md:hidden">
                     <GenreTags

@@ -60,7 +60,9 @@ function ListBox<T extends string>({
                                 key={opt.id || opt.code || opt.value}
                                 value={opt.id || opt.code || opt.value}
                                 disabled={opt.disabled}
-                                className={listboxOptionClass}
+                                className={({ active, selected }) =>
+                                    listboxOptionClass({ active, selected })
+                                }
                             >
                                 {opt.name || opt.label}
                             </Listbox.Option>

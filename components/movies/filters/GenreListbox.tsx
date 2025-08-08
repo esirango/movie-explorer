@@ -44,7 +44,9 @@ const GenreListbox: React.FC<GenreListboxProps> = ({
                                 key={opt.id}
                                 value={opt}
                                 disabled={opt.disabled}
-                                className={listboxOptionClass}
+                                className={({ active, selected }) =>
+                                    listboxOptionClass({ active, selected })
+                                }
                             >
                                 <span
                                     className={clsx(

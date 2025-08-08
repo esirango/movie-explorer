@@ -28,6 +28,6 @@ export function useAddFavorite() {
         addFavorite: trigger,
         data,
         error,
-        isLoading: isMutating,
+        isLoadingAddFavorite: isMutating,
     };
 }

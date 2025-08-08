@@ -24,14 +24,26 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
 }) => {
     const { t } = useLanguage();
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const { addFavorite, isLoadingAddFavorite } = useAddFavorite();
+
+    const { removeFavorite, isLoadingRemoveFavorite } = useRemoveFavorite(
+        String(movie.id)
+    );
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (isLoadingAddFavorite || isLoadingRemoveFavorite) {
+            setLoading(true);
+        } else {
+            setLoading(false);
+        }
+    }, [isLoadingAddFavorite, isLoadingRemoveFavorite]);
 
     useEffect(() => {
         setIsFavorited(initialIsFavorited);
     }, [initialIsFavorited]);
-
-    const buttonRef = useRef<HTMLButtonElement>(null);
-
-    const { addFavorite, isLoading, error } = useAddFavorite();
 
     const handleAddFavorite = () => {
         return addFavorite({
@@ -80,7 +92,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
                 );
                 triggerConfettiAroundButton();
             } else {
-                await useRemoveFavorite(String(movie.id));
+                await removeFavorite();
                 setIsFavorited(false);
                 toast.error(
                     `${movie.title} ${t("toastMsgs.favorite_removed")}`
@@ -97,19 +109,24 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
         <button
             ref={buttonRef}
             onClick={toggleFavorite}
-            disabled={isLoading}
+            disabled={loading}
             className={`${
                 inline
                     ? "p-1"
                     : "absolute top-3 right-3 z-10 p-2 bg-white/80 dark:bg-gray-700/70 backdrop-blur"
-            } rounded-full transition-transform duration-300 ${
-                isFavorited
-                    ? "scale-110 text-red-500"
-                    : "text-gray-400 hover:text-red-400"
-            } hover:scale-125 cursor-pointer `}
+            } rounded-full transition-transform duration-300
+    ${
+        isFavorited
+            ? "scale-110 text-red-500"
+            : "text-gray-400 hover:text-red-400"
+    }
+    hover:scale-125 ${!loading ? "cursor-pointer" : "cursor-progress"}
+    `}
         >
             <Heart
-                className="transition-all"
+                className={`transition-all ${
+                    loading ? "animate-heartbeat text-pink-500" : ""
+                }`}
                 size={size}
                 fill={isFavorited ? "currentColor" : "none"}
             />

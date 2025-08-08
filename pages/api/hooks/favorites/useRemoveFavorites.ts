@@ -1,7 +1,19 @@
+import useSWRMutation from "swr/mutation";
 import { fetcher } from "../../fetcher";
 
-export async function useRemoveFavorite(movieId: string) {
-    return fetcher(`/api/favorites/remove/${movieId}`, {
-        method: "delete",
-    });
+async function removeFavoriteFetcher(url: string) {
+    return fetcher(url, { method: "delete" });
+}
+
+export function useRemoveFavorite(movieId: string) {
+    const { trigger, isMutating, error } = useSWRMutation(
+        `/api/favorites/remove/${movieId}`,
+        removeFavoriteFetcher
+    );
+
+    return {
+        removeFavorite: trigger,
+        isLoadingRemoveFavorite: isMutating,
+        error,
+    };
 }

@@ -21,3 +21,18 @@ export interface MovieFilterProps {
     }) => void;
     isLoading: boolean;
 }
+
+export interface Filters {
+    query: string;
+    genre: GenreOption[];
+    country: string;
+    sortBy: string;
+    year: string;
+}
+
+export interface GenreListboxProps {
+    genres: GenreOption[];
+    filters: Filters;
+    setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+    t: (key: string) => string;
+}

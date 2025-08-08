@@ -7,22 +7,7 @@ import {
 } from "../../../store/filters/movieFilterStyles";
 import { ChevronDown } from "lucide-react";
 import clsx from "clsx";
-import { GenreOption } from "../../../types/filters";
-
-interface Filters {
-    query: string;
-    genre: GenreOption[];
-    country: string;
-    sortBy: string;
-    year: string;
-}
-
-interface GenreListboxProps {
-    genres: GenreOption[];
-    filters: Filters;
-    setFilters: React.Dispatch<React.SetStateAction<Filters>>;
-    t: (key: string) => string;
-}
+import { GenreListboxProps, GenreOption } from "../../../types/filters";
 
 const GenreListbox: React.FC<GenreListboxProps> = ({
     genres,

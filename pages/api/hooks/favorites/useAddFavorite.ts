@@ -1,6 +1,5 @@
 import useSWRMutation from "swr/mutation";
 import { fetcher } from "../../fetcher";
-import Cookies from "js-cookie";
 
 interface AddFavoriteArgs {
     movieId: string;

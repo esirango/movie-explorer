@@ -1,58 +1,47 @@
 import React, { useState } from "react";
-import { Movie } from "../../types/movie";
+import { Favorite, Movie } from "../../types/movie";
 import Link from "next/link";
 import IMDbVoteAverage from "./IMDbVoteAverage";
 import MovieReleaseDate from "./movie/MovieReleaseDate";
-import { Heart, HeartOff } from "lucide-react";
-import toast from "react-hot-toast";
 import useAuthStore from "../../store/useAuthStore";
-import { useLanguage } from "../../lang/LanguageContext";
 import AddToFavorites from "./AddToFavorites";
+import { useFavorites } from "../../pages/api/hooks/favorites/useFavorites";
 
 interface MovieCardProps {
     movie: Movie;
-    userFavorites?: number[];
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie, userFavorites = [] }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
     const [imageError, setImageError] = useState(false);
-    const [isFavorited, setIsFavorited] = useState(
-        userFavorites.includes(movie.id)
-    );
 
-    const { t } = useLanguage();
+    const { favorites } = useFavorites();
 
     const { token } = useAuthStore();
-
-    const toggleFavorite = (e: React.MouseEvent) => {
-        e.preventDefault();
-
-        if (!token) {
-            toast.error(t("toastMsgs.favorite_need_login"));
-            return;
-        }
-
-        setIsFavorited((prev) => !prev);
-
-        if (!isFavorited) {
-            toast.success(`${movie.title} ${t("toastMsgs.favorite_added")}`);
-        } else {
-            toast.error(`${movie.title} ${t("toastMsgs.favorite_removed")}`);
-        }
-    };
 
     function truncateText(text: string, maxLength: number) {
         if (text.length <= maxLength) return text;
         return text.slice(0, maxLength) + "...";
     }
 
+    console.log(
+        Boolean(
+            favorites.find(
+                (favorite: Favorite) => favorite.movieId === String(movie.id)
+            )
+        )
+    );
     return (
         <Link href={`/movies/${movie.id}/${movie.title}`}>
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">
                 <AddToFavorites
                     movie={movie}
                     userToken={token}
-                    initialIsFavorited={userFavorites.includes(movie.id)}
+                    initialIsFavorited={Boolean(
+                        favorites.find(
+                            (favorite: Favorite) =>
+                                favorite.movieId === String(movie.id)
+                        )
+                    )}
                 />
 
                 {!imageError && movie.poster_path ? (

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { useLanguage } from "../../lang/LanguageContext";
@@ -18,19 +18,23 @@ interface AddToFavoritesProps {
 const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     movie,
     userToken,
-    initialIsFavorited = false,
+    initialIsFavorited,
     size = 20,
     inline,
 }) => {
     const { t } = useLanguage();
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
-    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setIsFavorited(initialIsFavorited);
+    }, [initialIsFavorited]);
+
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    const { trigger, isMutating, error } = useAddFavorite();
+    const { addFavorite, isLoading, error } = useAddFavorite();
 
     const handleAddFavorite = () => {
-        return trigger({
+        return addFavorite({
             movieId: String(movie.id),
             title: movie.title,
             poster_path: movie.poster_path,
@@ -67,8 +71,6 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
             return;
         }
 
-        setLoading(true);
-
         try {
             if (!isFavorited) {
                 await handleAddFavorite();
@@ -85,9 +87,9 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
                 );
             }
         } catch (error) {
-            toast.error(t("toastMsgs.favorite_error"));
-        } finally {
-            setLoading(false);
+            toast.error(
+                error.response.data.message || t("toastMsgs.favorite_error")
+            );
         }
     };
 
@@ -95,8 +97,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
         <button
             ref={buttonRef}
             onClick={toggleFavorite}
-            disabled={loading}
-            title={t("add_to_favorites")}
+            disabled={isLoading}
             className={`${
                 inline
                     ? "p-1"
@@ -105,7 +106,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
                 isFavorited
                     ? "scale-110 text-red-500"
                     : "text-gray-400 hover:text-red-400"
-            } hover:scale-125`}
+            } hover:scale-125 cursor-pointer `}
         >
             <Heart
                 className="transition-all"

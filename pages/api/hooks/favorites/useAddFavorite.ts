@@ -19,5 +19,15 @@ async function addFavoriteFetcher(
 }
 
 export function useAddFavorite() {
-    return useSWRMutation("/api/favorites/add", addFavoriteFetcher);
+    const { trigger, data, error, isMutating } = useSWRMutation(
+        "/api/favorites/add",
+        addFavoriteFetcher
+    );
+
+    return {
+        addFavorite: trigger,
+        data,
+        error,
+        isLoading: isMutating,
+    };
 }

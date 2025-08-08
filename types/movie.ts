@@ -13,6 +13,14 @@ export interface Movie {
     original_language: string;
 }
 
+export interface Favorite {
+    movieId: string;
+    poster_path: string;
+    title: string;
+    vote_average: number;
+    _id: string;
+}
+
 export interface Pagination {
     page: number;
     total_pages: number;

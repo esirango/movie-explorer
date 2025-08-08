@@ -6,10 +6,14 @@ import Link from "next/link";
 import { toPersianNumber } from "../../../funcs/toPersianNumber";
 import MovieReleaseDate from "./MovieReleaseDate";
 import AddToFavorites from "../AddToFavorites";
+import { useFavorites } from "../../../pages/api/hooks/favorites/useFavorites";
+import { Favorite } from "../../../types/movie";
 
-function MovieDetails({ movie, related, userToken, userFavorites = [] }) {
+function MovieDetails({ movie, related, userToken }) {
     const { t, language } = useLanguage();
     const [posterError, setPosterError] = useState<boolean>(false);
+
+    const { favorites } = useFavorites();
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -36,8 +40,11 @@ function MovieDetails({ movie, related, userToken, userFavorites = [] }) {
                         <AddToFavorites
                             movie={movie}
                             userToken={userToken}
-                            initialIsFavorited={userFavorites.includes(
-                                movie.id
+                            initialIsFavorited={Boolean(
+                                favorites.find(
+                                    (favorite: Favorite) =>
+                                        favorite.movieId === String(movie.id)
+                                )
                             )}
                             size={24}
                             inline

@@ -1,9 +1,9 @@
 import useSWR from "swr";
-import { Movie } from "../../../../types/movie";
+import { Favorite } from "../../../../types/movie";
 import { fetcher } from "../../fetcher";
 
 export function useFavorites() {
-    const { data, error, mutate } = useSWR<Movie[]>(
+    const { data, error, mutate } = useSWR<Favorite[]>(
         "/api/favorites/list",
         fetcher
     );

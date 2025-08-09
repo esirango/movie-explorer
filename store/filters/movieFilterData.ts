@@ -1,3 +1,17 @@
+const currentYear = new Date().getFullYear();
+
+const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
+    (currentYear - i).toString()
+);
+
+export const emptyValues = {
+    query: "",
+    genre: [],
+    country: "",
+    sortBy: "",
+    year: "",
+};
+
 export const getGenres = (t: (key: string) => string) => [
     { id: "", name: t("movies.filters.genre"), disabled: true },
     { id: "28", name: t("movies.filters.genres.28") },
@@ -58,3 +72,24 @@ export const getSortOptions = (t: (key: string) => string) => [
         label: t("movies.filters.sortOptions.vote_average"),
     },
 ];
+
+export const getYears = (t: (key: string) => string) => {
+    return [
+        {
+            value: "",
+            label: t("movies.filters.year.selectYear"),
+            disabled: true,
+        },
+        ...yearsList.map((y) => ({ value: y, label: y })),
+    ];
+};
+
+export const listBoxTitles = (t: (key: string) => string) => {
+    const countries = getCountries(t);
+    const sortOptions = getSortOptions(t);
+    return [
+        { title: "country", options: countries },
+        { title: "sortBy", options: sortOptions },
+        { title: "year", options: getYears(t) },
+    ];
+};

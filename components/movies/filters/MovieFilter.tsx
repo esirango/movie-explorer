@@ -5,8 +5,8 @@ import GenreTags from "./GenreTags";
 import { useRouter } from "next/router";
 import {
     getGenres,
-    getCountries,
-    getSortOptions,
+    listBoxTitles,
+    emptyValues,
 } from "../../../store/filters/movieFilterData";
 import { inputClass } from "../../../store/filters/movieFilterStyles";
 import ListBox from "./ListBox";
@@ -20,36 +20,8 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
 }) => {
     const router = useRouter();
     const { t } = useLanguage();
-    const currentYear = new Date().getFullYear();
-    const yearsList = Array.from({ length: currentYear - 1899 }, (_, i) =>
-        (currentYear - i).toString()
-    );
 
     const genres = getGenres(t);
-    const countries = getCountries(t);
-    const sortOptions = getSortOptions(t);
-    const years = [
-        {
-            value: "",
-            label: t("movies.filters.year.selectYear"),
-            disabled: true,
-        },
-        ...yearsList.map((y) => ({ value: y, label: y })),
-    ];
-
-    const listBoxTitles = [
-        { title: "country", options: countries },
-        { title: "sortBy", options: sortOptions },
-        { title: "year", options: years },
-    ];
-
-    const emptyValues = {
-        query: "",
-        genre: [],
-        country: "",
-        sortBy: "",
-        year: "",
-    };
 
     const [filters, setFilters] = useState({
         ...defaultValues,
@@ -86,7 +58,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                     t={t}
                 />
 
-                {listBoxTitles.map((listBox) => (
+                {listBoxTitles(t).map((listBox) => (
                     <ListBox
                         options={listBox.options}
                         value={filters[listBox.title]}

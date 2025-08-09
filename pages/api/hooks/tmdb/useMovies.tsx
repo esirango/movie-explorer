@@ -114,7 +114,7 @@ export const useMovies = (
             setFiltered(null);
             setTotalResults(data.total_results);
         }
-    }, [data, query, genre, country, year, page]);
+    }, [data, query, genre ? genre.join(",") : "", country, year, page]);
 
     return {
         data: filtered

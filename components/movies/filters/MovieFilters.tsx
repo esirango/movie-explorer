@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "../../../lang/LanguageContext";
-import { Search, RotateCw } from "lucide-react";
+import { RotateCw } from "lucide-react";
 import GenreTags from "./GenreTags";
 import { useRouter } from "next/router";
 import {
@@ -8,12 +8,12 @@ import {
     listBoxTitles,
     emptyValues,
 } from "../../../store/filters/movieFilterData";
-import { inputClass } from "../../../store/filters/movieFilterStyles";
 import ListBox from "./ListBox";
 import GenreListbox from "./GenreListbox";
 import { MovieFilterProps } from "../../../types/filters";
-import { useMovies } from "../../../pages/api/hooks/tmdb/useMovies";
-import PosterThumb from "./PosterThumb";
+import Search from "./Search";
+
+import { Search as SearchIcon } from "lucide-react";
 
 const MovieFilter: React.FC<MovieFilterProps> = ({
     defaultValues,
@@ -25,29 +25,11 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
     const genres = getGenres(t);
 
     const [searchTerm, setSearchTerm] = useState(defaultValues.query || "");
-    const [showSuggestions, setShowSuggestions] = useState(false);
-    const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
+
     const [filters, setFilters] = useState({
         ...defaultValues,
         genre: defaultValues.genre || [],
     });
-
-    const wrapperRef = useRef<HTMLDivElement>(null);
-
-    const { data: suggestions } = useMovies(1, [], debouncedTerm, "", "", "");
-
-    const handleSelectMovie = (movie: any) => {
-        setSearchTerm(movie.title);
-        setFilters((prev) => ({ ...prev, query: movie.title }));
-        setShowSuggestions(false);
-    };
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedTerm(searchTerm);
-        }, 400);
-        return () => clearTimeout(handler);
-    }, [searchTerm]);
 
     useEffect(() => {
         setFilters({
@@ -57,65 +39,15 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
         setSearchTerm(defaultValues.query || "");
     }, [defaultValues]);
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                wrapperRef.current &&
-                !wrapperRef.current.contains(event.target as Node)
-            ) {
-                setShowSuggestions(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
     return (
         <div className="flex flex-col my-24 justify-center gap-4 items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
             <div className="flex flex-col md:flex-row md:flex-wrap gap-4 justify-center items-center w-full">
-                <div className="relative w-60" ref={wrapperRef}>
-                    <input
-                        type="text"
-                        placeholder={t("movies.filters.inputSearchPlaceholder")}
-                        value={searchTerm}
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                            setShowSuggestions(true);
-                        }}
-                        onFocus={() => {
-                            if (searchTerm.trim()) setShowSuggestions(true);
-                        }}
-                        className={`${inputClass} pl-10 w-full`}
-                    />
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
-
-                    {showSuggestions && suggestions?.results?.length > 0 && (
-                        <ul className="absolute top-full mt-1 w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-auto z-50">
-                            {suggestions.results.map((movie: any) => (
-                                <li
-                                    key={movie.id}
-                                    onMouseDown={(e) => {
-                                        e.preventDefault();
-                                        handleSelectMovie(movie);
-                                    }}
-                                    className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-700"
-                                >
-                                    <PosterThumb
-                                        key={movie.id}
-                                        posterPath={movie.poster_path}
-                                        title={movie.title}
-                                    />
-                                    <span className="text-sm">
-                                        {movie.title}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
+                <Search
+                    t={t}
+                    setFilters={setFilters}
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                />
                 <GenreListbox
                     genres={genres}
                     filters={filters}
@@ -177,7 +109,7 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
                disabled:bg-indigo-400 disabled:cursor-not-allowed disabled:shadow-none"
                     disabled={isLoading}
                 >
-                    <Search className="w-5 h-5" />
+                    <SearchIcon className="w-5 h-5" />
                     {t("movies.filters.search")}
                 </button>
             </div>

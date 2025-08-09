@@ -3,7 +3,7 @@ import Pagination from "../../components/movies/Pagination";
 import MovieCard from "../../components/movies/MovieCard";
 import LandingMovieSlider from "../../components/movies/landingMoviesSlider";
 import { useRouter } from "next/router";
-import MovieFilter from "../../components/movies/filters/MovieFilter";
+import MovieFilter from "../../components/movies/filters/MovieFilters";
 import MovieCardSkeleton from "../../components/movies/shimmer/MovieCardSkeleton";
 import { useMovies } from "../api/hooks/tmdb/useMovies";
 import { getGenres } from "../../store/filters/movieFilterData";

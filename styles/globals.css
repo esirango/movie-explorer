@@ -66,10 +66,8 @@ button {
     animation: heartbeat 1s ease-in-out infinite;
 }
 
-@layer utilities {
-    .gradient-text {
-        @apply text-transparent bg-gradient-to-r from-purple-400 via-indigo-500 to-purple-500 bg-[length:200%_auto] bg-clip-text animate-gradientText;
-    }
+.gradient-text {
+    @apply text-transparent bg-gradient-to-r from-purple-400 via-indigo-500 to-purple-700 bg-[length:200%_auto] bg-clip-text animate-gradientText;
 }
 
 @layer keyframes {
@@ -88,6 +86,6 @@ button {
 
 @layer utilities {
     .animate-gradientText {
-        animation: gradientText 2.5s ease-in-out infinite;
+        animation: gradientText 2s ease-in-out infinite;
     }
 }

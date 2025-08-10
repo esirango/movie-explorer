@@ -104,7 +104,14 @@ const MovieFilter: React.FC<MovieFilterProps> = ({
 
             <div className="w-60 flex justify-end md:justify-center">
                 <button
-                    onClick={() => onSubmit(filters)}
+                    onClick={() => {
+                        const updatedFilters = {
+                            ...filters,
+                            query: searchTerm,
+                        };
+                        setFilters(updatedFilters);
+                        onSubmit(updatedFilters);
+                    }}
                     className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500
                disabled:bg-indigo-400 disabled:cursor-not-allowed disabled:shadow-none"
                     disabled={isLoading}

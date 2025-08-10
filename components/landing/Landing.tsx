@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { useLanguage } from "../../lang/LanguageContext";
 import InteractiveCinemaBackground from "../landing/InteractiveCinemaBackground";
+import { useState } from "react";
 
 export default function Landing() {
     const { t } = useLanguage();
+
+    const [isHoveredLink, setIsHoveredLink] = useState<boolean>(false);
 
     return (
         <div className="relative min-h-screen bg-gray-200 dark:bg-black dark:text-white overflow-hidden">
@@ -28,12 +31,19 @@ export default function Landing() {
                 <p className="max-w-2xl text-lg mb-12 px-4 dark:text-gray-300">
                     {t("landing.bannerDescription")}
                 </p>
-
                 <Link
                     href="/movies"
-                    className="mt-16 inline-block px-10 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-semibold shadow-lg transition-colors duration-300"
+                    className="mt-16 inline-block px-10 py-4 rounded-full text-white bg-indigo-600 font-semibold shadow-lg transition-colors duration-300 hover:bg-violet-800"
+                    onMouseEnter={() => setIsHoveredLink(true)}
+                    onMouseLeave={() => setIsHoveredLink(false)}
                 >
-                    {t("landing.bannerButton")}
+                    <span
+                        className={`transition-colors duration-300 ${
+                            isHoveredLink ? "gradient-text" : ""
+                        }`}
+                    >
+                        {t("landing.bannerButton")}
+                    </span>
                 </Link>
             </main>
         </div>

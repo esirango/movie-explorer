@@ -134,6 +134,8 @@
         }
     },
     "movieDetail": {
+        "relatedMovies": "فیلم‌های مرتبط",
+
         "release": "تاریخ انتشار",
         "runtime": "مدت زمان",
         "status": "وضعیت",

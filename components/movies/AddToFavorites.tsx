@@ -50,7 +50,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
             movieId: String(movie.id),
             title: movie.title,
             poster_path: movie.poster_path,
-            vote_average: movie.vote_average ? movie.vote_average : 0,
+            vote_average: movie.vote_average > 0 ? movie.vote_average : 1,
         });
     };
 

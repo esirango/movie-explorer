@@ -114,7 +114,7 @@ function MovieDetails({ movie, related, userToken }) {
             {related.length > 0 && (
                 <div className="mt-12">
                     <h2 className="text-2xl font-bold mb-4">
-                        {t("related_movies")}
+                        {t("movieDetail.relatedMovies")}
                     </h2>
                     <MovieSlider movies={related} />
                 </div>

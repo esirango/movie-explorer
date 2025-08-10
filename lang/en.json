@@ -134,6 +134,7 @@
         }
     },
     "movieDetail": {
+        "relatedMovies": "Related Movies",
         "release": "Release",
         "runtime": "Runtime",
         "status": "Status",

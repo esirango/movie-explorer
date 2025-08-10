@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { Camera, Plus, UserCircle, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { convertHeicToJpeg } from "../../../funcs/utils/heicConverter";
@@ -8,18 +8,21 @@ interface UploadAvatarProps {
     loading: boolean;
     t: (key: string) => string;
     register: any;
+    isConverting: boolean;
+    setIsConverting: React.Dispatch<React.SetStateAction<boolean>>;
     handleImageChange: (e: { target: { files: File[] } }) => void;
 }
 
 const UploadAvatar: React.FC<UploadAvatarProps> = ({
     preview,
     loading,
+    isConverting,
+    setIsConverting,
     t,
     register,
     handleImageChange,
 }) => {
     const [isDragging, setIsDragging] = useState(false);
-    const [isConverting, setIsConverting] = useState(false);
 
     const processFile = async (file: File) => {
         setIsConverting(true);
@@ -62,6 +65,7 @@ const UploadAvatar: React.FC<UploadAvatarProps> = ({
         <div
             onDrop={handleDrop}
             onDragOver={(e) => {
+                if (isConverting || loading) return;
                 e.preventDefault();
                 setIsDragging(true);
             }}

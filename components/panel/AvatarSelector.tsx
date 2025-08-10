@@ -21,6 +21,7 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
     const [selected, setSelected] = useState<string | null>(null);
     const [preview, setPreview] = useState<string>(currentAvatar);
     const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [isConverting, setIsConverting] = useState<boolean>(false);
 
     const { register, handleSubmit } = useForm();
 
@@ -60,8 +61,10 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="text-center w-full">
             <UploadAvatar
+                isConverting={isConverting}
+                setIsConverting={setIsConverting}
                 preview={preview}
-                loading={false}
+                loading={loading}
                 t={t}
                 register={register}
                 handleImageChange={handleImageChange}
@@ -74,13 +77,21 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
                     <button
                         key={url}
                         type="button"
-                        onClick={() => handleSelect(url)}
+                        disabled={loading || isConverting}
+                        onClick={() => {
+                            if (!loading && !isConverting) {
+                                handleSelect(url);
+                            }
+                        }}
                         className={`rounded-full ${
                             selected === url ? "ring-4 ring-indigo-500" : ""
                         }`}
                     >
                         <img
                             src={url}
+                            style={
+                                loading || isConverting ? { opacity: 0.5 } : {}
+                            }
                             alt="Avatar option"
                             className="w-12 h-12 rounded-full hover:ring-2 ring-indigo-400 transition"
                         />
@@ -93,8 +104,8 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
                     <button
                         type="submit"
                         className="btn-primary"
-                        disabled={loading}
-                        style={loading ? { opacity: 0.5 } : {}}
+                        disabled={loading || isConverting}
+                        style={loading || isConverting ? { opacity: 0.5 } : {}}
                     >
                         {loading ? t("loading.title") : t("panel.save")}
                     </button>
@@ -107,8 +118,8 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
                             setSelected(null);
                         }}
                         className="btn-secondary"
-                        disabled={loading}
-                        style={loading ? { opacity: 0.5 } : {}}
+                        disabled={loading || isConverting}
+                        style={loading || isConverting ? { opacity: 0.5 } : {}}
                     >
                         {t("panel.cancel")}
                     </button>

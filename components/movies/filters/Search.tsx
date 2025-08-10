@@ -5,12 +5,19 @@ import { inputClass } from "../../../store/filters/movieFilterStyles";
 import PosterThumb from "./PosterThumb";
 
 function Search({ t, setFilters, searchTerm, setSearchTerm }) {
-    const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
-    const [debouncedTerm, setDebouncedTerm] = useState<string>(searchTerm);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
 
     const wrapperRef = useRef<HTMLDivElement>(null);
 
-    const { data: suggestions } = useMovies(1, [], debouncedTerm, "", "", "");
+    const { data: suggestions, isLoading } = useMovies(
+        1,
+        [],
+        debouncedTerm,
+        "",
+        "",
+        ""
+    );
 
     const handleSelectMovie = (movie: any) => {
         setSearchTerm(movie.title);
@@ -35,9 +42,8 @@ function Search({ t, setFilters, searchTerm, setSearchTerm }) {
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        return () => {
+        return () =>
             document.removeEventListener("mousedown", handleClickOutside);
-        };
     }, []);
 
     return (
@@ -57,25 +63,48 @@ function Search({ t, setFilters, searchTerm, setSearchTerm }) {
             />
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300 w-5 h-5" />
 
-            {showSuggestions && suggestions?.results?.length > 0 && (
+            {showSuggestions && (
                 <ul className="absolute top-full mt-1 w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-auto z-50">
-                    {suggestions.results.slice(0, 10)?.map((movie: any) => (
-                        <li
-                            key={movie.id}
-                            onMouseDown={(e) => {
-                                e.preventDefault();
-                                handleSelectMovie(movie);
-                            }}
-                            className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-700"
-                        >
-                            <PosterThumb
+                    {/* حالت لودینگ */}
+                    {isLoading &&
+                        Array.from({ length: 5 }).map((_, i) => (
+                            <li
+                                key={i}
+                                className="flex items-center gap-2 px-3 py-2 animate-pulse"
+                            >
+                                <div className="w-8 h-12 bg-gray-300 dark:bg-gray-700 rounded" />
+                                <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-32" />
+                            </li>
+                        ))}
+
+                    {/* حالت بدون نتیجه */}
+                    {!isLoading &&
+                        debouncedTerm &&
+                        suggestions?.results?.length === 0 && (
+                            <li className="px-3 py-4 text-center text-sm gradient-text">
+                                {t("movies.filters.noResults")}
+                            </li>
+                        )}
+
+                    {/* حالت نمایش نتایج */}
+                    {!isLoading &&
+                        suggestions?.results?.length > 0 &&
+                        suggestions.results.slice(0, 10).map((movie: any) => (
+                            <li
                                 key={movie.id}
-                                posterPath={movie.poster_path}
-                                title={movie.title}
-                            />
-                            <span className="text-sm">{movie.title}</span>
-                        </li>
-                    ))}
+                                onMouseDown={(e) => {
+                                    e.preventDefault();
+                                    handleSelectMovie(movie);
+                                }}
+                                className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-indigo-100 dark:hover:bg-indigo-700"
+                            >
+                                <PosterThumb
+                                    posterPath={movie.poster_path}
+                                    title={movie.title}
+                                />
+                                <span className="text-sm">{movie.title}</span>
+                            </li>
+                        ))}
                 </ul>
             )}
         </div>

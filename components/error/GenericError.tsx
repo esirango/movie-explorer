@@ -24,11 +24,11 @@ const GenericError = ({ title, message, retry, noBackground }: Props) => {
                 <SpinningFilmReel />
             </div>
 
-            <h3 className="text-2xl font-extrabold mb-3">
+            <h3 className="text-2xl font-extrabold mb-3 gradient-text">
                 {title || t("panel.panelTitle")}
             </h3>
 
-            <p className="mb-6 text-sm leading-relaxed text-center">
+            <p className="mb-6 text-sm leading-relaxed text-center gradient-text">
                 {message || t("panel.panelMessage")}
             </p>
 

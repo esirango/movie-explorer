@@ -17,16 +17,16 @@ export const LoadingSpinner = () => {
             /> */}
             <SpinningFilmReel size="12" />
             <motion.span
-                className="ml-4 text-indigo-600 dark:text-indigo-400 font-semibold text-2xl select-none"
+                className="ml-4 text-indigo-600 dark:text-indigo-400 font-semibold text-2xl select-none gradient-text"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0] }}
+                animate={{ opacity: [0.5, 1, 0.7] }}
                 transition={{
                     repeat: Infinity,
                     duration: 2,
                     ease: "easeInOut",
                 }}
             >
-                {t("loading.title")}...
+                <p className="gradient-text"> {t("loading.title")}... </p>
             </motion.span>
         </div>
     );

@@ -76,7 +76,7 @@ const UploadAvatar: React.FC<UploadAvatarProps> = ({
                 <img
                     src={preview}
                     alt={t("auth.previewAvatarAlt")}
-                    className={`w-28 h-28 rounded-full border-4 border-indigo-500 object-cover shadow-md
+                    className={`w-40 h-40 rounded-full border-4 border-indigo-500 object-cover shadow-md
                         ${
                             isDragging
                                 ? "border-yellow-200 transition-all duration-150"
@@ -99,7 +99,7 @@ const UploadAvatar: React.FC<UploadAvatarProps> = ({
                 htmlFor="avatar"
                 className={`${
                     loading || isConverting ? "opacity-50" : ""
-                } absolute bottom-2 right-1/2 -translate-x-1/2 bg-indigo-500 hover:bg-indigo-700 text-white p-1 dark:text-black rounded-full cursor-pointer transition`}
+                } absolute bottom-2 right-1/2 -translate-x-7 bg-indigo-500 hover:bg-indigo-700 text-white p-1 dark:text-black rounded-full cursor-pointer transition`}
                 title={t("auth.addAvatarTitle")}
             >
                 <div className="relative w-6 h-6 z-1 text-white">

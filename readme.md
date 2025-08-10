@@ -37,6 +37,7 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 
     -   View your favorite movies in one place.
     -   Upload and choose your avatar with **HEIC support** and automatic conversion to JPG.
+    -   User avatars are stored on **Cloudinary** for efficient delivery and management.
     -   Fully interactive UI with smooth animations.
 
 -   **✨ Interactive Animations Everywhere**
@@ -58,6 +59,11 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 -   **🔁 Dynamic Routing & Pagination**
     -   Clean, user-friendly navigation with page-based browsing.
 
+## 🔧 Backend & Hosting
+
+-   The main server is hosted on **Render** for reliable and scalable deployment.
+-   User-related data is managed through a dedicated **Users API**, backed by **MongoDB** for data persistence and scalability.
+
 ## 🛠️ Tech Stack
 
 -   **Framework**: Next.js
@@ -66,7 +72,8 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 -   **Data Fetching**: SWR, Cookies
 -   **Icons**: Font Awesome (including IMDB brand)
 -   **Localization**: next/router + internal translation logic
--   **API**: The Movie Database (TMDB)
+-   **API**: The Movie Database (TMDB) + Custom Users API (MongoDB)
+-   **Storage**: Cloudinary for avatar images
 
 ## 🚀 Getting Started
 

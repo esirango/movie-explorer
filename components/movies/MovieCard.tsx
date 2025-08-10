@@ -23,13 +23,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         return text.slice(0, maxLength) + "...";
     }
 
-    console.log(
-        Boolean(
-            favorites.find(
-                (favorite: Favorite) => favorite.movieId === String(movie.id)
-            )
-        )
-    );
     return (
         <Link href={`/movies/${movie.id}/${movie.title}`}>
             <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">

@@ -22,14 +22,26 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
     -   Beautiful animated placeholders shown while movie data is loading.
     -   Mimics the layout of real content to provide a smooth and responsive UX.
 
--   **🎯 Advanced Movie Filtering**
+-   **🎯 Advanced Movie Filtering & Search**
 
     -   Filter movies by genre, release status, vote average, and more.
-    -   Filters update results in real-time and adapt to selected language.
+    -   Advanced search supports multiple keywords at the same time.
+    -   Filters update results in real-time and adapt to the selected language.
 
--   **✨ Interactive Animations**
+-   **💖 Favorite Movies with Confetti Animation**
 
-    -   Smooth hover effects, animated transitions, and responsive UI interactions using **Framer Motion** and **TailwindCSS**.
+    -   Like your favorite movies and enjoy a **colorful confetti animation** powered by the **`canvas-confetti`** library.
+    -   All your liked movies are saved and can be viewed later in your personal panel.
+
+-   **👤 Personalized User Panel**
+
+    -   View your favorite movies in one place.
+    -   Upload and choose your avatar with **HEIC support** and automatic conversion to JPG.
+    -   Fully interactive UI with smooth animations.
+
+-   **✨ Interactive Animations Everywhere**
+
+    -   Smooth hover effects, animated transitions, and responsive UI interactions using **Framer Motion**, **TailwindCSS**, and other playful animations across the app.
 
 -   **⭐ IMDB Integration**
 
@@ -50,7 +62,7 @@ A sleek and dynamic movie discovery web application built with **Next.js**, desi
 
 -   **Framework**: Next.js
 -   **Styling**: TailwindCSS
--   **Animations**: Framer Motion, Flickity
+-   **Animations**: Framer Motion, Flickity, canvas-confetti
 -   **Data Fetching**: SWR, Cookies
 -   **Icons**: Font Awesome (including IMDB brand)
 -   **Localization**: next/router + internal translation logic

@@ -48,9 +48,11 @@ const AvatarSelector: React.FC<Props> = ({ currentAvatar }) => {
             if (uploadedFile) {
                 await updateAvatar({ file: uploadedFile });
                 setSelected(null);
+                setUploadedFile(null);
             } else if (selected) {
                 await updateAvatar({ url: selected });
                 setSelected(null);
+                setUploadedFile(null);
             }
             toast.success(t("panel.toastMessages.avatarSavedSuccess"));
         } catch (e) {

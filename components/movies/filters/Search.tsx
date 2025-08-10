@@ -26,6 +26,9 @@ function Search({ t, setFilters, searchTerm, setSearchTerm }) {
     };
 
     useEffect(() => {
+        if (!searchTerm) {
+            setShowSuggestions(false);
+        }
         const handler = setTimeout(() => {
             setDebouncedTerm(searchTerm);
         }, 400);

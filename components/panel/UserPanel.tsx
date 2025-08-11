@@ -72,8 +72,8 @@ const UserPanel = () => {
 
             <Tabs tabs={tabItems} onTabChange={setActiveTab} />
 
-            <div className="z-[2] flex flex-col items-center lg:w-1/2 w-full gap-y-6">
-                <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait">
+                <div className="z-[2] flex flex-col items-center lg:w-1/2 w-full gap-y-6 mt-6">
                     {activeTab === "info" && (
                         <motion.div
                             key="info"
@@ -101,6 +101,8 @@ const UserPanel = () => {
                             <ChangePasswordForm />
                         </motion.div>
                     )}
+                </div>
+                <div className="lg:w-4/6 w-full z-[2] flex flex-col items-center">
                     {activeTab === "favorites" && (
                         <motion.div
                             key="favorites"
@@ -116,8 +118,8 @@ const UserPanel = () => {
                             />
                         </motion.div>
                     )}
-                </AnimatePresence>
-            </div>
+                </div>
+            </AnimatePresence>
         </div>
     );
 };

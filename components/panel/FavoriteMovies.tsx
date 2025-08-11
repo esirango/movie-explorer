@@ -18,7 +18,7 @@ const FavoriteMovies = ({ userId, userToken }) => {
 
     if (isLoading) return <LoadingSpinner />;
 
-    if (favorites.length)
+    if (!favorites.length)
         return (
             <GenericError
                 title={t("notFoundMovie.noFavorites")}

@@ -61,6 +61,11 @@
             "avatarSaveError": "There was a problem saving the avatar.",
             "usernameUpdated": "Username updated!",
             "passwordUpdated": "Password updated!"
+        },
+        "tabs": {
+            "info": "User Info",
+            "password": "Change Password",
+            "favorites": "Favorite Movies"
         }
     },
     "header": {

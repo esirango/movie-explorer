@@ -41,7 +41,7 @@ const Tabs = ({ tabs, onTabChange }) => {
 
     return (
         <div className="w-full flex flex-col items-center relative">
-            <div className="flex lg:flex-row md:flex-row flex-col lg:w-4/6 md:w-5/6 sm:w-4/6  w-full items-center justify-evenly  gap-3 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md p-2 rounded-xl shadow-md">
+            <div className="flex lg:flex-row md:flex-row flex-col lg:w-8/12 md:w-5/6 sm:w-4/6  w-full items-center justify-evenly  gap-3 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md p-2 rounded-xl shadow-md">
                 {tabs.map((tab: { id: string; label: string }) => {
                     const isActive = activeTab === tab.id;
                     return (

@@ -38,7 +38,7 @@ const FavoriteMovies = ({ userId, userToken }) => {
         );
 
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {favorites.map((movie: Favorite) => {
                 const imageError = imageErrorMap[movie.movieId] || false;
 
@@ -47,7 +47,7 @@ const FavoriteMovies = ({ userId, userToken }) => {
                         key={movie.movieId}
                         href={`/movies/${movie.movieId}/${movie.title}`}
                     >
-                        <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group">
+                        <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-200 transform hover:scale-105 cursor-pointer relative group ">
                             <AddToFavorites
                                 movie={movie}
                                 userToken={userToken}

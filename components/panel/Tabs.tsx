@@ -13,16 +13,22 @@ const Tabs = ({ tabs, onTabChange }) => {
         const queryTab = router.query.tab;
         const storedTab = localStorage.getItem("activeUserPanelTab");
 
-        if (queryTab && tabs.some((tab) => tab.id === queryTab)) {
+        if (
+            queryTab &&
+            tabs.some((tab: { id: string | string[] }) => tab.id === queryTab)
+        ) {
             setActiveTab(queryTab);
             onTabChange(queryTab);
-        } else if (storedTab && tabs.some((tab) => tab.id === storedTab)) {
+        } else if (
+            storedTab &&
+            tabs.some((tab: { id: string }) => tab.id === storedTab)
+        ) {
             setActiveTab(storedTab);
             onTabChange(storedTab);
         }
     }, [router.query.tab, tabs, onTabChange]);
 
-    const handleTabClick = (id) => {
+    const handleTabClick = (id: string) => {
         setActiveTab(id);
         onTabChange(id);
         localStorage.setItem("activeUserPanelTab", id);
@@ -35,14 +41,14 @@ const Tabs = ({ tabs, onTabChange }) => {
 
     return (
         <div className="w-full flex flex-col items-center relative">
-            <div className="flex gap-3 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md p-2 rounded-xl shadow-md">
-                {tabs.map((tab) => {
+            <div className="flex lg:flex-row md:flex-row flex-col lg:w-4/6 md:w-5/6 sm:w-4/6  w-full items-center justify-evenly  gap-3 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md p-2 rounded-xl shadow-md">
+                {tabs.map((tab: { id: string; label: string }) => {
                     const isActive = activeTab === tab.id;
                     return (
                         <button
                             key={tab.id}
                             onClick={() => handleTabClick(tab.id)}
-                            className={`relative px-5 py-2 rounded-lg font-medium transition-all duration-300
+                            className={`relative px-5 py-2 rounded-lg font-medium transition-all duration-300 text-center lg:text-lg text-lg
                                 ${
                                     isActive
                                         ? "text-white bg-indigo-500 shadow-lg"

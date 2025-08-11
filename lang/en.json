@@ -163,6 +163,9 @@
     },
     "notFoundMovie": {
         "title": "No movies found",
+        "noFavorites": "No favorite movie registered",
+        "goToAddFavoritesPrefix": "Explore thousands of amazing movies and add your favorites to the list.",
+        "goToAddFavoritesLinkText": "click here",
         "description": "Try adjusting your search or filters."
     },
     "loading": {

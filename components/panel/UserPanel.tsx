@@ -7,11 +7,15 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import { LoadingSpinner } from "../Loading";
 import GenericError from "../error/GenericError";
 import AnimatedBackground from "../landing/AnimatedBackground";
+import FavoriteMovies from "./FavoriteMovies";
+import useAuthStore from "../../store/useAuthStore";
 
 const UserPanel = () => {
     const [isClient, setIsClient] = useState(false);
-    const { user, isLoading, isError, mutate } = useCurrentUser();
+    const { user, isLoading, isError } = useCurrentUser();
     const { t } = useLanguage();
+
+    const { token } = useAuthStore();
 
     useEffect(() => {
         setIsClient(true);
@@ -55,6 +59,7 @@ const UserPanel = () => {
                     <AvatarSelector currentAvatar={String(user.avatar)} />
                     <UserInfoCard user={user} />
                     <ChangePasswordForm />
+                    <FavoriteMovies userId={user._id} userToken={token} />
                 </div>
             </div>
         </>

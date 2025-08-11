@@ -5,14 +5,15 @@ import { useLanguage } from "../../lang/LanguageContext";
 import confetti from "canvas-confetti";
 import { useAddFavorite } from "../../pages/api/hooks/favorites/useAddFavorite";
 import { useRemoveFavorite } from "../../pages/api/hooks/favorites/useRemoveFavorites";
-import { Movie } from "../../types/movie";
+import { Favorite, Movie } from "../../types/movie";
 
 interface AddToFavoritesProps {
-    movie: Movie;
+    movie: Movie | Favorite;
     userToken?: string;
     initialIsFavorited?: boolean;
     size?: number;
     inline?: boolean;
+    onChangeFavorites?: () => void;
 }
 
 const AddToFavorites: React.FC<AddToFavoritesProps> = ({
@@ -21,14 +22,17 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
     initialIsFavorited,
     size = 20,
     inline,
+    onChangeFavorites,
 }) => {
     const { t } = useLanguage();
     const [isFavorited, setIsFavorited] = useState(initialIsFavorited);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { addFavorite, isLoadingAddFavorite } = useAddFavorite();
 
+    const movieId = "id" in movie ? String(movie.id) : movie.movieId;
+
     const { removeFavorite, isLoadingRemoveFavorite } = useRemoveFavorite(
-        String(movie.id)
+        String(movieId)
     );
 
     const [loading, setLoading] = useState(false);
@@ -47,7 +51,7 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
 
     const handleAddFavorite = () => {
         return addFavorite({
-            movieId: String(movie.id),
+            movieId: String(movieId),
             title: movie.title,
             poster_path: movie.poster_path,
             vote_average: movie.vote_average > 0 ? movie.vote_average : 1,
@@ -98,13 +102,14 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({
                     `${movie.title} ${t("toastMsgs.favorite_removed")}`
                 );
             }
+
+            if (onChangeFavorites) onChangeFavorites();
         } catch (error) {
             toast.error(
-                error.response.data.message || t("toastMsgs.favorite_error")
+                error?.response?.data?.message || t("toastMsgs.favorite_error")
             );
         }
     };
-
     return (
         <button
             ref={buttonRef}

@@ -4,7 +4,7 @@ import SpinningFilmReel from "../error/SpinnerFilmReel";
 
 interface Props {
     title?: string;
-    message?: string;
+    message?: string | React.ReactNode;
     retry?: () => void;
     noBackground?: boolean;
 }

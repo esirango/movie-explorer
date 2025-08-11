@@ -23,6 +23,8 @@ const RegisterForm = () => {
     const router = useRouter();
     const { t } = useLanguage();
 
+    const [isConverting, setIsConverting] = useState<boolean>(false);
+
     const { token } = useAuthStore();
 
     useEffect(() => {
@@ -98,6 +100,8 @@ const RegisterForm = () => {
                     handleImageChange={handleImageChange}
                     register={register}
                     preview={preview}
+                    isConverting={isConverting}
+                    setIsConverting={setIsConverting}
                 />
 
                 <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600 dark:text-indigo-400 tracking-wide">

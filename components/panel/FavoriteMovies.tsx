@@ -74,7 +74,7 @@ const FavoriteMovies = ({ userId, userToken }) => {
                                 </div>
                             )}
 
-                            <div className="p-4 flex flex-col h-[100px] items-center gap-y-5">
+                            <div className="p-4 flex flex-col h-[125px] items-center gap-y-5">
                                 <h3 className="text-lg font-semibold line-clamp-2 text-gray-800 dark:text-white">
                                     {movie.title}
                                 </h3>

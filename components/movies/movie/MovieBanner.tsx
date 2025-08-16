@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function MovieBanner({ movie }) {
     const [imgError, setImgError] = useState(false);
-    const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+    const backdropUrl = `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`;
 
     return (
         <div className="w-full h-[60vh] relative">

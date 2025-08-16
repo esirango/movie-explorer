@@ -29,7 +29,7 @@ function TrendingMovies({ sampleMovies = [], loading }: HomeProps) {
                                 id={movie.id}
                                 key={movie.id}
                                 title={movie.title}
-                                poster={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                                poster={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
                             />
                         ))
                 ) : loading ? (

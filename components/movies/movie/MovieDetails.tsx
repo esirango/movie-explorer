@@ -21,7 +21,7 @@ function MovieDetails({ movie, related, userToken }) {
                 {/* Poster */}
                 {!posterError && movie.poster_path ? (
                     <img
-                        src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                        src={`https://image.tmdb.org/t/p/w780${movie.poster_path}`}
                         alt={movie.title}
                         className="rounded-xl w-full max-w-xs mx-auto md:mx-0"
                         onError={() => setPosterError(true)}
